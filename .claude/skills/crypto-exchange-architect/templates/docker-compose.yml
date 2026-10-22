@@ -1,0 +1,195 @@
+# infra/docker-compose.yml — local development only (production runs on Kubernetes).
+# Each service owns its own database; payment-core sits on an isolated network.
+x-svc: &svc
+  restart: unless-stopped
+  env_file: .env
+  networks: [internal]
+
+services:
+  # ---------- edge ----------
+  frontend:                      # Next.js app at the repo root
+    build: ..
+    ports: ["3001:3000"]
+    networks: [public]
+
+  api-gateway:
+    <<: *svc
+    build: { context: ../backend, args: { APP: api-gateway } }
+    ports: ["3000:3000"]
+    environment:
+      REDIS_URL: "redis://:${GATEWAY_REDIS_PASSWORD}@gateway-redis:6379"
+      TRUSTED_PROXIES: ""
+      PAYMENT_LIMIT_TZ: Asia/Tehran
+    depends_on: [gateway-redis]
+    networks: [public, internal, payment]
+
+  gateway-redis:
+    image: redis:7.4-alpine
+    command: ["redis-server", "--requirepass", "${GATEWAY_REDIS_PASSWORD}"]
+    networks: [internal]
+
+  # ---------- domain services (database per service) ----------
+  auth-service:
+    <<: *svc
+    build: { context: ../backend, args: { APP: auth-service } }
+    environment: { DATABASE_URL: "postgres://auth:${AUTH_DB_PASSWORD}@auth-db:5432/auth_db" }
+    depends_on: [auth-db]
+  auth-db:
+    image: postgres:16-alpine
+    environment: { POSTGRES_DB: auth_db, POSTGRES_USER: auth, POSTGRES_PASSWORD: "${AUTH_DB_PASSWORD}" }
+    volumes: [auth-data:/var/lib/postgresql/data]
+    networks: [internal]
+
+  user-service:
+    <<: *svc
+    build: { context: ../backend, args: { APP: user-service } }
+    environment: { DATABASE_URL: "postgres://usr:${USER_DB_PASSWORD}@user-db:5432/user_db" }
+    depends_on: [user-db]
+  user-db:
+    image: postgres:16-alpine
+    environment: { POSTGRES_DB: user_db, POSTGRES_USER: usr, POSTGRES_PASSWORD: "${USER_DB_PASSWORD}" }
+    volumes: [user-data:/var/lib/postgresql/data]
+    networks: [internal]
+
+  kyc-service:
+    <<: *svc
+    build: { context: ../backend, args: { APP: kyc-service } }
+    environment: { DATABASE_URL: "postgres://kyc:${KYC_DB_PASSWORD}@kyc-db:5432/kyc_db" }
+    depends_on: [kyc-db]
+  kyc-db:
+    image: postgres:16-alpine
+    environment: { POSTGRES_DB: kyc_db, POSTGRES_USER: kyc, POSTGRES_PASSWORD: "${KYC_DB_PASSWORD}" }
+    volumes: [kyc-data:/var/lib/postgresql/data]
+    networks: [internal]
+
+  market-service:
+    <<: *svc
+    build: { context: ../backend, args: { APP: market-service } }
+    environment: { DATABASE_URL: "postgres://market:${MARKET_DB_PASSWORD}@market-db:5432/market_db" }
+    depends_on: [market-db]
+  market-db:
+    image: timescale/timescaledb:latest-pg16
+    environment: { POSTGRES_DB: market_db, POSTGRES_USER: market, POSTGRES_PASSWORD: "${MARKET_DB_PASSWORD}" }
+    volumes: [market-data:/var/lib/postgresql/data]
+    networks: [internal]
+
+  order-service:
+    <<: *svc
+    build: { context: ../backend, args: { APP: order-service } }
+    environment: { DATABASE_URL: "postgres://order:${ORDER_DB_PASSWORD}@order-db:5432/order_db" }
+    depends_on: [order-db, kafka]
+    networks: [internal, payment]
+  order-db:
+    image: postgres:16-alpine
+    environment: { POSTGRES_DB: order_db, POSTGRES_USER: order, POSTGRES_PASSWORD: "${ORDER_DB_PASSWORD}" }
+    volumes: [order-data:/var/lib/postgresql/data]
+    networks: [internal]
+
+  matching-engine:
+    <<: *svc
+    build: { context: ../backend, args: { APP: matching-engine } }
+    depends_on: [kafka]
+
+  wallet-service:
+    <<: *svc
+    build: { context: ../backend, args: { APP: wallet-service } }
+    environment: { DATABASE_URL: "postgres://wallet:${WALLET_DB_PASSWORD}@wallet-db:5432/wallet_db" }
+    depends_on: [wallet-db]
+    networks: [internal, payment]
+  wallet-db:
+    image: postgres:16-alpine
+    environment: { POSTGRES_DB: wallet_db, POSTGRES_USER: wallet, POSTGRES_PASSWORD: "${WALLET_DB_PASSWORD}" }
+    volumes: [wallet-data:/var/lib/postgresql/data]
+    networks: [internal]
+
+  # ---------- isolated payment core ----------
+  payment-core:
+    restart: unless-stopped
+    env_file: .env.payment
+    build: { context: ../backend, args: { APP: payment-core } }
+    environment: { DATABASE_URL: "postgres://payment_app:${PAYMENT_DB_PASSWORD}@payment-db:5432/payment_db" }
+    depends_on: [payment-db]
+    networks: [payment]          # not on the internal network, no published ports
+  payment-db:
+    image: postgres:16-alpine
+    environment: { POSTGRES_DB: payment_db, POSTGRES_USER: payment_app, POSTGRES_PASSWORD: "${PAYMENT_DB_PASSWORD}" }
+    volumes: [payment-data:/var/lib/postgresql/data]
+    networks: [payment]
+
+  blockchain-service:
+    <<: *svc
+    build: { context: ../backend, args: { APP: blockchain-service } }
+    environment: { DATABASE_URL: "postgres://chain:${CHAIN_DB_PASSWORD}@chain-db:5432/chain_db" }
+    depends_on: [chain-db, kafka]
+    networks: [internal, payment, public]   # needs egress to blockchain nodes
+  chain-db:
+    image: postgres:16-alpine
+    environment: { POSTGRES_DB: chain_db, POSTGRES_USER: chain, POSTGRES_PASSWORD: "${CHAIN_DB_PASSWORD}" }
+    volumes: [chain-data:/var/lib/postgresql/data]
+    networks: [internal]
+
+  # ---------- supporting ----------
+  notification-service:
+    <<: *svc
+    build: { context: ../backend, args: { APP: notification-service } }
+    environment: { MONGO_URL: "mongodb://notify-db:27017/notify_db" }
+    depends_on: [notify-db]
+  notify-db:
+    image: mongo:7
+    volumes: [notify-data:/data/db]
+    networks: [internal]
+
+  audit-service:
+    <<: *svc
+    build: { context: ../backend, args: { APP: audit-service } }
+    environment: { CLICKHOUSE_URL: "http://audit-db:8123" }
+    depends_on: [audit-db]
+    networks: [internal, payment]
+  audit-db:
+    image: clickhouse/clickhouse-server:24.8
+    volumes: [audit-data:/var/lib/clickhouse]
+    networks: [internal]
+
+  risk-service:
+    <<: *svc
+    build: { context: ../backend, args: { APP: risk-service } }
+    environment: { DATABASE_URL: "postgres://risk:${RISK_DB_PASSWORD}@risk-db:5432/risk_db" }
+    depends_on: [risk-db, kafka]
+  risk-db:
+    image: postgres:16-alpine
+    environment: { POSTGRES_DB: risk_db, POSTGRES_USER: risk, POSTGRES_PASSWORD: "${RISK_DB_PASSWORD}" }
+    volumes: [risk-data:/var/lib/postgresql/data]
+    networks: [internal]
+
+  kafka:
+    image: bitnami/kafka:3.8
+    environment:
+      KAFKA_CFG_NODE_ID: "1"
+      KAFKA_CFG_PROCESS_ROLES: controller,broker
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER
+    networks: [internal, payment]
+
+  vault:
+    image: hashicorp/vault:1.17
+    cap_add: [IPC_LOCK]
+    networks: [internal, payment]
+
+networks:
+  public: {}
+  internal: { internal: true }
+  payment: { internal: true }
+
+volumes:
+  auth-data: {}
+  user-data: {}
+  kyc-data: {}
+  market-data: {}
+  order-data: {}
+  wallet-data: {}
+  payment-data: {}
+  chain-data: {}
+  notify-data: {}
+  audit-data: {}
+  risk-data: {}
