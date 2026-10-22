@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #ffffff; }
+  * { box-sizing: border-box; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+<script src="image-slot.js"></script>
+</helmet>
+<div dir="rtl" style="font-family: 'Vazirmatn', system-ui, sans-serif; color: #14213d; background: #ffffff; min-height: 100vh;">
+
+  <!-- ======= HEADER ======= -->
+  <header data-screen-label="هدر" style="position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(20,33,61,0.08);">
+    <div style="position: relative; max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 72px; display: flex; align-items: center; gap: 32px;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <a href="Nixopay Landing.dc.html" style="display: flex; align-items: center;"><span style="position: relative; display: block; width: 93px; height: 38px; overflow: hidden;"><img src="uploads/nikso-fa.svg" alt="نیکسو" style="position: absolute; left: -3px; top: -32px; width: 110px; height: 96px; max-width: none; display: block;"></span></a>
+      </div>
+      <nav style="display: flex; align-items: center; gap: 26px; font-size: 16.5px; font-weight: 500; color: rgba(20,33,61,0.72); flex: 1; white-space: nowrap;">
+        <div onMouseEnter="{{ openMenu }}" onMouseLeave="{{ closeMenu }}" style="height: 72px; display: flex; align-items: center;">
+          <a href="Nixopay Landing.dc.html#services" style="color: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;" style-hover="color: #14213d;">خدمات
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+          </a>
+          <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position: absolute; top: 72px; right: 24px; left: 24px; background: #ffffff; border: 1px solid rgba(20,33,61,0.1); border-top: none; border-radius: 0 0 20px 20px; box-shadow: 0 30px 70px rgba(20,33,61,0.18); display: grid; grid-template-columns: 280px 1fr; z-index: 60; overflow: hidden;">
+              <div style="border-left: 1px solid rgba(20,33,61,0.08); padding: 18px 0; display: flex; flex-direction: column;">
+                <sc-for list="{{ menuCats }}" as="cat" hint-placeholder-count="7">
+                  <a href="{{ cat.href }}" onMouseEnter="{{ cat.activate }}" style="{{ cat.rowStyle }}">
+                    <svg width="20" height="20" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="{{ cat.iconPath }}"></path></svg>
+                    {{ cat.label }}
+                  </a>
+                </sc-for>
+              </div>
+              <sc-if value="{{ menuHasGroups }}" hint-placeholder-val="{{ false }}">
+                <div style="padding: 30px 40px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 48px; align-content: start;">
+                  <sc-for list="{{ menuGroupCols }}" as="col" hint-placeholder-count="2">
+                    <div style="display: flex; flex-direction: column; gap: 26px;">
+                      <sc-for list="{{ col.groups }}" as="g" hint-placeholder-count="2">
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                          <a href="{{ g.href }}" style="display: flex; align-items: center; gap: 12px; font-size: 15.5px; font-weight: 800; color: #14213d; text-decoration: none; padding: 4px 0 8px;" style-hover="color: #2057cd;">
+                            <sc-if value="{{ g.hasBadge }}" hint-placeholder-val="{{ true }}">
+                              <span style="{{ g.badgeStyle }}">{{ g.badge }}</span>
+                            </sc-if>
+                            <span>{{ g.title }}</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M15 6l-6 6 6 6"></path></svg>
+                          </a>
+                          <sc-for list="{{ g.links }}" as="l" hint-placeholder-count="2">
+                            <a href="{{ l.href }}" style="{{ l.rowStyle }}" style-hover="color: #2057cd;">
+                              <sc-if value="{{ l.hasMark }}" hint-placeholder-val="{{ false }}">
+                                <span role="img" aria-label="{{ l.mark }}" style="{{ l.markStyle }}"></span>
+                              </sc-if>
+                              <span>{{ l.label }}</span>
+                            </a>
+                          </sc-for>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ menuNoGroups }}" hint-placeholder-val="{{ true }}">
+              <div style="padding: 30px 34px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 28px; align-content: start;">
+                <sc-for list="{{ menuItems }}" as="mi" hint-placeholder-count="4">
+                  <a href="{{ mi.href }}" style="font-size: 14px; font-weight: 600; color: rgba(20,33,61,0.75); text-decoration: none; padding: 9px 12px; border-radius: 10px; display: block;" style-hover="background: rgba(47,111,237,0.07); color: #2057cd;">{{ mi.label }}</a>
+                </sc-for>
+              </div>
+              </sc-if>
+            </div>
+          </sc-if>
+        </div>
+        <a href="service-direct.dc.html" style="color: inherit; text-decoration: none;" style-hover="color: #14213d;">پرداخت مستقیم</a>
+        <a href="Nixopay Landing.dc.html#blog" style="color: inherit; text-decoration: none;" style-hover="color: #14213d;">بلاگ</a>
+        <div onMouseEnter="{{ openContact }}" onMouseLeave="{{ closeContact }}" style="position: relative; height: 72px; display: flex; align-items: center;">
+          <a href="contact.dc.html" style="color: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;" style-hover="color: #14213d;">تماس با ما
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+          </a>
+          <sc-if value="{{ contactOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position: absolute; top: 64px; right: -12px; min-width: 240px; background: #ffffff; border: 1px solid rgba(20,33,61,0.1); border-radius: 16px; box-shadow: 0 24px 60px rgba(20,33,61,0.16); padding: 8px 0; display: flex; flex-direction: column; z-index: 60;">
+                <a href="about.dc.html" style="font-size: 14.5px; font-weight: 600; color: rgba(20,33,61,0.75); text-decoration: none; padding: 12px 20px; display: block;" style-hover="background: rgba(47,111,237,0.07); color: #2057cd;">درباره نیکسو</a>
+                <a href="terms.dc.html" style="font-size: 14.5px; font-weight: 600; color: rgba(20,33,61,0.75); text-decoration: none; padding: 12px 20px; display: block;" style-hover="background: rgba(47,111,237,0.07); color: #2057cd;">شرایط و قوانین استفاده از خدمات</a>
+                <a href="contact.dc.html" style="font-size: 14.5px; font-weight: 600; color: rgba(20,33,61,0.75); text-decoration: none; padding: 12px 20px; display: block;" style-hover="background: rgba(47,111,237,0.07); color: #2057cd;">تماس با نیکسو</a>
+            </div>
+          </sc-if>
+        </div>
+      </nav>
+      <div style="position: relative; flex: 1 1 440px; max-width: 440px; min-width: 160px;">
+        <input placeholder="جستجو در خدمات…" style="width: 100%; font-family: inherit; font-size: 14.5px; font-weight: 600; color: #14213d; background: rgba(20,33,61,0.05); border: 1px solid rgba(20,33,61,0.12); border-radius: 12px; padding: 13px 42px 13px 16px; outline: none;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(20,33,61,0.45)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; top: 50%; right: 13px; transform: translateY(-50%);"><path d="M11 4a7 7 0 1 1 0 14 7 7 0 0 1 0-14z M21 21l-4.7-4.7"></path></svg>
+      </div>
+      <a href="auth.dc.html" style="display: inline-flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 700; color: #14213d; text-decoration: none; padding: 10px 6px; white-space: nowrap;" style-hover="color: #2057cd;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="10" r="3.2"></circle><path d="M6.2 18.6c1.3-2.2 3.4-3.4 5.8-3.4s4.5 1.2 5.8 3.4"></path></svg>
+        <span>ورود <span style="opacity: 0.45; font-weight: 400; margin: 0 2px;">|</span> ثبت‌نام</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ======= HERO ======= -->
+  <section data-screen-label="هیرو" style="position: relative; overflow: hidden; background: #14213d;">
+    <div style="position: absolute; width: 620px; height: 620px; border-radius: 50%; background: #2f6fed; opacity: 0.24; filter: blur(120px); top: -220px; left: 4%;"></div>
+    <div style="position: relative; max-width: 1200px; margin: 0 auto; padding: 88px 24px 96px;">
+      <div style="animation: fadeUp 0.7s ease both; max-width: 820px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 22px;">
+        <div style="font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.55); display: flex; flex-wrap: wrap; gap: 8px;"><a href="Nixopay Landing.dc.html" style="color: inherit; text-decoration: none;" style-hover="color: #ffffff;">Nixopay</a><span>/</span><a href="service-payments.dc.html" style="color: inherit; text-decoration: none;" style-hover="color: #ffffff;">پرداخت ارزی</a><span>/</span><span style="color: #a8c4fa;">پرداخت هزینه هتل</span></div>
+        <h1 style="font-size: clamp(32px, 4vw, 48px); line-height: 1.35; font-weight: 900; color: #ffffff; margin: 0; text-wrap: pretty;">پرداخت هزینه هتل</h1>
+        <p style="font-size: 16.5px; line-height: 2.1; color: rgba(255,255,255,0.72); margin: 0; max-width: 620px; text-wrap: pretty;">رزرو و پرداخت هزینه هتل و اقامتگاه در سراسر دنیا از طریق معتبرترین سایت‌های رزرو.</p>
+        <div style="width: 100%; max-width: 680px; display: flex; gap: 8px; background: #ffffff; border-radius: 16px; padding: 8px; margin-top: 8px; box-shadow: 0 30px 60px rgba(0,0,0,0.3);">
+          <input dir="ltr" placeholder="لینک هتل یا رزرو را وارد کنید" style="flex: 1; min-width: 0; font-family: inherit; font-size: 15px; font-weight: 600; color: #14213d; border: none; outline: none; padding: 12px 16px; background: transparent;">
+          <a href="auth.dc.html" style="flex: none; font-size: 15px; font-weight: 800; background: #2f6fed; color: #ffffff; text-decoration: none; padding: 14px 28px; border-radius: 11px; white-space: nowrap;" style-hover="background: #2459c4;">استعلام قیمت</a>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 6px;">
+          <span dir="ltr" style="font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); padding: 7px 15px; border-radius: 99px;">Booking.com</span>
+          <span dir="ltr" style="font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); padding: 7px 15px; border-radius: 99px;">Airbnb</span>
+          <span dir="ltr" style="font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); padding: 7px 15px; border-radius: 99px;">Agoda</span>
+          <span dir="ltr" style="font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); padding: 7px 15px; border-radius: 99px;">Expedia</span>
+          <span dir="ltr" style="font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); padding: 7px 15px; border-radius: 99px;">Hotels.com</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" data-screen-label="سرویس‌ها" style="background: #f2f5fa; padding: 88px 0; scroll-margin-top: 72px;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 40px;">
+        <h2 style="font-size: clamp(26px, 2.6vw, 32px); font-weight: 900; margin: 0; line-height: 1.5;">سایت‌های رزرو هتل</h2>
+        <p style="font-size: 15px; line-height: 2; color: rgba(20,33,61,0.62); margin: 0; max-width: 720px; text-wrap: pretty;">رزرو در معتبرترین سایت‌های اقامتی دنیا با پرداخت ریالی.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 18px;">
+        <div style="background: #ffffff; border: 1px solid rgba(20,33,61,0.08); border-radius: 16px; padding: 22px; display: flex; align-items: center; gap: 14px;">
+          <span dir="ltr" style="flex: none; width: 44px; height: 44px; border-radius: 12px; background: #003580; color: #ffffff; display: grid; place-items: center; font-size: 14px; font-weight: 900; letter-spacing: 0.3px;">B.</span>
+          <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0;"><span dir="ltr" style="font-size: 15.5px; font-weight: 800; text-align: right;">Booking.com</span><span style="font-size: 13px; color: rgba(20,33,61,0.55);">هتل و آپارتمان</span></div>
+        </div>
+        <div style="background: #ffffff; border: 1px solid rgba(20,33,61,0.08); border-radius: 16px; padding: 22px; display: flex; align-items: center; gap: 14px;">
+          <span dir="ltr" style="flex: none; width: 44px; height: 44px; border-radius: 12px; background: #ff5a5f; color: #ffffff; display: grid; place-items: center; font-size: 14px; font-weight: 900; letter-spacing: 0.3px;">A</span>
+          <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0;"><span dir="ltr" style="font-size: 15.5px; font-weight: 800; text-align: right;">Airbnb</span><span style="font-size: 13px; color: rgba(20,33,61,0.55);">اقامتگاه</span></div>
+        </div>
+        <div style="background: #ffffff; border: 1px solid rgba(20,33,61,0.08); border-radius: 16px; padding: 22px; display: flex; align-items: center; gap: 14px;">
+          <span dir="ltr" style="flex: none; width: 44px; height: 44px; border-radius: 12px; background: #5a2d82; color: #ffffff; display: grid; place-items: center; font-size: 14px; font-weight: 900; letter-spacing: 0.3px;">ag</span>
+          <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0;"><span dir="ltr" style="font-size: 15.5px; font-weight: 800; text-align: right;">Agoda</span><span style="font-size: 13px; color: rgba(20,33,61,0.55);">هتل‌های آسیا</span></div>
+        </div>
+        <div style="background: #ffffff; border: 1px solid rgba(20,33,61,0.08); border-radius: 16px; padding: 22px; display: flex; align-items: center; gap: 14px;">
+          <span dir="ltr" style="flex: none; width: 44px; height: 44px; border-radius: 12px; background: #1e243a; color: #ffffff; display: grid; place-items: center; font-size: 14px; font-weight: 900; letter-spacing: 0.3px;">E</span>
+          <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0;"><span dir="ltr" style="font-size: 15.5px; font-weight: 800; text-align: right;">Expedia</span><span style="font-size: 13px; color: rgba(20,33,61,0.55);">هتل و پرواز</span></div>
+        </div>
+        <div style="background: #ffffff; border: 1px solid rgba(20,33,61,0.08); border-radius: 16px; padding: 22px; display: flex; align-items: center; gap: 14px;">
+          <span dir="ltr" style="flex: none; width: 44px; height: 44px; border-radius: 12px; background: #d32f2f; color: #ffffff; display: grid; place-items: center; font-size: 14px; font-weight: 900; letter-spacing: 0.3px;">H</span>
+          <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0;"><span dir="ltr" style="font-size: 15.5px; font-weight: 800; text-align: right;">Hotels.com</span><span style="font-size: 13px; color: rgba(20,33,61,0.55);">هتل</span></div>
+        </div>
+        <div style="background: #ffffff; border: 1px solid rgba(20,33,61,0.08); border-radius: 16px; padding: 22px; display: flex; align-items: center; gap: 14px;">
+          <span dir="ltr" style="flex: none; width: 44px; height: 44px; border-radius: 12px; background: #287dfa; color: #ffffff; display: grid; place-items: center; font-size: 14px; font-weight: 900; letter-spacing: 0.3px;">T</span>
+          <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0;"><span dir="ltr" style="font-size: 15.5px; font-weight: 800; text-align: right;">Trip.com</span><span style="font-size: 13px; color: rgba(20,33,61,0.55);">هتل و سفر</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" data-screen-label="تعرفه و کارمزد" style="background: #ffffff; padding: 88px 0; scroll-margin-top: 72px;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 40px;">
+        <span style="font-size: 13.5px; font-weight: 700; color: #2057cd;">تعرفه‌ها</span>
+        <h2 style="font-size: clamp(26px, 2.6vw, 32px); font-weight: 900; margin: 0; line-height: 1.5;">کارمزد رزرو هتل</h2>
+        <p style="font-size: 15px; line-height: 2; color: rgba(20,33,61,0.62); margin: 0; max-width: 720px; text-wrap: pretty;">مبالغ تقریبی است و قیمت نهایی هنگام ثبت درخواست با نرخ لحظه‌ای ارز محاسبه می‌شود.</p>
+      </div>
+      <div style="background: #ffffff; border: 1px solid rgba(20,33,61,0.08); border-radius: 18px; overflow-x: auto;">
+        <table style="width: 100%; min-width: 620px; border-collapse: collapse; font-size: 14.5px;">
+          <thead><tr style="background: #f2f5fa;"><th style="text-align: right; padding: 16px 24px; font-size: 13px; font-weight: 800; color: rgba(20,33,61,0.6);">مورد پرداخت</th><th style="text-align: right; padding: 16px 24px; font-size: 13px; font-weight: 800; color: rgba(20,33,61,0.6);">هزینه تقریبی</th><th style="text-align: right; padding: 16px 24px; font-size: 13px; font-weight: 800; color: rgba(20,33,61,0.6);">کارمزد نیکسو</th><th style="text-align: right; padding: 16px 24px; font-size: 13px; font-weight: 800; color: rgba(20,33,61,0.6);">زمان انجام</th></tr></thead>
+          <tbody>
+            <tr style="border-top: 1px solid rgba(20,33,61,0.07);"><td style="padding: 18px 24px; font-weight: 800;"><span dir="ltr">رزرو تا €۳۰۰</span></td><td style="padding: 18px 24px; font-weight: 700;">—</td><td style="padding: 18px 24px; color: #2057cd; font-weight: 700;">۵٪</td><td style="padding: 18px 24px; color: rgba(20,33,61,0.62);">۳۰ دقیقه</td></tr>
+            <tr style="border-top: 1px solid rgba(20,33,61,0.07);"><td style="padding: 18px 24px; font-weight: 800;"><span dir="ltr">رزرو €۳۰۰ تا €۱۰۰۰</span></td><td style="padding: 18px 24px; font-weight: 700;">—</td><td style="padding: 18px 24px; color: #2057cd; font-weight: 700;">۴٪</td><td style="padding: 18px 24px; color: rgba(20,33,61,0.62);">۳۰ دقیقه</td></tr>
+            <tr style="border-top: 1px solid rgba(20,33,61,0.07);"><td style="padding: 18px 24px; font-weight: 800;"><span dir="ltr">رزرو بالای €۱۰۰۰</span></td><td style="padding: 18px 24px; font-weight: 700;">—</td><td style="padding: 18px 24px; color: #2057cd; font-weight: 700;">۳٪</td><td style="padding: 18px 24px; color: rgba(20,33,61,0.62);">۱ ساعت</td></tr>
+            <tr style="border-top: 1px solid rgba(20,33,61,0.07);"><td style="padding: 18px 24px; font-weight: 800;">ضمانت رزرو با کارت</td><td style="padding: 18px 24px; font-weight: 700;">—</td><td style="padding: 18px 24px; color: #2057cd; font-weight: 700;">ثابت ۱۵۰ هزار تومان</td><td style="padding: 18px 24px; color: rgba(20,33,61,0.62);">۳۰ دقیقه</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" data-screen-label="مراحل" style="background: #f2f5fa; padding: 88px 0; scroll-margin-top: 72px;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 40px;">
+        <span style="font-size: 13.5px; font-weight: 700; color: #2057cd;">نحوه انجام</span>
+        <h2 style="font-size: clamp(26px, 2.6vw, 32px); font-weight: 900; margin: 0; line-height: 1.5;">مراحل پرداخت هزینه هتل</h2>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 32px;">
+        <div style="display: flex; gap: 18px; align-items: flex-start;">
+          <span style="flex: none; width: 48px; height: 48px; border-radius: 50%; background: #14213d; color: #ffffff; font-size: 18px; font-weight: 900; display: grid; place-items: center;">۱</span>
+          <div style="display: flex; flex-direction: column; gap: 6px;"><div style="font-size: 17px; font-weight: 800;">ثبت درخواست</div><div style="font-size: 14.5px; line-height: 2; color: rgba(20,33,61,0.62); text-wrap: pretty;">نوع پرداخت، مبلغ و لینک یا اطلاعات لازم را در فرم ثبت کنید.</div></div>
+        </div>
+        <div style="display: flex; gap: 18px; align-items: flex-start;">
+          <span style="flex: none; width: 48px; height: 48px; border-radius: 50%; background: #14213d; color: #ffffff; font-size: 18px; font-weight: 900; display: grid; place-items: center;">۲</span>
+          <div style="display: flex; flex-direction: column; gap: 6px;"><div style="font-size: 17px; font-weight: 800;">پرداخت ریالی</div><div style="font-size: 14.5px; line-height: 2; color: rgba(20,33,61,0.62); text-wrap: pretty;">فاکتور تومانی صادر می‌شود و آن را از درگاه بانکی پرداخت می‌کنید.</div></div>
+        </div>
+        <div style="display: flex; gap: 18px; align-items: flex-start;">
+          <span style="flex: none; width: 48px; height: 48px; border-radius: 50%; background: #14213d; color: #ffffff; font-size: 18px; font-weight: 900; display: grid; place-items: center;">۳</span>
+          <div style="display: flex; flex-direction: column; gap: 6px;"><div style="font-size: 17px; font-weight: 800;">انجام پرداخت</div><div style="font-size: 14.5px; line-height: 2; color: rgba(20,33,61,0.62); text-wrap: pretty;">پرداخت ارزی انجام و رسید آن برای شما ارسال می‌شود.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="docs" data-screen-label="مدارک لازم" style="background: #ffffff; padding: 88px 0; scroll-margin-top: 72px;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 40px; align-items: start;">
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 40px;">
+        <span style="font-size: 13.5px; font-weight: 700; color: #2057cd;">پیش از ثبت درخواست</span>
+        <h2 style="font-size: clamp(26px, 2.6vw, 32px); font-weight: 900; margin: 0; line-height: 1.5;">مدارک و اطلاعات لازم</h2>
+        <p style="font-size: 15px; line-height: 2; color: rgba(20,33,61,0.62); margin: 0; max-width: 720px; text-wrap: pretty;">برای رزرو هتل این اطلاعات را آماده کنید.</p>
+      </div>
+        </div>
+        <div style="background: #ffffff; border: 1px solid rgba(20,33,61,0.08); border-radius: 18px; padding: 12px 28px;">
+          <div style="display: flex; gap: 14px; align-items: flex-start; padding: 16px 0;"><span style="flex: none; width: 26px; height: 26px; border-radius: 50%; background: rgba(47,111,237,0.1); color: #2057cd; display: grid; place-items: center; margin-top: 2px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></span><span style="font-size: 15px; line-height: 1.9; font-weight: 600;">لینک هتل یا اقامتگاه موردنظر</span></div>
+          <div style="display: flex; gap: 14px; align-items: flex-start; padding: 16px 0; border-top: 1px solid rgba(20,33,61,0.07);"><span style="flex: none; width: 26px; height: 26px; border-radius: 50%; background: rgba(47,111,237,0.1); color: #2057cd; display: grid; place-items: center; margin-top: 2px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></span><span style="font-size: 15px; line-height: 1.9; font-weight: 600;">تاریخ ورود و خروج و تعداد نفرات</span></div>
+          <div style="display: flex; gap: 14px; align-items: flex-start; padding: 16px 0; border-top: 1px solid rgba(20,33,61,0.07);"><span style="flex: none; width: 26px; height: 26px; border-radius: 50%; background: rgba(47,111,237,0.1); color: #2057cd; display: grid; place-items: center; margin-top: 2px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></span><span style="font-size: 15px; line-height: 1.9; font-weight: 600;">نام مسافران مطابق پاسپورت</span></div>
+          <div style="display: flex; gap: 14px; align-items: flex-start; padding: 16px 0; border-top: 1px solid rgba(20,33,61,0.07);"><span style="flex: none; width: 26px; height: 26px; border-radius: 50%; background: rgba(47,111,237,0.1); color: #2057cd; display: grid; place-items: center; margin-top: 2px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></span><span style="font-size: 15px; line-height: 1.9; font-weight: 600;">ایمیل برای دریافت تأییدیه رزرو</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= CALCULATOR ======= -->
+  <section id="calc" data-screen-label="محاسبه پرداخت" style="max-width: 1200px; margin: 0 auto; padding: 72px 24px; scroll-margin-top: 52px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: 24px 32px;">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <svg width="40" height="40" viewBox="0 0 48 48" fill="none" stroke="#2f6fed" stroke-width="2" style="flex: none;" stroke-linecap="round" stroke-linejoin="round"><path d="M6 14h36a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V16a2 2 0 0 1 2-2z M4 21h40"></path></svg>
+        <div style="font-size: 15px; font-weight: 500; line-height: 1.9; color: rgba(20,33,61,0.75); text-wrap: pretty;">بدون نیاز به کارت اعتباری</div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <svg width="40" height="40" viewBox="0 0 48 48" fill="none" stroke="#2f6fed" stroke-width="2" style="flex: none;" stroke-linecap="round" stroke-linejoin="round"><path d="M24 7a17 17 0 1 1 0 34 17 17 0 0 1 0-34z M24 14v10l7 5"></path></svg>
+        <div style="font-size: 15px; font-weight: 500; line-height: 1.9; color: rgba(20,33,61,0.75); text-wrap: pretty;">پرداخت در سریع‌ترین زمان ممکن</div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <svg width="40" height="40" viewBox="0 0 48 48" fill="none" stroke="#2f6fed" stroke-width="2" style="flex: none;" stroke-linecap="round" stroke-linejoin="round"><path d="M10 26a14 14 0 0 1 28 0 M8 28h6v10H8a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z M40 28h-6v10h6a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2z"></path></svg>
+        <div style="font-size: 15px; font-weight: 500; line-height: 1.9; color: rgba(20,33,61,0.75); text-wrap: pretty;">پشتیبانی ۲۴ ساعته</div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <svg width="40" height="40" viewBox="0 0 48 48" fill="none" stroke="#2f6fed" stroke-width="2" style="flex: none;" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6l14 6v10c0 9-6 16-14 20-8-4-14-11-14-20V12l14-6z M18 24l4 4 8-8"></path></svg>
+        <div style="font-size: 15px; font-weight: 500; line-height: 1.9; color: rgba(20,33,61,0.75); text-wrap: pretty;">مناسب‌ترین کارمزد</div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <svg width="40" height="40" viewBox="0 0 48 48" fill="none" stroke="#2f6fed" stroke-width="2" style="flex: none;" stroke-linecap="round" stroke-linejoin="round"><path d="M24 7a17 17 0 1 1 0 34 17 17 0 0 1 0-34z M16 24l6 6 10-12"></path></svg>
+        <div style="font-size: 15px; font-weight: 500; line-height: 1.9; color: rgba(20,33,61,0.75); text-wrap: pretty;">انجام طی ۵ دقیقه</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="articles" data-screen-label="مقالات مرتبط" style="background: #f2f5fa; padding: 88px 0; scroll-margin-top: 72px;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px;"><div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 40px;">
+        <span style="font-size: 13.5px; font-weight: 700; color: #2057cd;">بلاگ نیکسو</span>
+        <h2 style="font-size: clamp(26px, 2.6vw, 32px); font-weight: 900; margin: 0; line-height: 1.5;">مقالات مرتبط</h2>
+      </div><a href="Nixopay Landing.dc.html#blog" style="display: inline-flex; align-items: center; gap: 8px; font-size: 14.5px; font-weight: 700; color: #14213d; text-decoration: none; margin-bottom: 40px;" style-hover="color: #2057cd;">همه مقالات <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"></path></svg></a></div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 24px;">
+        <a href="Nixopay Landing.dc.html#blog" style="background: #ffffff; border: 1px solid rgba(20,33,61,0.08); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; color: #14213d; transition: box-shadow 0.25s, transform 0.25s;" style-hover="box-shadow: 0 22px 48px rgba(20,33,61,0.1); transform: translateY(-4px);">
+          <div style="aspect-ratio: 16 / 9; background: #e8eefc; display: grid; place-items: center; font-size: 12.5px; font-weight: 700; color: rgba(20,33,61,0.4);">تصویر مقاله</div>
+          <div style="padding: 22px 24px 24px; display: flex; flex-direction: column; gap: 12px;">
+            <span style="font-size: 12.5px; font-weight: 800; color: #2057cd;">سفر</span>
+            <span style="font-size: 16.5px; font-weight: 800; line-height: 1.8; text-wrap: pretty;">چطور از Booking.com با کارت ایرانی رزرو کنیم؟</span>
+            <span style="font-size: 13px; color: rgba(20,33,61,0.5);">۵ دقیقه مطالعه</span>
+          </div>
+        </a>
+        <a href="Nixopay Landing.dc.html#blog" style="background: #ffffff; border: 1px solid rgba(20,33,61,0.08); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; color: #14213d; transition: box-shadow 0.25s, transform 0.25s;" style-hover="box-shadow: 0 22px 48px rgba(20,33,61,0.1); transform: translateY(-4px);">
+          <div style="aspect-ratio: 16 / 9; background: #e8eefc; display: grid; place-items: center; font-size: 12.5px; font-weight: 700; color: rgba(20,33,61,0.4);">تصویر مقاله</div>
+          <div style="padding: 22px 24px 24px; display: flex; flex-direction: column; gap: 12px;">
+            <span style="font-size: 12.5px; font-weight: 800; color: #2057cd;">اقامت</span>
+            <span style="font-size: 16.5px; font-weight: 800; line-height: 1.8; text-wrap: pretty;">مقایسه Airbnb و هتل برای سفرهای کوتاه</span>
+            <span style="font-size: 13px; color: rgba(20,33,61,0.5);">۶ دقیقه مطالعه</span>
+          </div>
+        </a>
+        <a href="Nixopay Landing.dc.html#blog" style="background: #ffffff; border: 1px solid rgba(20,33,61,0.08); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; color: #14213d; transition: box-shadow 0.25s, transform 0.25s;" style-hover="box-shadow: 0 22px 48px rgba(20,33,61,0.1); transform: translateY(-4px);">
+          <div style="aspect-ratio: 16 / 9; background: #e8eefc; display: grid; place-items: center; font-size: 12.5px; font-weight: 700; color: rgba(20,33,61,0.4);">تصویر مقاله</div>
+          <div style="padding: 22px 24px 24px; display: flex; flex-direction: column; gap: 12px;">
+            <span style="font-size: 12.5px; font-weight: 800; color: #2057cd;">راهنما</span>
+            <span style="font-size: 16.5px; font-weight: 800; line-height: 1.8; text-wrap: pretty;">قوانین لغو رزرو و بازگشت وجه</span>
+            <span style="font-size: 13px; color: rgba(20,33,61,0.5);">۴ دقیقه مطالعه</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= FAQ ======= -->
+  <section id="faq" data-screen-label="سوالات متداول" style="background: #ffffff; padding: 96px 0; scroll-margin-top: 72px;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; flex-direction: column; gap: 44px;">
+      <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px;">
+        <span style="font-size: 14px; font-weight: 700; color: #2057cd;">هر سوالی که دارید، از ما بپرسید.</span>
+        <h2 style="font-size: clamp(28px, 2.8vw, 36px); font-weight: 900; line-height: 1.4; margin: 0; color: #14213d;">سوالات متداول</h2>
+      </div>
+      <div style="display: flex; flex-direction: column; border-top: 1px solid rgba(20,33,61,0.09);">
+        <sc-for list="{{ faqs }}" as="faq" hint-placeholder-count="4">
+          <div style="border-bottom: 1px solid rgba(20,33,61,0.09);">
+            <button onClick="{{ faq.toggle }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 30px 0; background: none; border: none; cursor: pointer; font-family: inherit; text-align: right; color: #14213d;">
+              <span style="flex: 1; font-size: 16.5px; font-weight: 700; line-height: 1.8;">{{ faq.q }}</span>
+              <span style="flex: none; width: 36px; display: grid; place-items: center; color: #2f6fed;">
+                <sc-if value="{{ faq.open }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"></path></svg></sc-if>
+                <sc-if value="{{ faq.closed }}" hint-placeholder-val="{{ true }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></sc-if>
+              </span>
+            </button>
+            <sc-if value="{{ faq.open }}" hint-placeholder-val="{{ false }}">
+              <div style="padding: 0 0 30px 60px; font-size: 15px; line-height: 2.1; color: rgba(20,33,61,0.75); text-wrap: pretty;">{{ faq.a }}</div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <div style="position: relative; overflow: hidden; background: #14213d; border-radius: 22px; padding: 48px 44px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;">
+        <div style="position: absolute; width: 320px; height: 320px; border-radius: 50%; background: #2f6fed; opacity: 0.3; filter: blur(80px); top: -180px; left: -60px;"></div>
+        <div style="position: relative; display: flex; align-items: center; gap: 18px;">
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="#6f9bff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M10 26a14 14 0 0 1 28 0 M8 28h6v10H8a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z M40 28h-6v10h6a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2z"></path></svg>
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <span style="font-size: 17px; font-weight: 800; color: #ffffff;">پاسخ سوال خود را پیدا نکردید؟</span>
+            <span style="font-size: 14px; line-height: 1.9; color: rgba(255,255,255,0.65);">کارشناسان ما در سریع‌ترین زمان ممکن با شما تماس می‌گیرند.</span>
+          </div>
+        </div>
+        <a href="contact.dc.html" style="position: relative; font-size: 15px; font-weight: 800; background: #ffffff; color: #14213d; text-decoration: none; padding: 14px 28px; border-radius: 12px; white-space: nowrap;" style-hover="background: #e8eefc;">درخواست مشاوره</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= FOOTER ======= -->
+  <footer data-screen-label="فوتر" style="background: #14213d; color: #ffffff;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 56px 24px 28px;">
+      <div style="display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px; padding-bottom: 40px;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+            <span style="position: relative; display: block; width: 98px; height: 40px; overflow: hidden;"><img src="uploads/nikso-fa.svg" alt="نیکسو" style="position: absolute; left: -3px; top: -34px; width: 116px; height: 101px; max-width: none; display: block; filter: brightness(0) invert(1);"></span>
+          </div>
+          <p style="font-size: 13.5px; line-height: 1.9; color: rgba(255,255,255,0.55); margin: 0; max-width: 280px;">صرافی خدمات پرداخت ارزی؛ خرید از فروشگاه‌های بین‌المللی و پرداخت هزینه‌های خارجی، بدون ارز دیجیتال.</p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px;">
+          <div style="font-weight: 700; margin-bottom: 4px;">خدمات</div>
+          <a href="service-shopping.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">خرید از فروشگاه‌های خارجی</a>
+          <a href="service-payments.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">پرداخت ارزی</a>
+          <a href="service-travel.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">رزرو هتل و بلیت</a>
+          <a href="service-subscriptions.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">اشتراک سرویس‌های آنلاین</a>
+          <a href="service-giftcards.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">گیفت کارت</a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px;">
+          <div style="font-weight: 700; margin-bottom: 4px;">نیکسو</div>
+          <a href="about.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">درباره ما</a>
+          <a href="terms.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">قوانین و مقررات</a>
+          <a href="contact.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">تماس با ما</a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; padding-right: 48px;">
+          <div style="font-weight: 700; margin-bottom: 4px;">تماس</div>
+          <span dir="ltr" style="color: rgba(255,255,255,0.6); text-align: right;">۰۲۱-۹۱۰۰۰۰۰۰</span>
+          <span dir="ltr" style="color: rgba(255,255,255,0.6); text-align: right;">support@nixopay.ir</span>
+          <span style="color: rgba(255,255,255,0.6);">تهران، خیابان ولیعصر</span>
+        </div>
+      </div>
+      <div style="padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.12); font-size: 12.5px; color: rgba(255,255,255,0.45); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+        <span>© ۱۴۰۵ Nixopay — تمامی حقوق محفوظ است.</span>
+        <span>خدمات این مجموعه شامل ارزهای دیجیتال نمی‌شود.</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;feePercent&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 4, &quot;tsType&quot;: &quot;number&quot;, &quot;min&quot;: 1, &quot;max&quot;: 15, &quot;step&quot;: 0.5, &quot;unit&quot;: &quot;%&quot;, &quot;section&quot;: &quot;ماشین‌حساب&quot;}}">
+class Component extends DCLogic {
+  state = { menuOpen: false, menuCat: 0, payType: 'site', currencyId: 'usd', amount: 100, openFaq: -1 };
+
+  menuData() {
+    return [
+      { label: 'خرید کالای خارجی', href: 'service-shopping.dc.html', iconPath: 'M10 16h28v22a2 2 0 0 1-2 2H12a2 2 0 0 1-2-2V16z M17 16v-3a7 7 0 0 1 14 0v3', items: [{ label: 'خرید از آمازون', href: 'service-shopping.dc.html#amazon' }, { label: 'خرید از برندهای محبوب (نایکی، آدیداس، زارا)', href: 'service-shopping.dc.html#brands' }, { label: 'محاسبه قیمت و ثبت سفارش', href: 'service-shopping.dc.html#calc' }, { label: 'نحوه خرید و تحویل در ایران', href: 'service-shopping.dc.html#how' }, { label: 'سوالات متداول خرید', href: 'service-shopping.dc.html#faq' }], groups: [
+        [
+          { title: 'خرید از آمازون', href: 'service-shopping.dc.html#amazon', links: [{ label: 'آمازون امارات', href: 'service-shopping.dc.html#amazon', mark: 'AE' }, { label: 'آمازون انگلیس', href: 'service-shopping.dc.html#amazon', mark: 'UK' }, { label: 'آمازون ترکیه', href: 'service-shopping.dc.html#amazon', mark: 'TR' }, { label: 'آمازون آلمان', href: 'service-shopping.dc.html#amazon', mark: 'DE' }] },
+          { title: 'برندهای اورجینال', href: 'service-shopping.dc.html#brands', links: [{ label: 'نایکی', href: 'service-shopping.dc.html#brands', mark: 'NIKE' }, { label: 'آدیداس', href: 'service-shopping.dc.html#brands', mark: 'adidas' }, { label: 'زارا', href: 'service-shopping.dc.html#brands', mark: 'ZARA' }] },
+        ],
+        [
+          { title: 'فروشگاه‌های دیگر', href: 'service-shopping.dc.html', links: [{ label: 'ای‌بی', href: 'service-shopping.dc.html', mark: 'eBay' }, { label: 'علی‌اکسپرس', href: 'service-shopping.dc.html', mark: 'AliExpress' }, { label: 'ترندیول', href: 'service-shopping.dc.html', mark: 'Trendyol' }, { label: 'ایکیا', href: 'service-shopping.dc.html', mark: 'IKEA' }] },
+          { title: 'ثبت سفارش', href: 'service-shopping.dc.html#calc', links: [{ label: 'محاسبه آنلاین قیمت', href: 'service-shopping.dc.html#calc' }, { label: 'سوالات متداول خرید', href: 'service-shopping.dc.html#faq' }] },
+        ],
+      ] },
+      { label: 'پرداخت ارزی', href: 'service-payments.dc.html', iconPath: 'M13 6h22a2 2 0 0 1 2 2v32a2 2 0 0 1-2 2H13a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z M19 15h10 M19 22h10 M19 31l3 3 7-7', items: [{ label: 'آزمون‌های بین‌المللی (IELTS، TOEFL)', href: 'payment-exams.dc.html' }, { label: 'وقت سفارت و ویزا', href: 'payment-embassy.dc.html' }, { label: 'پرداخت هزینه بلیط', href: 'payment-tickets.dc.html' }] },
+      { label: 'اکانت و اشتراک', href: 'service-subscriptions.dc.html', iconPath: 'M24 7a17 17 0 1 1 0 34 17 17 0 0 1 0-34z M20 17l12 7-12 7v-14z', items: [{ label: 'اکانت هوش مصنوعی متنی (ChatGPT و…)', href: 'service-subscriptions.dc.html#ai-text' }, { label: 'هوش مصنوعی تصویر و صدا', href: 'service-subscriptions.dc.html#ai-media' }, { label: 'ابزار برنامه‌نویسی و API', href: 'service-subscriptions.dc.html#ai-dev' }, { label: 'سایر اشتراک‌ها (ادوبی، گوگل‌پلی، استیم و…)', href: 'service-subscriptions.dc.html#others' }] },
+      { label: 'گیفت کارت', href: 'service-giftcards.dc.html', iconPath: 'M8 16h32v22a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V16z M8 24h32 M24 16v24 M24 16c-8 0-9-8-4-8s4 8 4 8z M24 16c8 0 9-8 4-8s-4 8-4 8z', items: [{ label: 'گیفت کارت بازی (Steam، PlayStation و…)', href: 'service-giftcards.dc.html#gaming' }, { label: 'استریم و اپلیکیشن (Netflix، Spotify و…)', href: 'service-giftcards.dc.html#streaming' }, { label: 'خرید و پرداخت آنلاین (PayPal، Amazon و…)', href: 'service-giftcards.dc.html#shopping' }, { label: 'نحوه سفارش گیفت کارت', href: 'service-giftcards.dc.html#how' }] },
+      { label: 'سفر و اقامت', href: 'service-travel.dc.html', iconPath: 'M12 40V12a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v28 M8 40h32 M18 17h4 M26 17h4 M18 25h4 M26 25h4 M21 40v-7h6v7', items: [{ label: 'بلیت پرواز خارجی', href: 'service-travel.dc.html#flights' }, { label: 'رزرو هتل و اقامت', href: 'service-travel.dc.html#hotels' }, { label: 'ویزا، سفارت و مهاجرت', href: 'service-travel.dc.html#visa' }] },
+    ];
+  }
+
+  currencyData() {
+    return [
+      { id: 'usd', label: 'دلار', rate: 112500 },
+      { id: 'eur', label: 'یورو', rate: 122000 },
+    ];
+  }
+
+  faqData() {
+    return [{"q":"رزرو به نام چه کسی ثبت می‌شود؟","a":"رزرو با نام و مشخصات مسافر انجام می‌شود و تأییدیه رزرو به ایمیل شما ارسال می‌گردد."},{"q":"اگر رزرو را لغو کنم چه می‌شود؟","a":"در رزروهای قابل لغو، مبلغ بازگشتی پس از واریز به حساب ما، به‌صورت ریالی به شما بازگردانده می‌شود."},{"q":"امکان رزرو با حساب Airbnb خودم هست؟","a":"بله، پرداخت در حساب کاربری خود شما انجام می‌شود."},{"q":"هزینه رزرو را چه زمانی پرداخت کنم؟","a":"پس از ثبت درخواست و تأیید قیمت نهایی، فاکتور ریالی صادر و پرداخت انجام می‌شود."}];
+  }
+
+  renderVals() {
+    const cats = this.menuData();
+    const activeCat = Math.min(this.state.menuCat, cats.length - 1);
+    const fa = n => Math.round(n).toLocaleString('fa-IR');
+    const currencies = this.currencyData();
+    const currency = currencies.find(c => c.id === this.state.currencyId) || currencies[0];
+    const feePct = this.props.feePercent ?? 4;
+    const amount = Math.max(0, Number(this.state.amount) || 0);
+    const base = amount * currency.rate;
+    const fee = base * feePct / 100;
+    return {
+      menuOpen: this.state.menuOpen,
+      openMenu: () => this.setState({ menuOpen: true }),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      contactOpen: !!this.state.contactOpen,
+      openContact: () => this.setState({ contactOpen: true }),
+      closeContact: () => this.setState({ contactOpen: false }),
+      menuCats: cats.map((c, i) => ({
+        label: c.label,
+        iconPath: c.iconPath,
+        href: c.href,
+        activate: () => this.setState({ menuCat: i }),
+        rowStyle: {
+          display: 'flex', alignItems: 'center', gap: '11px', padding: '13px 22px',
+          fontSize: '14.5px', fontWeight: i === activeCat ? 800 : 600,
+          color: i === activeCat ? '#2057cd' : 'rgba(20,33,61,0.75)',
+          background: i === activeCat ? 'rgba(47,111,237,0.07)' : 'transparent',
+          borderRight: i === activeCat ? '3px solid #2f6fed' : '3px solid transparent',
+          cursor: 'pointer', whiteSpace: 'nowrap', textDecoration: 'none',
+        },
+      })),
+      menuItems: cats[activeCat].items.map(it => (typeof it === 'string' ? { label: it, href: cats[activeCat].href } : it)),
+      menuHasGroups: !!cats[activeCat].groups,
+      menuNoGroups: !cats[activeCat].groups,
+      menuGroupCols: (cats[activeCat].groups || []).map(col => ({ groups: col.map(g => ({
+        title: g.title, href: g.href, badge: g.badge, hasBadge: !!g.badge,
+        badgeStyle: { flex: 'none', width: '36px', height: '36px', borderRadius: '50%', background: g.badgeBg, color: g.badgeColor, display: 'grid', placeItems: 'center', fontSize: g.badge && g.badge.length > 1 ? '11.5px' : '17px', fontWeight: 900, direction: 'ltr', letterSpacing: '0.5px' },
+        links: g.links.map(l => ({ label: l.label, href: l.href, mark: l.mark, hasMark: !!l.mark, img: ({"AE":"logos/flag-ae.svg","UK":"logos/flag-gb.svg","TR":"logos/flag-tr.svg","DE":"logos/flag-de.svg","NIKE":"logos/nike.svg","adidas":"logos/adidas.svg","ZARA":"logos/zara.svg","eBay":"logos/ebay.svg","AliExpress":"logos/aliexpress.svg","Trendyol":"logos/trendyol.svg","IKEA":"logos/ikea.svg"})[l.mark],
+          rowStyle: { display: 'flex', alignItems: 'center', gap: '12px', fontSize: '14px', fontWeight: 500, color: 'rgba(20,33,61,0.68)', textDecoration: 'none', padding: '8px 0', paddingRight: g.badge ? '48px' : '0' },
+          markStyle: { flex: 'none', width: (['eBay','AliExpress','IKEA','ZARA'].includes(l.mark) ? '36px' : '24px'), height: (['AE','UK','TR','DE'].includes(l.mark) ? '17px' : '24px'), backgroundImage: 'url("' + ({"AE":"logos/flag-ae.svg","UK":"logos/flag-gb.svg","TR":"logos/flag-tr.svg","DE":"logos/flag-de.svg","NIKE":"logos/nike.svg","adidas":"logos/adidas.svg","ZARA":"logos/zara.svg","eBay":"logos/ebay.svg","AliExpress":"logos/aliexpress.svg","Trendyol":"logos/trendyol.svg","IKEA":"logos/ikea.svg"})[l.mark] + '")', backgroundSize: (['AE','UK','TR','DE'].includes(l.mark) ? 'cover' : (l.mark === 'Trendyol' ? '100%' : (['eBay','AliExpress','IKEA','ZARA'].includes(l.mark) ? '92%' : '62%'))), backgroundRepeat: 'no-repeat', backgroundPosition: 'center', borderRadius: (['AE','UK','TR','DE'].includes(l.mark) ? '4px' : '6px'), boxShadow: '0 0 0 1px rgba(20,33,61,0.08)', backgroundColor: '#ffffff' },
+        })),
+      })) })),
+
+      payType: this.state.payType,
+      payTypes: [
+        { id: 'site', label: 'پرداخت در سایت‌های بین‌المللی' },
+        { id: 'exam', label: 'هزینه آزمون (IELTS، TOEFL و…)' },
+        { id: 'embassy', label: 'وقت سفارت و ویزا' },
+        { id: 'uni', label: 'شهریه دانشگاه و اپلیکیشن فی' },
+        { id: 'remit', label: 'حواله ارزی' },
+      ],
+      setPayType: e => this.setState({ payType: e.target.value }),
+      currencyId: this.state.currencyId,
+      currencies: currencies.map(c => ({ id: c.id, label: c.label })),
+      setCurrency: e => this.setState({ currencyId: e.target.value }),
+      amount: this.state.amount,
+      setAmount: e => this.setState({ amount: e.target.value }),
+      currencyLabel: currency.label,
+      rateLabel: fa(currency.rate) + ' تومان',
+      feeLabel: '٪' + fa(feePct),
+      feeAmountLabel: fa(fee) + ' تومان',
+      totalLabel: fa(base + fee) + ' تومان',
+
+      faqs: this.faqData().map((f, i) => ({
+        q: f.q,
+        a: f.a,
+        open: this.state.openFaq === i, closed: !(this.state.openFaq === i),
+        toggle: () => this.setState(s => ({ openFaq: s.openFaq === i ? -1 : i })),
+        chevronStyle: {
+          flex: 'none', width: '26px', height: '26px', borderRadius: '50%',
+          background: 'rgba(47,111,237,0.1)', color: '#2057cd',
+          display: 'grid', placeItems: 'center',
+          transform: this.state.openFaq === i ? 'rotate(180deg)' : 'rotate(0deg)',
+          transition: 'transform 0.2s',
+        },
+      })),
+    };
+  }
+}
+</script>
+</body>
+</html>

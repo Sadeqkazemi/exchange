@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #ffffff; }
+  * { box-sizing: border-box; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</helmet>
+<div dir="rtl" style="font-family: 'Vazirmatn', system-ui, sans-serif; color: #14213d; background: #ffffff; min-height: 100vh;">
+
+  <!-- ======= HEADER ======= -->
+  <header data-screen-label="هدر" style="position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(20,33,61,0.08);">
+    <div style="position: relative; max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 72px; display: flex; align-items: center; gap: 32px;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <a href="Nixopay Landing.dc.html" style="display: flex; align-items: center;"><span style="position: relative; display: block; width: 93px; height: 38px; overflow: hidden;"><img src="uploads/nikso-fa.svg" alt="نیکسو" style="position: absolute; left: -3px; top: -32px; width: 110px; height: 96px; max-width: none; display: block;"></span></a>
+      </div>
+      <nav style="display: flex; align-items: center; gap: 26px; font-size: 16.5px; font-weight: 500; color: rgba(20,33,61,0.72); flex: 1; white-space: nowrap;">
+        <div onMouseEnter="{{ openMenu }}" onMouseLeave="{{ closeMenu }}" style="height: 72px; display: flex; align-items: center;">
+          <a href="Nixopay Landing.dc.html#services" style="color: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;" style-hover="color: #14213d;">خدمات
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+          </a>
+          <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position: absolute; top: 72px; right: 24px; left: 24px; background: #ffffff; border: 1px solid rgba(20,33,61,0.1); border-top: none; border-radius: 0 0 20px 20px; box-shadow: 0 30px 70px rgba(20,33,61,0.18); display: grid; grid-template-columns: 280px 1fr; z-index: 60; overflow: hidden;">
+              <div style="border-left: 1px solid rgba(20,33,61,0.08); padding: 18px 0; display: flex; flex-direction: column;">
+                <sc-for list="{{ menuCats }}" as="cat" hint-placeholder-count="7">
+                  <a href="{{ cat.href }}" onMouseEnter="{{ cat.activate }}" style="{{ cat.rowStyle }}">
+                    <svg width="20" height="20" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="{{ cat.iconPath }}"></path></svg>
+                    {{ cat.label }}
+                  </a>
+                </sc-for>
+              </div>
+              <sc-if value="{{ menuHasGroups }}" hint-placeholder-val="{{ false }}">
+                <div style="padding: 30px 40px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 48px; align-content: start;">
+                  <sc-for list="{{ menuGroupCols }}" as="col" hint-placeholder-count="2">
+                    <div style="display: flex; flex-direction: column; gap: 26px;">
+                      <sc-for list="{{ col.groups }}" as="g" hint-placeholder-count="2">
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                          <a href="{{ g.href }}" style="display: flex; align-items: center; gap: 12px; font-size: 15.5px; font-weight: 800; color: #14213d; text-decoration: none; padding: 4px 0 8px;" style-hover="color: #2057cd;">
+                            <sc-if value="{{ g.hasBadge }}" hint-placeholder-val="{{ true }}">
+                              <span style="{{ g.badgeStyle }}">{{ g.badge }}</span>
+                            </sc-if>
+                            <span>{{ g.title }}</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M15 6l-6 6 6 6"></path></svg>
+                          </a>
+                          <sc-for list="{{ g.links }}" as="l" hint-placeholder-count="2">
+                            <a href="{{ l.href }}" style="{{ l.rowStyle }}" style-hover="color: #2057cd;">
+                              <sc-if value="{{ l.hasMark }}" hint-placeholder-val="{{ false }}">
+                                <span role="img" aria-label="{{ l.mark }}" style="{{ l.markStyle }}"></span>
+                              </sc-if>
+                              <span>{{ l.label }}</span>
+                            </a>
+                          </sc-for>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ menuNoGroups }}" hint-placeholder-val="{{ true }}">
+              <div style="padding: 30px 34px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 28px; align-content: start;">
+                <sc-for list="{{ menuItems }}" as="mi" hint-placeholder-count="4">
+                  <a href="{{ mi.href }}" style="font-size: 14px; font-weight: 600; color: rgba(20,33,61,0.75); text-decoration: none; padding: 9px 12px; border-radius: 10px; display: block;" style-hover="background: rgba(47,111,237,0.07); color: #2057cd;">{{ mi.label }}</a>
+                </sc-for>
+              </div>
+              </sc-if>
+            </div>
+          </sc-if>
+        </div>
+        <a href="service-direct.dc.html" style="color: inherit; text-decoration: none;" style-hover="color: #14213d;">پرداخت مستقیم</a>
+        <a href="Nixopay Landing.dc.html#blog" style="color: inherit; text-decoration: none;" style-hover="color: #14213d;">بلاگ</a>
+        <div onMouseEnter="{{ openContact }}" onMouseLeave="{{ closeContact }}" style="position: relative; height: 72px; display: flex; align-items: center;">
+          <a href="contact.dc.html" style="color: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;" style-hover="color: #14213d;">تماس با ما
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+          </a>
+          <sc-if value="{{ contactOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position: absolute; top: 64px; right: -12px; min-width: 240px; background: #ffffff; border: 1px solid rgba(20,33,61,0.1); border-radius: 16px; box-shadow: 0 24px 60px rgba(20,33,61,0.16); padding: 8px 0; display: flex; flex-direction: column; z-index: 60;">
+                <a href="about.dc.html" style="font-size: 14.5px; font-weight: 600; color: rgba(20,33,61,0.75); text-decoration: none; padding: 12px 20px; display: block;" style-hover="background: rgba(47,111,237,0.07); color: #2057cd;">درباره نیکسو</a>
+                <a href="terms.dc.html" style="font-size: 14.5px; font-weight: 600; color: rgba(20,33,61,0.75); text-decoration: none; padding: 12px 20px; display: block;" style-hover="background: rgba(47,111,237,0.07); color: #2057cd;">شرایط و قوانین استفاده از خدمات</a>
+                <a href="contact.dc.html" style="font-size: 14.5px; font-weight: 600; color: rgba(20,33,61,0.75); text-decoration: none; padding: 12px 20px; display: block;" style-hover="background: rgba(47,111,237,0.07); color: #2057cd;">تماس با نیکسو</a>
+            </div>
+          </sc-if>
+        </div>
+      </nav>
+      <div style="position: relative; flex: 1 1 440px; max-width: 440px; min-width: 160px;">
+        <input placeholder="جستجو در خدمات…" style="width: 100%; font-family: inherit; font-size: 14.5px; font-weight: 600; color: #14213d; background: rgba(20,33,61,0.05); border: 1px solid rgba(20,33,61,0.12); border-radius: 12px; padding: 13px 42px 13px 16px; outline: none;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(20,33,61,0.45)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; top: 50%; right: 13px; transform: translateY(-50%);"><path d="M11 4a7 7 0 1 1 0 14 7 7 0 0 1 0-14z M21 21l-4.7-4.7"></path></svg>
+      </div>
+      <a href="auth.dc.html" style="display: inline-flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 700; color: #14213d; text-decoration: none; padding: 10px 6px; white-space: nowrap;" style-hover="color: #2057cd;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="10" r="3.2"></circle><path d="M6.2 18.6c1.3-2.2 3.4-3.4 5.8-3.4s4.5 1.2 5.8 3.4"></path></svg>
+        <span>ورود <span style="opacity: 0.45; font-weight: 400; margin: 0 2px;">|</span> ثبت‌نام</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ======= HERO ======= -->
+  <section data-screen-label="هیرو" style="background: #14213d; overflow: hidden;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 84px 24px 64px; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: center;">
+      <div style="animation: fadeUp 0.7s ease both;">
+        <div style="font-size: 13px; font-weight: 700; color: #a8c4fa; letter-spacing: 0.5px; margin-bottom: 14px;"><a href="Nixopay Landing.dc.html" style="color: inherit; text-decoration: none;">Nixopay</a> / خدمات / خرید کالای خارجی</div>
+        <h1 style="font-size: 44px; line-height: 1.35; font-weight: 900; color: #ffffff; margin: 0 0 16px; text-wrap: pretty;">خرید کالا از سایت‌های خارجی، تحویل درب منزل شما</h1>
+        <p style="font-size: 16.5px; line-height: 2.1; color: rgba(255,255,255,0.72); margin: 0 0 30px; max-width: 540px; text-wrap: pretty;">از آمازون، ای‌بی، علی‌اکسپرس و برندهای اورجینال خرید کنید؛ پرداخت ریالی، خرید و ارسال کالا با Nixopay.</p>
+        <div style="position: relative; max-width: 460px; margin-bottom: 34px;">
+          <input value="{{ query }}" onChange="{{ setQuery }}" placeholder="نام فروشگاه یا برند را جستجو کنید؛ مثلاً Amazon…" style="width: 100%; font-family: inherit; font-size: 15px; font-weight: 600; color: #14213d; background: #ffffff; border: none; border-radius: 14px; padding: 17px 52px 17px 20px; outline: none;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(20,33,61,0.45)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; top: 50%; right: 18px; transform: translateY(-50%);"><path d="M11 4a7 7 0 1 1 0 14 7 7 0 0 1 0-14z M21 21l-4.7-4.7"></path></svg>
+        </div>
+        <div style="display: flex; gap: 36px;">
+          <div>
+            <div style="font-size: 24px; font-weight: 900; color: #ffffff;">+۲۰ فروشگاه</div>
+            <div style="font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 2px;">آمازون، برندها و مارکت‌ها</div>
+          </div>
+          <div style="width: 1px; background: rgba(255,255,255,0.15);"></div>
+          <div>
+            <div style="font-size: 24px; font-weight: 900; color: #ffffff;">ارسال بیمه‌شده</div>
+            <div style="font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 2px;">تحویل درب منزل در ایران</div>
+          </div>
+          <div style="width: 1px; background: rgba(255,255,255,0.15);"></div>
+          <div>
+            <div style="font-size: 24px; font-weight: 900; color: #ffffff;">قیمت شفاف</div>
+            <div style="font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 2px;">بدون هزینه پنهان</div>
+          </div>
+        </div>
+      </div>
+      <div style="animation: fadeUp 0.7s 0.15s ease both; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; direction: ltr;">
+        <div style="background: rgba(255,255,255,0.07); border: 1px solid rgba(168,196,250,0.22); border-radius: 18px; padding: 22px 14px; display: grid; place-items: center; gap: 8px; transform: translateY(18px);">
+          <div style="width: 42px; height: 42px; border-radius: 12px; background: #ffffff; display: grid; place-items: center;"><img src="https://www.google.com/s2/favicons?domain=amazon.com&sz=64" alt="Amazon" style="width: 24px; height: 24px; object-fit: contain;"></div>
+          <div style="font-size: 13px; font-weight: 800; color: #ffffff;">Amazon</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.07); border: 1px solid rgba(168,196,250,0.22); border-radius: 18px; padding: 22px 14px; display: grid; place-items: center; gap: 8px;">
+          <div style="width: 42px; height: 42px; border-radius: 12px; background: #ffffff; display: grid; place-items: center;"><img src="https://cdn.simpleicons.org/ebay" alt="eBay" style="width: 24px; height: 24px; object-fit: contain;"></div>
+          <div style="font-size: 13px; font-weight: 800; color: #ffffff;">eBay</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.07); border: 1px solid rgba(168,196,250,0.22); border-radius: 18px; padding: 22px 14px; display: grid; place-items: center; gap: 8px; transform: translateY(28px);">
+          <div style="width: 42px; height: 42px; border-radius: 12px; background: #ffffff; display: grid; place-items: center;"><img src="https://cdn.simpleicons.org/aliexpress" alt="AliExpress" style="width: 24px; height: 24px; object-fit: contain;"></div>
+          <div style="font-size: 13px; font-weight: 800; color: #ffffff;">AliExpress</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.07); border: 1px solid rgba(168,196,250,0.22); border-radius: 18px; padding: 22px 14px; display: grid; place-items: center; gap: 8px; transform: translateY(10px);">
+          <div style="width: 42px; height: 42px; border-radius: 12px; background: #ffffff; display: grid; place-items: center;"><img src="https://cdn.simpleicons.org/nike" alt="Nike" style="width: 24px; height: 24px; object-fit: contain;"></div>
+          <div style="font-size: 13px; font-weight: 800; color: #ffffff;">Nike</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.07); border: 1px solid rgba(168,196,250,0.22); border-radius: 18px; padding: 22px 14px; display: grid; place-items: center; gap: 8px; transform: translateY(-8px);">
+          <div style="width: 42px; height: 42px; border-radius: 12px; background: #ffffff; display: grid; place-items: center;"><img src="https://cdn.simpleicons.org/ikea" alt="IKEA" style="width: 24px; height: 24px; object-fit: contain;"></div>
+          <div style="font-size: 13px; font-weight: 800; color: #ffffff;">IKEA</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.07); border: 1px solid rgba(168,196,250,0.22); border-radius: 18px; padding: 22px 14px; display: grid; place-items: center; gap: 8px; transform: translateY(18px);">
+          <div style="width: 42px; height: 42px; border-radius: 12px; background: #ffffff; display: grid; place-items: center;"><img src="https://cdn.simpleicons.org/zara" alt="Zara" style="width: 24px; height: 24px; object-fit: contain;"></div>
+          <div style="font-size: 13px; font-weight: 800; color: #ffffff;">Zara</div>
+        </div>
+      </div>
+    </div>
+    <!-- TAB NAV -->
+    <div style="border-top: 1px solid rgba(255,255,255,0.12);">
+      <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; gap: 8px; overflow-x: auto;">
+        <a href="#amazon" style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.75); text-decoration: none; padding: 16px 18px; border-bottom: 3px solid transparent; white-space: nowrap;" style-hover="color: #ffffff; border-bottom-color: #2f6fed;">فروشگاه‌های آمازون</a>
+        <a href="#brands" style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.75); text-decoration: none; padding: 16px 18px; border-bottom: 3px solid transparent; white-space: nowrap;" style-hover="color: #ffffff; border-bottom-color: #2f6fed;">برندهای اورجینال</a>
+        <a href="#markets" style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.75); text-decoration: none; padding: 16px 18px; border-bottom: 3px solid transparent; white-space: nowrap;" style-hover="color: #ffffff; border-bottom-color: #2f6fed;">فروشگاه‌های دیگر</a>
+        <a href="#how" style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.75); text-decoration: none; padding: 16px 18px; border-bottom: 3px solid transparent; white-space: nowrap;" style-hover="color: #ffffff; border-bottom-color: #2f6fed;">نحوه سفارش</a>
+        <a href="#faq" style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.75); text-decoration: none; padding: 16px 18px; border-bottom: 3px solid transparent; white-space: nowrap;" style-hover="color: #ffffff; border-bottom-color: #2f6fed;">سوالات متداول</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= STORE SECTIONS ======= -->
+  <sc-for list="{{ sections }}" as="sec" hint-placeholder-count="3">
+    <section id="{{ sec.id }}" data-screen-label="{{ sec.title }}" style="max-width: 1200px; margin: 0 auto; padding: 72px 24px 4px; scroll-margin-top: 72px;">
+      <h2 style="font-size: 27px; font-weight: 900; margin: 0 0 10px; line-height: 1.5;">{{ sec.title }}</h2>
+      <p style="font-size: 14.5px; color: rgba(20,33,61,0.6); margin: 0 0 32px 0; line-height: 2;">{{ sec.desc }}</p>
+      <sc-if value="{{ sec.empty }}" hint-placeholder-val="{{ false }}">
+        <div style="font-size: 14px; font-weight: 600; color: rgba(20,33,61,0.5); background: #ffffff; border: 1.5px dashed rgba(20,33,61,0.18); border-radius: 14px; padding: 26px; text-align: center;">موردی با این جستجو یافت نشد — با پشتیبانی در میان بگذارید؛ احتمالاً می‌توانیم تهیه کنیم.</div>
+      </sc-if>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;">
+        <sc-for list="{{ sec.items }}" as="it" hint-placeholder-count="8">
+          <a href="{{ it.buyHref }}" style="position: relative; background: #ffffff; border: 1px solid rgba(20,33,61,0.11); border-radius: 18px; padding: 24px 22px; display: flex; flex-direction: column; gap: 14px; text-decoration: none; color: inherit; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;" style-hover="transform: translateY(-4px); box-shadow: 0 16px 38px rgba(20,33,61,0.12); border-color: #2f6fed;">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <div style="width: 50px; height: 50px; border-radius: 14px; background: #ffffff; border: 1px solid rgba(20,33,61,0.12); display: grid; place-items: center;">
+                <img src="{{ it.icon }}" alt="{{ it.name }}" style="width: 27px; height: 27px; object-fit: contain;">
+              </div>
+              <sc-if value="{{ it.popular }}" hint-placeholder-val="{{ false }}">
+                <span style="font-size: 11px; font-weight: 800; color: #2057cd; background: rgba(47,111,237,0.1); border-radius: 99px; padding: 5px 12px;">پرفروش</span>
+              </sc-if>
+            </div>
+            <div>
+              <div dir="ltr" style="font-size: 18px; font-weight: 800; letter-spacing: -0.2px; text-align: right;">{{ it.name }}</div>
+              <div style="font-size: 13px; font-weight: 600; color: rgba(20,33,61,0.55); margin-top: 4px;">{{ it.label }}</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 800; color: #2057cd; margin-top: auto;">
+              ثبت سفارش
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="transform: scaleX(-1);"><path d="M5 12h14 M13 6l6 6-6 6"></path></svg>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+      <sc-if value="{{ sec.hasMore }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; justify-content: center; margin-top: 28px;">
+          <button onClick="{{ sec.toggle }}" style="font-family: inherit; font-size: 14px; font-weight: 800; color: #2057cd; background: #ffffff; border: 1.5px solid rgba(47,111,237,0.4); border-radius: 99px; padding: 12px 30px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" style-hover="background: rgba(47,111,237,0.06);">
+            {{ sec.toggleLabel }}
+            <span style="{{ sec.chevronStyle }}">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+            </span>
+          </button>
+        </div>
+      </sc-if>
+    </section>
+  </sc-for>
+
+  <!-- ======= PRICE ESTIMATOR ======= -->
+  <section data-screen-label="محاسبه قیمت" style="max-width: 1200px; margin: 0 auto; padding: 76px 24px;">
+    <div style="background: #ffffff; border: 1px solid rgba(20,33,61,0.12); border-radius: 22px; padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; box-shadow: 0 20px 50px rgba(20,33,61,0.07);">
+      <div>
+        <h2 style="font-size: 26px; font-weight: 900; margin: 0 0 12px; line-height: 1.5;">قیمت سفارش را همین حالا حساب کنید</h2>
+        <p style="font-size: 14.5px; line-height: 2.1; color: rgba(20,33,61,0.62); margin: 0;">قیمت کالا را به دلار وارد کنید؛ مبلغ ریالی با نرخ لحظه‌ای دلار و کارمزد Nixopay محاسبه می‌شود. هزینه ارسال پس از وزن‌کشی اعلام می‌شود.</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <label style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; font-weight: 700; color: rgba(20,33,61,0.65);">فروشگاه
+            <select value="{{ calcBrand }}" onChange="{{ setCalcBrand }}" style="font-family: inherit; font-size: 14.5px; font-weight: 700; color: #14213d; background: #ffffff; border: 1.5px solid rgba(20,33,61,0.18); border-radius: 12px; padding: 12px 14px; outline: none; cursor: pointer;">
+              <sc-for list="{{ calcBrands }}" as="b" hint-placeholder-count="5">
+                <option value="{{ b }}">{{ b }}</option>
+              </sc-for>
+            </select>
+          </label>
+          <label style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; font-weight: 700; color: rgba(20,33,61,0.65);">قیمت کالا (دلار)
+            <input dir="ltr" value="{{ calcAmount }}" onChange="{{ setCalcAmount }}" placeholder="100" style="font-family: inherit; font-size: 14.5px; font-weight: 700; color: #14213d; background: #ffffff; border: 1.5px solid rgba(20,33,61,0.18); border-radius: 12px; padding: 12px 14px; outline: none; text-align: left;">
+          </label>
+        </div>
+        <div style="background: #14213d; border-radius: 14px; padding: 20px 24px; display: flex; justify-content: space-between; align-items: center;">
+          <div style="font-size: 13.5px; font-weight: 700; color: rgba(255,255,255,0.65);">مبلغ قابل پرداخت</div>
+          <div style="font-size: 24px; font-weight: 900; color: #ffffff;">{{ calcTotal }} <span style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.6);">تومان</span></div>
+        </div>
+        <div style="font-size: 12px; color: rgba(20,33,61,0.5); line-height: 1.9;">شامل نرخ دلار {{ rateLabel }} تومان و کارمزد {{ feeLabel }}٪ — نرخ نهایی هنگام صدور فاکتور قطعی می‌شود.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= HOW IT WORKS ======= -->
+  <section id="how" data-screen-label="نحوه سفارش" style="background: #14213d; padding: 76px 0; scroll-margin-top: 72px;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+      <div style="text-align: center; margin-bottom: 52px;">
+        <h2 style="font-size: 27px; font-weight: 900; margin: 0 0 10px; line-height: 1.5; color: #ffffff;">خرید کالای خارجی در ۴ قدم</h2>
+        <p style="font-size: 14.5px; color: rgba(255,255,255,0.6); margin: 0; line-height: 2;">از ارسال لینک کالا تا تحویل درب منزل، همه مراحل را Nixopay انجام می‌دهد.</p>
+      </div>
+      <div style="position: relative; margin-bottom: 64px;">
+        <div style="position: absolute; top: 34px; right: 12.5%; left: 12.5%; height: 2px; background: rgba(168,196,250,0.25);"></div>
+        <div style="position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
+          <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0;">
+            <div style="width: 68px; height: 68px; border-radius: 50%; background: #2f6fed; border: 6px solid #14213d; display: grid; place-items: center; margin-bottom: 18px;">
+              <svg width="28" height="28" viewBox="0 0 48 48" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 16h32v22a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V16z M8 24h32 M24 16v24"></path></svg>
+            </div>
+            <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(168,196,250,0.2); border-radius: 16px; padding: 20px 18px; width: 100%;">
+              <div style="font-size: 12px; font-weight: 900; color: #a8c4fa; letter-spacing: 1px; margin-bottom: 8px;">قدم ۱</div>
+              <div style="font-size: 16px; font-weight: 800; color: #ffffff; margin-bottom: 6px;">ارسال لینک کالا</div>
+              <div style="font-size: 13px; line-height: 2; color: rgba(255,255,255,0.6);">لینک کالا را از فروشگاه موردنظر کپی و در پنل ثبت کنید.</div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0;">
+            <div style="width: 68px; height: 68px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 6px solid #14213d; outline: 1px solid rgba(168,196,250,0.3); display: grid; place-items: center; margin-bottom: 18px;">
+              <svg width="28" height="28" viewBox="0 0 48 48" fill="none" stroke="#a8c4fa" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12h28a2 2 0 0 1 2 2v20a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V14a2 2 0 0 1 2-2z M8 18l16 10 16-10"></path></svg>
+            </div>
+            <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(168,196,250,0.2); border-radius: 16px; padding: 20px 18px; width: 100%;">
+              <div style="font-size: 12px; font-weight: 900; color: #a8c4fa; letter-spacing: 1px; margin-bottom: 8px;">قدم ۲</div>
+              <div style="font-size: 16px; font-weight: 800; color: #ffffff; margin-bottom: 6px;">بررسی و پیش‌فاکتور</div>
+              <div style="font-size: 13px; line-height: 2; color: rgba(255,255,255,0.6);">قیمت کالا بررسی و پیش‌فاکتور ریالی صادر می‌شود.</div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0;">
+            <div style="width: 68px; height: 68px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 6px solid #14213d; outline: 1px solid rgba(168,196,250,0.3); display: grid; place-items: center; margin-bottom: 18px;">
+              <svg width="28" height="28" viewBox="0 0 48 48" fill="none" stroke="#a8c4fa" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 14h36a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V16a2 2 0 0 1 2-2z M4 21h40 M10 29h9"></path></svg>
+            </div>
+            <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(168,196,250,0.2); border-radius: 16px; padding: 20px 18px; width: 100%;">
+              <div style="font-size: 12px; font-weight: 900; color: #a8c4fa; letter-spacing: 1px; margin-bottom: 8px;">قدم ۳</div>
+              <div style="font-size: 16px; font-weight: 800; color: #ffffff; margin-bottom: 6px;">پرداخت ریالی</div>
+              <div style="font-size: 13px; line-height: 2; color: rgba(255,255,255,0.6);">مبلغ را از درگاه بانکی یا کیف پول پرداخت کنید.</div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0;">
+            <div style="width: 68px; height: 68px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 6px solid #14213d; outline: 1px solid rgba(168,196,250,0.3); display: grid; place-items: center; margin-bottom: 18px;">
+              <svg width="28" height="28" viewBox="0 0 48 48" fill="none" stroke="#a8c4fa" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22l8 8 16-16 M12 34h24"></path></svg>
+            </div>
+            <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(168,196,250,0.2); border-radius: 16px; padding: 20px 18px; width: 100%;">
+              <div style="font-size: 12px; font-weight: 900; color: #a8c4fa; letter-spacing: 1px; margin-bottom: 8px;">قدم ۴</div>
+              <div style="font-size: 16px; font-weight: 800; color: #ffffff; margin-bottom: 6px;">ارسال و تحویل</div>
+              <div style="font-size: 13px; line-height: 2; color: rgba(255,255,255,0.6);">کالا خریداری و پس از ورود به ایران به آدرس شما ارسال می‌شود.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+        <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(168,196,250,0.2); border-radius: 16px; padding: 22px 24px; display: flex; align-items: center; gap: 14px;">
+          <svg width="24" height="24" viewBox="0 0 48 48" fill="none" stroke="#a8c4fa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M24 6l14 6v10c0 9-6 16-14 20-8-4-14-11-14-20V12l14-6z M18 24l4 4 8-8"></path></svg>
+          <div style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.85); line-height: 1.9;">خرید مستقیم از فروشگاه رسمی با فاکتور خرید</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(168,196,250,0.2); border-radius: 16px; padding: 22px 24px; display: flex; align-items: center; gap: 14px;">
+          <svg width="24" height="24" viewBox="0 0 48 48" fill="none" stroke="#a8c4fa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M24 7a17 17 0 1 1 0 34 17 17 0 0 1 0-34z M24 14v10l7 5"></path></svg>
+          <div style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.85); line-height: 1.9;">پیگیری مرحله‌به‌مرحله سفارش در پنل</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(168,196,250,0.2); border-radius: 16px; padding: 22px 24px; display: flex; align-items: center; gap: 14px;">
+          <svg width="24" height="24" viewBox="0 0 48 48" fill="none" stroke="#a8c4fa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M10 26a14 14 0 0 1 28 0 M8 28h6v10H8a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z M40 28h-6v10h6a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2z"></path></svg>
+          <div style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.85); line-height: 1.9;">پشتیبانی ۲۴ ساعته، ۷ روز هفته</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= FAQ ======= -->
+  <section id="faq" data-screen-label="سوالات متداول" style="background: #ffffff; padding: 96px 0; scroll-margin-top: 72px;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; flex-direction: column; gap: 44px;">
+      <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px;">
+        <span style="font-size: 14px; font-weight: 700; color: #2057cd;">هر سوالی که دارید، از ما بپرسید.</span>
+        <h2 style="font-size: clamp(28px, 2.8vw, 36px); font-weight: 900; line-height: 1.4; margin: 0; color: #14213d;">سوالات متداول</h2>
+      </div>
+      <div style="display: flex; flex-direction: column; border-top: 1px solid rgba(20,33,61,0.09);">
+        <sc-for list="{{ faqs }}" as="faq" hint-placeholder-count="4">
+          <div style="border-bottom: 1px solid rgba(20,33,61,0.09);">
+            <button onClick="{{ faq.toggle }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 30px 0; background: none; border: none; cursor: pointer; font-family: inherit; text-align: right; color: #14213d;">
+              <span style="flex: 1; font-size: 16.5px; font-weight: 700; line-height: 1.8;">{{ faq.q }}</span>
+              <span style="flex: none; width: 36px; display: grid; place-items: center; color: #2f6fed;">
+                <sc-if value="{{ faq.open }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"></path></svg></sc-if>
+                <sc-if value="{{ faq.closed }}" hint-placeholder-val="{{ true }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></sc-if>
+              </span>
+            </button>
+            <sc-if value="{{ faq.open }}" hint-placeholder-val="{{ false }}">
+              <div style="padding: 0 0 30px 60px; font-size: 15px; line-height: 2.1; color: rgba(20,33,61,0.75); text-wrap: pretty;">{{ faq.a }}</div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <div style="position: relative; overflow: hidden; background: #14213d; border-radius: 22px; padding: 48px 44px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;">
+        <div style="position: absolute; width: 320px; height: 320px; border-radius: 50%; background: #2f6fed; opacity: 0.3; filter: blur(80px); top: -180px; left: -60px;"></div>
+        <div style="position: relative; display: flex; align-items: center; gap: 18px;">
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="#6f9bff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M10 26a14 14 0 0 1 28 0 M8 28h6v10H8a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z M40 28h-6v10h6a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2z"></path></svg>
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <span style="font-size: 17px; font-weight: 800; color: #ffffff;">پاسخ سوال خود را پیدا نکردید؟</span>
+            <span style="font-size: 14px; line-height: 1.9; color: rgba(255,255,255,0.65);">کارشناسان ما در سریع‌ترین زمان ممکن با شما تماس می‌گیرند.</span>
+          </div>
+        </div>
+        <a href="contact.dc.html" style="position: relative; font-size: 15px; font-weight: 800; background: #ffffff; color: #14213d; text-decoration: none; padding: 14px 28px; border-radius: 12px; white-space: nowrap;" style-hover="background: #e8eefc;">درخواست مشاوره</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= CTA ======= -->
+  <section data-screen-label="بنر" style="max-width: 1200px; margin: 0 auto; padding: 0 24px 80px;">
+    <div style="position: relative; overflow: hidden; background: linear-gradient(115deg, #2f6fed 0%, #1d4fc4 100%); border-radius: 22px; padding: 46px 44px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; color: #ffffff;">
+      <div style="position: absolute; inset: 0; opacity: 0.16; background-image: radial-gradient(circle at 85% 20%, #ffffff 0, transparent 40%), radial-gradient(circle at 15% 90%, #ffffff 0, transparent 35%);"></div>
+      <h2 style="position: relative; font-size: 27px; font-weight: 900; margin: 0; line-height: 1.5;">فروشگاهی که می‌خواهید در فهرست نیست؟</h2>
+      <p style="position: relative; font-size: 14.5px; color: rgba(255,255,255,0.78); margin: 0; max-width: 540px;">لینک کالا را از هر سایت خارجی برای ما بفرستید؛ کارشناسان Nixopay امکان خرید و ارسال را بررسی می‌کنند.</p>
+      <div style="position: relative; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;">
+        <a href="Nixopay Landing.dc.html#contact" style="font-size: 15px; font-weight: 800; background: #ffffff; color: #14213d; text-decoration: none; padding: 14px 34px; border-radius: 13px; white-space: nowrap;" style-hover="background: rgba(255,255,255,0.88);">استعلام قیمت</a>
+        <a href="Nixopay Landing.dc.html#contact" style="font-size: 15px; font-weight: 800; color: #ffffff; border: 1.5px solid rgba(255,255,255,0.5); text-decoration: none; padding: 14px 30px; border-radius: 13px; white-space: nowrap;" style-hover="background: rgba(255,255,255,0.12);">تماس با پشتیبانی</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= FOOTER ======= -->
+  <footer data-screen-label="فوتر" style="background: #14213d; color: #ffffff;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 56px 24px 28px;">
+      <div style="display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px; padding-bottom: 40px;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+            <span style="position: relative; display: block; width: 98px; height: 40px; overflow: hidden;"><img src="uploads/nikso-fa.svg" alt="نیکسو" style="position: absolute; left: -3px; top: -34px; width: 116px; height: 101px; max-width: none; display: block; filter: brightness(0) invert(1);"></span>
+          </div>
+          <p style="font-size: 13.5px; line-height: 1.9; color: rgba(255,255,255,0.55); margin: 0; max-width: 280px;">صرافی خدمات پرداخت ارزی؛ خرید از فروشگاه‌های بین‌المللی و پرداخت هزینه‌های خارجی، بدون ارز دیجیتال.</p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px;">
+          <div style="font-weight: 700; margin-bottom: 4px;">خدمات</div>
+          <a href="service-shopping.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">خرید از فروشگاه‌های خارجی</a>
+          <a href="service-payments.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">پرداخت ارزی</a>
+          <a href="service-travel.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">رزرو هتل و بلیت</a>
+          <a href="service-subscriptions.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">اشتراک سرویس‌های آنلاین</a>
+          <a href="service-giftcards.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">گیفت کارت</a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px;">
+          <div style="font-weight: 700; margin-bottom: 4px;">نیکسو</div>
+          <a href="about.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">درباره ما</a>
+          <a href="terms.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">قوانین و مقررات</a>
+          <a href="contact.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">تماس با ما</a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; padding-right: 48px;">
+          <div style="font-weight: 700; margin-bottom: 4px;">تماس</div>
+          <span dir="ltr" style="color: rgba(255,255,255,0.6); text-align: right;">۰۲۱-۹۱۰۰۰۰۰۰</span>
+          <span dir="ltr" style="color: rgba(255,255,255,0.6); text-align: right;">support@nixopay.ir</span>
+          <span style="color: rgba(255,255,255,0.6);">تهران، خیابان ولیعصر</span>
+        </div>
+      </div>
+      <div style="padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.12); font-size: 12.5px; color: rgba(255,255,255,0.45); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+        <span>© ۱۴۰۵ Nixopay — تمامی حقوق محفوظ است.</span>
+        <span>خدمات این مجموعه شامل ارزهای دیجیتال نمی‌شود.</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;usdRate&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 106000, &quot;tsType&quot;: &quot;number&quot;, &quot;unit&quot;: &quot; تومان&quot;, &quot;section&quot;: &quot;محاسبه قیمت&quot;}, &quot;feePercent&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 5, &quot;tsType&quot;: &quot;number&quot;, &quot;min&quot;: 1, &quot;max&quot;: 15, &quot;step&quot;: 1, &quot;unit&quot;: &quot;٪&quot;, &quot;section&quot;: &quot;محاسبه قیمت&quot;}}">
+class Component extends DCLogic {
+  state = { menuOpen: false, menuCat: 4, expanded: {}, query: '', openFaq: -1, calcBrand: 'Amazon US', calcAmount: '100' };
+
+  menuData() {
+    return [
+      { label: 'خرید کالای خارجی', href: 'service-shopping.dc.html', iconPath: 'M10 16h28v22a2 2 0 0 1-2 2H12a2 2 0 0 1-2-2V16z M17 16v-3a7 7 0 0 1 14 0v3', items: [{ label: 'خرید از آمازون', href: 'service-shopping.dc.html#amazon' }, { label: 'خرید از برندهای محبوب (نایکی، آدیداس، زارا)', href: 'service-shopping.dc.html#brands' }, { label: 'محاسبه قیمت و ثبت سفارش', href: 'service-shopping.dc.html#calc' }, { label: 'نحوه خرید و تحویل در ایران', href: 'service-shopping.dc.html#how' }, { label: 'سوالات متداول خرید', href: 'service-shopping.dc.html#faq' }], groups: [
+        [
+          { title: 'خرید از آمازون', href: 'service-shopping.dc.html#amazon', links: [{ label: 'آمازون امارات', href: 'service-shopping.dc.html#amazon', mark: 'AE' }, { label: 'آمازون انگلیس', href: 'service-shopping.dc.html#amazon', mark: 'UK' }, { label: 'آمازون ترکیه', href: 'service-shopping.dc.html#amazon', mark: 'TR' }, { label: 'آمازون آلمان', href: 'service-shopping.dc.html#amazon', mark: 'DE' }] },
+          { title: 'برندهای اورجینال', href: 'service-shopping.dc.html#brands', links: [{ label: 'نایکی', href: 'service-shopping.dc.html#brands', mark: 'NIKE' }, { label: 'آدیداس', href: 'service-shopping.dc.html#brands', mark: 'adidas' }, { label: 'زارا', href: 'service-shopping.dc.html#brands', mark: 'ZARA' }] },
+        ],
+        [
+          { title: 'فروشگاه‌های دیگر', href: 'service-shopping.dc.html', links: [{ label: 'ای‌بی', href: 'service-shopping.dc.html', mark: 'eBay' }, { label: 'علی‌اکسپرس', href: 'service-shopping.dc.html', mark: 'AliExpress' }, { label: 'ترندیول', href: 'service-shopping.dc.html', mark: 'Trendyol' }, { label: 'ایکیا', href: 'service-shopping.dc.html', mark: 'IKEA' }] },
+          { title: 'ثبت سفارش', href: 'service-shopping.dc.html#calc', links: [{ label: 'محاسبه آنلاین قیمت', href: 'service-shopping.dc.html#calc' }, { label: 'سوالات متداول خرید', href: 'service-shopping.dc.html#faq' }] },
+        ],
+      ] },
+      { label: 'پرداخت ارزی', href: 'service-payments.dc.html', iconPath: 'M13 6h22a2 2 0 0 1 2 2v32a2 2 0 0 1-2 2H13a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z M19 15h10 M19 22h10 M19 31l3 3 7-7', items: [{ label: 'آزمون‌های بین‌المللی (IELTS، TOEFL)', href: 'payment-exams.dc.html' }, { label: 'وقت سفارت و ویزا', href: 'payment-embassy.dc.html' }, { label: 'پرداخت هزینه بلیط', href: 'payment-tickets.dc.html' }] },
+      { label: 'اکانت و اشتراک', href: 'service-subscriptions.dc.html', iconPath: 'M24 7a17 17 0 1 1 0 34 17 17 0 0 1 0-34z M20 17l12 7-12 7v-14z', items: [{ label: 'اکانت هوش مصنوعی متنی (ChatGPT و…)', href: 'service-subscriptions.dc.html#ai-text' }, { label: 'هوش مصنوعی تصویر و صدا', href: 'service-subscriptions.dc.html#ai-media' }, { label: 'ابزار برنامه‌نویسی و API', href: 'service-subscriptions.dc.html#ai-dev' }, { label: 'سایر اشتراک‌ها (ادوبی، گوگل‌پلی، استیم و…)', href: 'service-subscriptions.dc.html#others' }] },
+      { label: 'گیفت کارت', href: 'service-giftcards.dc.html', iconPath: 'M8 16h32v22a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V16z M8 24h32 M24 16v24 M24 16c-8 0-9-8-4-8s4 8 4 8z M24 16c8 0 9-8 4-8s-4 8-4 8z', items: [{ label: 'گیفت کارت بازی (Steam، PlayStation و…)', href: 'service-giftcards.dc.html#gaming' }, { label: 'استریم و اپلیکیشن (Netflix، Spotify و…)', href: 'service-giftcards.dc.html#streaming' }, { label: 'خرید و پرداخت آنلاین (PayPal، Amazon و…)', href: 'service-giftcards.dc.html#shopping' }, { label: 'نحوه سفارش گیفت کارت', href: 'service-giftcards.dc.html#how' }] },
+      { label: 'سفر و اقامت', href: 'service-travel.dc.html', iconPath: 'M12 40V12a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v28 M8 40h32 M18 17h4 M26 17h4 M18 25h4 M26 25h4 M21 40v-7h6v7', items: [{ label: 'بلیت پرواز خارجی', href: 'service-travel.dc.html#flights' }, { label: 'رزرو هتل و اقامت', href: 'service-travel.dc.html#hotels' }, { label: 'ویزا، سفارت و مهاجرت', href: 'service-travel.dc.html#visa' }] },
+    ];
+  }
+
+  sectionData() {
+    return [
+      {
+        id: 'amazon',
+        title: 'فروشگاه‌های آمازون',
+        desc: 'خرید از آمازون کشورهای مختلف با پرداخت ریالی و ارسال به ایران:',
+        items: [
+          { name: 'Amazon US', label: 'آمازون آمریکا', domain: 'amazon.com', popular: true, icon: 'https://www.google.com/s2/favicons?domain=amazon.com&sz=64' },
+          { name: 'Amazon UAE', label: 'آمازون امارات', domain: 'amazon.ae', popular: true, icon: 'https://www.google.com/s2/favicons?domain=amazon.ae&sz=64' },
+          { name: 'Amazon UK', label: 'آمازون انگلستان', domain: 'amazon.co.uk', icon: 'https://www.google.com/s2/favicons?domain=amazon.co.uk&sz=64' },
+          { name: 'Amazon DE', label: 'آمازون آلمان', domain: 'amazon.de', icon: 'https://www.google.com/s2/favicons?domain=amazon.de&sz=64' },
+          { name: 'Amazon TR', label: 'آمازون ترکیه', domain: 'amazon.com.tr', icon: 'https://www.google.com/s2/favicons?domain=amazon.com.tr&sz=64' },
+          { name: 'Amazon FR', label: 'آمازون فرانسه', domain: 'amazon.fr', icon: 'https://www.google.com/s2/favicons?domain=amazon.fr&sz=64' },
+        ],
+      },
+      {
+        id: 'brands',
+        title: 'برندهای اورجینال',
+        desc: 'خرید مستقیم از فروشگاه رسمی برندهای محبوب:',
+        items: [
+          { name: 'Nike', label: 'نایکی', domain: 'nike.com', popular: true, icon: 'https://www.google.com/s2/favicons?domain=nike.com&sz=64' },
+          { name: 'Adidas', label: 'آدیداس', domain: 'adidas.com', popular: true, icon: 'https://www.google.com/s2/favicons?domain=adidas.com&sz=64' },
+          { name: 'Zara', label: 'زارا', domain: 'zara.com', icon: 'https://www.google.com/s2/favicons?domain=zara.com&sz=64' },
+          { name: 'H&M', label: 'اچ‌اند‌ام', domain: 'hm.com', icon: 'https://www.google.com/s2/favicons?domain=hm.com&sz=64' },
+          { name: 'Apple', label: 'اپل استور', domain: 'apple.com', icon: 'https://www.google.com/s2/favicons?domain=apple.com&sz=64' },
+          { name: 'Sephora', label: 'سفورا', domain: 'sephora.com', icon: 'https://www.google.com/s2/favicons?domain=sephora.com&sz=64' },
+          { name: 'Lego', label: 'لگو', domain: 'lego.com', icon: 'https://www.google.com/s2/favicons?domain=lego.com&sz=64' },
+          { name: 'Puma', label: 'پوما', domain: 'puma.com', icon: 'https://www.google.com/s2/favicons?domain=puma.com&sz=64' },
+        ],
+      },
+      {
+        id: 'markets',
+        title: 'فروشگاه‌های دیگر',
+        desc: 'مارکت‌پلیس‌ها و فروشگاه‌های اینترنتی بین‌المللی:',
+        items: [
+          { name: 'eBay', label: 'ای‌بی', domain: 'ebay.com', popular: true, icon: 'https://www.google.com/s2/favicons?domain=ebay.com&sz=64' },
+          { name: 'AliExpress', label: 'علی‌اکسپرس', domain: 'aliexpress.com', popular: true, icon: 'https://www.google.com/s2/favicons?domain=aliexpress.com&sz=64' },
+          { name: 'Trendyol', label: 'ترندیول', domain: 'trendyol.com', icon: 'https://www.google.com/s2/favicons?domain=trendyol.com&sz=64' },
+          { name: 'IKEA', label: 'ایکیا', domain: 'ikea.com', icon: 'https://www.google.com/s2/favicons?domain=ikea.com&sz=64' },
+          { name: 'Etsy', label: 'اتسی', domain: 'etsy.com', icon: 'https://www.google.com/s2/favicons?domain=etsy.com&sz=64' },
+          { name: 'Walmart', label: 'والمارت', domain: 'walmart.com', icon: 'https://www.google.com/s2/favicons?domain=walmart.com&sz=64' },
+          { name: 'Noon', label: 'نون', domain: 'noon.com', icon: 'https://www.google.com/s2/favicons?domain=noon.com&sz=64' },
+          { name: 'Shein', label: 'شین', domain: 'shein.com', icon: 'https://www.google.com/s2/favicons?domain=shein.com&sz=64' },
+        ],
+      },
+    ];
+  }
+
+  faqData() {
+    return [
+      { q: 'از چه سایت‌هایی می‌توانم خرید کنم؟', a: 'از آمازون، ای‌بی، علی‌اکسپرس، فروشگاه رسمی برندها و بیشتر فروشگاه‌های اینترنتی خارجی. اگر فروشگاه موردنظر در فهرست نیست، لینک کالا را ثبت کنید تا بررسی شود.' },
+      { q: 'قیمت نهایی چگونه محاسبه می‌شود؟', a: 'قیمت کالا با نرخ لحظه‌ای ارز و کارمزد شفاف Nixopay به ریال تبدیل می‌شود. هزینه ارسال بین‌المللی پس از وزن‌کشی کالا اعلام و جداگانه دریافت می‌شود.' },
+      { q: 'تحویل کالا چقدر زمان می‌برد؟', a: 'بسته به فروشگاه و کشور مبدأ، معمولاً بین ۱۴ تا ۲۵ روز کاری پس از خرید کالا به دست شما می‌رسد.' },
+      { q: 'آیا امکان پیگیری سفارش وجود دارد؟', a: 'بله. همه مراحل خرید، ارسال و ورود کالا به ایران در بخش سفارش‌ها و پیگیری پنل کاربری‌تان نمایش داده می‌شود.' },
+      { q: 'اگر کالا آسیب‌دیده یا ناقص برسد چه می‌شود؟', a: 'ارسال‌ها بیمه شده‌اند. در صورت بروز مشکل، پشتیبانی موضوع را با فروشگاه و شرکت حمل پیگیری و هزینه را بازگشت یا کالا را جایگزین می‌کند.' },
+    ];
+  }
+
+  renderVals() {
+    const cats = this.menuData();
+    const activeCat = Math.min(this.state.menuCat, cats.length - 1);
+    const visible = this.props.initialVisible ?? 8;
+    const q = this.state.query.trim().toLowerCase();
+    const rate = this.props.usdRate ?? 106000;
+    const feePct = this.props.feePercent ?? 5;
+    const amount = parseInt(this.state.calcAmount, 10) || 0;
+    const total = Math.round(amount * rate * (1 + feePct / 100));
+    const fa = n => n.toLocaleString('fa-IR');
+
+    return {
+      menuOpen: this.state.menuOpen,
+      openMenu: () => this.setState({ menuOpen: true }),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      contactOpen: !!this.state.contactOpen,
+      openContact: () => this.setState({ contactOpen: true }),
+      closeContact: () => this.setState({ contactOpen: false }),
+      menuCats: cats.map((c, i) => ({
+        label: c.label,
+        iconPath: c.iconPath,
+        href: c.href,
+        activate: () => this.setState({ menuCat: i }),
+        rowStyle: {
+          display: 'flex', alignItems: 'center', gap: '11px', padding: '13px 22px',
+          fontSize: '14.5px', fontWeight: i === activeCat ? 800 : 600,
+          color: i === activeCat ? '#2057cd' : 'rgba(20,33,61,0.75)',
+          background: i === activeCat ? 'rgba(47,111,237,0.07)' : 'transparent',
+          borderRight: i === activeCat ? '3px solid #2f6fed' : '3px solid transparent',
+          cursor: 'pointer', whiteSpace: 'nowrap', textDecoration: 'none',
+        },
+      })),
+      menuItems: cats[activeCat].items.map(it => (typeof it === 'string' ? { label: it, href: cats[activeCat].href } : it)),
+      menuHasGroups: !!cats[activeCat].groups,
+      menuNoGroups: !cats[activeCat].groups,
+      menuGroupCols: (cats[activeCat].groups || []).map(col => ({ groups: col.map(g => ({
+        title: g.title, href: g.href, badge: g.badge, hasBadge: !!g.badge,
+        badgeStyle: { flex: 'none', width: '36px', height: '36px', borderRadius: '50%', background: g.badgeBg, color: g.badgeColor, display: 'grid', placeItems: 'center', fontSize: g.badge && g.badge.length > 1 ? '11.5px' : '17px', fontWeight: 900, direction: 'ltr', letterSpacing: '0.5px' },
+        links: g.links.map(l => ({ label: l.label, href: l.href, mark: l.mark, hasMark: !!l.mark, img: ({"AE":"logos/flag-ae.svg","UK":"logos/flag-gb.svg","TR":"logos/flag-tr.svg","DE":"logos/flag-de.svg","NIKE":"logos/nike.svg","adidas":"logos/adidas.svg","ZARA":"logos/zara.svg","eBay":"logos/ebay.svg","AliExpress":"logos/aliexpress.svg","Trendyol":"logos/trendyol.svg","IKEA":"logos/ikea.svg"})[l.mark],
+          rowStyle: { display: 'flex', alignItems: 'center', gap: '12px', fontSize: '14px', fontWeight: 500, color: 'rgba(20,33,61,0.68)', textDecoration: 'none', padding: '8px 0', paddingRight: g.badge ? '48px' : '0' },
+          markStyle: { flex: 'none', width: (['eBay','AliExpress','IKEA','ZARA'].includes(l.mark) ? '36px' : '24px'), height: (['AE','UK','TR','DE'].includes(l.mark) ? '17px' : '24px'), backgroundImage: 'url("' + ({"AE":"logos/flag-ae.svg","UK":"logos/flag-gb.svg","TR":"logos/flag-tr.svg","DE":"logos/flag-de.svg","NIKE":"logos/nike.svg","adidas":"logos/adidas.svg","ZARA":"logos/zara.svg","eBay":"logos/ebay.svg","AliExpress":"logos/aliexpress.svg","Trendyol":"logos/trendyol.svg","IKEA":"logos/ikea.svg"})[l.mark] + '")', backgroundSize: (['AE','UK','TR','DE'].includes(l.mark) ? 'cover' : (l.mark === 'Trendyol' ? '100%' : (['eBay','AliExpress','IKEA','ZARA'].includes(l.mark) ? '92%' : '62%'))), backgroundRepeat: 'no-repeat', backgroundPosition: 'center', borderRadius: (['AE','UK','TR','DE'].includes(l.mark) ? '4px' : '6px'), boxShadow: '0 0 0 1px rgba(20,33,61,0.08)', backgroundColor: '#ffffff' },
+        })),
+      })) })),
+
+      query: this.state.query,
+      setQuery: e => this.setState({ query: e.target.value }),
+
+      calcBrands: ['Amazon US', 'Amazon UAE', 'Amazon UK', 'Amazon DE', 'eBay', 'AliExpress', 'Nike', 'Adidas', 'IKEA'],
+      calcBrand: this.state.calcBrand,
+      setCalcBrand: e => this.setState({ calcBrand: e.target.value }),
+      calcAmount: this.state.calcAmount,
+      setCalcAmount: e => this.setState({ calcAmount: e.target.value.replace(/[^\d.]/g, '') }),
+      calcTotal: fa(total),
+      rateLabel: fa(rate),
+      feeLabel: fa(feePct),
+
+      sections: this.sectionData().map(sec => {
+        const matched = q ? sec.items.filter(it => (it.name + ' ' + it.label).toLowerCase().includes(q)) : sec.items;
+        const open = !!this.state.expanded[sec.id];
+        const items = (q || open) ? matched : matched.slice(0, visible);
+        return {
+          id: sec.id,
+          title: sec.title,
+          desc: sec.desc,
+          empty: matched.length === 0,
+          items: items.map(it => ({ name: it.name, label: it.label, popular: !!it.popular, icon: it.icon,
+            buyHref: 'auth.dc.html?next=' + encodeURIComponent('panel.dc.html?lo=' + encodeURIComponent(it.domain)) })),
+          hasMore: !q && matched.length > visible,
+          toggle: () => this.setState(s => ({ expanded: { ...s.expanded, [sec.id]: !s.expanded[sec.id] } })),
+          toggleLabel: open ? 'مشاهده کمتر' : 'مشاهده بیشتر',
+          chevronStyle: {
+            display: 'grid', placeItems: 'center',
+            transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: 'transform 0.2s',
+          },
+        };
+      }),
+
+      faqs: this.faqData().map((f, i) => ({
+        q: f.q,
+        a: f.a,
+        open: this.state.openFaq === i, closed: !(this.state.openFaq === i),
+        toggle: () => this.setState(s => ({ openFaq: s.openFaq === i ? -1 : i })),
+        chevronStyle: {
+          flex: 'none', width: '26px', height: '26px', borderRadius: '50%',
+          background: 'rgba(47,111,237,0.1)', color: '#2057cd',
+          display: 'grid', placeItems: 'center',
+          transform: this.state.openFaq === i ? 'rotate(180deg)' : 'rotate(0deg)',
+          transition: 'transform 0.2s',
+        },
+      })),
+    };
+  }
+}
+</script>
+</body>
+</html>

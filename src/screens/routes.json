@@ -1,0 +1,117 @@
+[
+  {
+    "name": "Nixopay Landing",
+    "slug": "landing",
+    "route": "/"
+  },
+  {
+    "name": "about",
+    "slug": "about",
+    "route": "/about"
+  },
+  {
+    "name": "admin-auth",
+    "slug": "admin-auth",
+    "route": "/admin/login"
+  },
+  {
+    "name": "admin-panel",
+    "slug": "admin-panel",
+    "route": "/admin"
+  },
+  {
+    "name": "auth",
+    "slug": "auth",
+    "route": "/auth"
+  },
+  {
+    "name": "contact",
+    "slug": "contact",
+    "route": "/contact"
+  },
+  {
+    "name": "panel",
+    "slug": "panel",
+    "route": "/panel"
+  },
+  {
+    "name": "payment-embassy",
+    "slug": "payment-embassy",
+    "route": "/payment-embassy"
+  },
+  {
+    "name": "payment-exams",
+    "slug": "payment-exams",
+    "route": "/payment-exams"
+  },
+  {
+    "name": "payment-hotel",
+    "slug": "payment-hotel",
+    "route": "/payment-hotel"
+  },
+  {
+    "name": "payment-premium",
+    "slug": "payment-premium",
+    "route": "/payment-premium"
+  },
+  {
+    "name": "payment-seo",
+    "slug": "payment-seo",
+    "route": "/payment-seo"
+  },
+  {
+    "name": "payment-shopping",
+    "slug": "payment-shopping",
+    "route": "/payment-shopping"
+  },
+  {
+    "name": "payment-tickets",
+    "slug": "payment-tickets",
+    "route": "/payment-tickets"
+  },
+  {
+    "name": "service-cards",
+    "slug": "service-cards",
+    "route": "/service-cards"
+  },
+  {
+    "name": "service-direct",
+    "slug": "service-direct",
+    "route": "/service-direct"
+  },
+  {
+    "name": "service-giftcards",
+    "slug": "service-giftcards",
+    "route": "/service-giftcards"
+  },
+  {
+    "name": "service-payments",
+    "slug": "service-payments",
+    "route": "/service-payments"
+  },
+  {
+    "name": "service-shopping",
+    "slug": "service-shopping",
+    "route": "/service-shopping"
+  },
+  {
+    "name": "service-subscriptions",
+    "slug": "service-subscriptions",
+    "route": "/service-subscriptions"
+  },
+  {
+    "name": "service-travel",
+    "slug": "service-travel",
+    "route": "/service-travel"
+  },
+  {
+    "name": "subscription-plans",
+    "slug": "subscription-plans",
+    "route": "/subscription-plans"
+  },
+  {
+    "name": "terms",
+    "slug": "terms",
+    "route": "/terms"
+  }
+]

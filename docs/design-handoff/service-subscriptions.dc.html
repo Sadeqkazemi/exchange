@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #ffffff; }
+  * { box-sizing: border-box; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</helmet>
+<div dir="rtl" style="font-family: 'Vazirmatn', system-ui, sans-serif; color: #14213d; background: #ffffff; min-height: 100vh;">
+
+  <!-- ======= HEADER ======= -->
+  <header data-screen-label="هدر" style="position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(20,33,61,0.08);">
+    <div style="position: relative; max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 72px; display: flex; align-items: center; gap: 32px;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <a href="Nixopay Landing.dc.html" style="display: flex; align-items: center;"><span style="position: relative; display: block; width: 93px; height: 38px; overflow: hidden;"><img src="uploads/nikso-fa.svg" alt="نیکسو" style="position: absolute; left: -3px; top: -32px; width: 110px; height: 96px; max-width: none; display: block;"></span></a>
+      </div>
+      <nav style="display: flex; align-items: center; gap: 26px; font-size: 16.5px; font-weight: 500; color: rgba(20,33,61,0.72); flex: 1; white-space: nowrap;">
+        <div onMouseEnter="{{ openMenu }}" onMouseLeave="{{ closeMenu }}" style="height: 72px; display: flex; align-items: center;">
+          <a href="Nixopay Landing.dc.html#services" style="color: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;" style-hover="color: #14213d;">خدمات
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+          </a>
+          <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position: absolute; top: 72px; right: 24px; left: 24px; background: #ffffff; border: 1px solid rgba(20,33,61,0.1); border-top: none; border-radius: 0 0 20px 20px; box-shadow: 0 30px 70px rgba(20,33,61,0.18); display: grid; grid-template-columns: 280px 1fr; z-index: 60; overflow: hidden;">
+              <div style="border-left: 1px solid rgba(20,33,61,0.08); padding: 18px 0; display: flex; flex-direction: column;">
+                <sc-for list="{{ menuCats }}" as="cat" hint-placeholder-count="7">
+                  <a href="{{ cat.href }}" onMouseEnter="{{ cat.activate }}" style="{{ cat.rowStyle }}">
+                    <svg width="20" height="20" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="{{ cat.iconPath }}"></path></svg>
+                    {{ cat.label }}
+                  </a>
+                </sc-for>
+              </div>
+              <sc-if value="{{ menuHasGroups }}" hint-placeholder-val="{{ false }}">
+                <div style="padding: 30px 40px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 48px; align-content: start;">
+                  <sc-for list="{{ menuGroupCols }}" as="col" hint-placeholder-count="2">
+                    <div style="display: flex; flex-direction: column; gap: 26px;">
+                      <sc-for list="{{ col.groups }}" as="g" hint-placeholder-count="2">
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                          <a href="{{ g.href }}" style="display: flex; align-items: center; gap: 12px; font-size: 15.5px; font-weight: 800; color: #14213d; text-decoration: none; padding: 4px 0 8px;" style-hover="color: #2057cd;">
+                            <sc-if value="{{ g.hasBadge }}" hint-placeholder-val="{{ true }}">
+                              <span style="{{ g.badgeStyle }}">{{ g.badge }}</span>
+                            </sc-if>
+                            <span>{{ g.title }}</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M15 6l-6 6 6 6"></path></svg>
+                          </a>
+                          <sc-for list="{{ g.links }}" as="l" hint-placeholder-count="2">
+                            <a href="{{ l.href }}" style="{{ l.rowStyle }}" style-hover="color: #2057cd;">
+                              <sc-if value="{{ l.hasMark }}" hint-placeholder-val="{{ false }}">
+                                <span role="img" aria-label="{{ l.mark }}" style="{{ l.markStyle }}"></span>
+                              </sc-if>
+                              <span>{{ l.label }}</span>
+                            </a>
+                          </sc-for>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ menuNoGroups }}" hint-placeholder-val="{{ true }}">
+              <div style="padding: 30px 34px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 28px; align-content: start;">
+                <sc-for list="{{ menuItems }}" as="mi" hint-placeholder-count="4">
+                  <a href="{{ mi.href }}" style="font-size: 14px; font-weight: 600; color: rgba(20,33,61,0.75); text-decoration: none; padding: 9px 12px; border-radius: 10px; display: block;" style-hover="background: rgba(47,111,237,0.07); color: #2057cd;">{{ mi.label }}</a>
+                </sc-for>
+              </div>
+              </sc-if>
+            </div>
+          </sc-if>
+        </div>
+        <a href="service-direct.dc.html" style="color: inherit; text-decoration: none;" style-hover="color: #14213d;">پرداخت مستقیم</a>
+        <a href="Nixopay Landing.dc.html#blog" style="color: inherit; text-decoration: none;" style-hover="color: #14213d;">بلاگ</a>
+        <div onMouseEnter="{{ openContact }}" onMouseLeave="{{ closeContact }}" style="position: relative; height: 72px; display: flex; align-items: center;">
+          <a href="contact.dc.html" style="color: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;" style-hover="color: #14213d;">تماس با ما
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+          </a>
+          <sc-if value="{{ contactOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position: absolute; top: 64px; right: -12px; min-width: 240px; background: #ffffff; border: 1px solid rgba(20,33,61,0.1); border-radius: 16px; box-shadow: 0 24px 60px rgba(20,33,61,0.16); padding: 8px 0; display: flex; flex-direction: column; z-index: 60;">
+                <a href="about.dc.html" style="font-size: 14.5px; font-weight: 600; color: rgba(20,33,61,0.75); text-decoration: none; padding: 12px 20px; display: block;" style-hover="background: rgba(47,111,237,0.07); color: #2057cd;">درباره نیکسو</a>
+                <a href="terms.dc.html" style="font-size: 14.5px; font-weight: 600; color: rgba(20,33,61,0.75); text-decoration: none; padding: 12px 20px; display: block;" style-hover="background: rgba(47,111,237,0.07); color: #2057cd;">شرایط و قوانین استفاده از خدمات</a>
+                <a href="contact.dc.html" style="font-size: 14.5px; font-weight: 600; color: rgba(20,33,61,0.75); text-decoration: none; padding: 12px 20px; display: block;" style-hover="background: rgba(47,111,237,0.07); color: #2057cd;">تماس با نیکسو</a>
+            </div>
+          </sc-if>
+        </div>
+      </nav>
+      <div style="position: relative; flex: 1 1 440px; max-width: 440px; min-width: 160px;">
+        <input placeholder="جستجو در خدمات…" style="width: 100%; font-family: inherit; font-size: 14.5px; font-weight: 600; color: #14213d; background: rgba(20,33,61,0.05); border: 1px solid rgba(20,33,61,0.12); border-radius: 12px; padding: 13px 42px 13px 16px; outline: none;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(20,33,61,0.45)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; top: 50%; right: 13px; transform: translateY(-50%);"><path d="M11 4a7 7 0 1 1 0 14 7 7 0 0 1 0-14z M21 21l-4.7-4.7"></path></svg>
+      </div>
+      <a href="auth.dc.html" style="display: inline-flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 700; color: #14213d; text-decoration: none; padding: 10px 6px; white-space: nowrap;" style-hover="color: #2057cd;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="10" r="3.2"></circle><path d="M6.2 18.6c1.3-2.2 3.4-3.4 5.8-3.4s4.5 1.2 5.8 3.4"></path></svg>
+        <span>ورود <span style="opacity: 0.45; font-weight: 400; margin: 0 2px;">|</span> ثبت‌نام</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ======= HERO ======= -->
+  <section data-screen-label="هیرو" style="background: #14213d; overflow: hidden;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 84px 24px 64px; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: center;">
+      <div style="animation: fadeUp 0.7s ease both;">
+        <div style="font-size: 13px; font-weight: 700; color: #a8c4fa; letter-spacing: 0.5px; margin-bottom: 14px;"><a href="Nixopay Landing.dc.html" style="color: inherit; text-decoration: none;">Nixopay</a> / خدمات / اکانت و اشتراک</div>
+        <h1 style="font-size: 44px; line-height: 1.35; font-weight: 900; color: #ffffff; margin: 0 0 16px; text-wrap: pretty;">اکانت هوش مصنوعی و اشتراک سرویس‌های خارجی</h1>
+        <p style="font-size: 16.5px; line-height: 2.1; color: rgba(255,255,255,0.72); margin: 0 0 30px; max-width: 540px; text-wrap: pretty;">ChatGPT، Midjourney، GitHub Copilot و ده‌ها سرویس دیگر — خرید و تمدید روی ایمیل خودتان، با پرداخت ریالی و فعال‌سازی سریع.</p>
+        <div style="position: relative; max-width: 460px; margin-bottom: 34px;">
+          <input value="{{ query }}" onChange="{{ setQuery }}" placeholder="نام سرویس را جستجو کنید؛ مثلاً ChatGPT…" style="width: 100%; font-family: inherit; font-size: 15px; font-weight: 600; color: #14213d; background: #ffffff; border: none; border-radius: 14px; padding: 17px 52px 17px 20px; outline: none;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(20,33,61,0.45)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; top: 50%; right: 18px; transform: translateY(-50%);"><path d="M11 4a7 7 0 1 1 0 14 7 7 0 0 1 0-14z M21 21l-4.7-4.7"></path></svg>
+        </div>
+        <div style="display: flex; gap: 36px;">
+          <div>
+            <div style="font-size: 24px; font-weight: 900; color: #ffffff;">+۳۰ سرویس</div>
+            <div style="font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 2px;">هوش مصنوعی و اشتراک</div>
+          </div>
+          <div style="width: 1px; background: rgba(255,255,255,0.15);"></div>
+          <div>
+            <div style="font-size: 24px; font-weight: 900; color: #ffffff;">۵ دقیقه</div>
+            <div style="font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 2px;">میانگین زمان فعال‌سازی</div>
+          </div>
+          <div style="width: 1px; background: rgba(255,255,255,0.15);"></div>
+          <div>
+            <div style="font-size: 24px; font-weight: 900; color: #ffffff;">روی ایمیل شما</div>
+            <div style="font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 2px;">حساب شخصی، نه اشتراکی</div>
+          </div>
+        </div>
+      </div>
+      <div style="animation: fadeUp 0.7s 0.15s ease both; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; direction: ltr;">
+        <div style="background: rgba(255,255,255,0.07); border: 1px solid rgba(168,196,250,0.22); border-radius: 18px; padding: 22px 14px; display: grid; place-items: center; gap: 8px; transform: translateY(18px);">
+          <div style="width: 42px; height: 42px; border-radius: 12px; background: #2f6fed; display: grid; place-items: center; color: #ffffff; font-size: 19px; font-weight: 900; position: relative;">C<img src="https://svgl.app/library/openai.svg" alt="ChatGPT" style="position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 12px; background: #ffffff; padding: 9px; object-fit: contain;"></div>
+          <div style="font-size: 13px; font-weight: 800; color: #ffffff;">ChatGPT</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.07); border: 1px solid rgba(168,196,250,0.22); border-radius: 18px; padding: 22px 14px; display: grid; place-items: center; gap: 8px;">
+          <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); display: grid; place-items: center; color: #ffffff; font-size: 19px; font-weight: 900; position: relative;">M<img src="https://svgl.app/library/midjourney.svg" alt="Midjourney" style="position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 12px; background: #ffffff; padding: 9px; object-fit: contain;"></div>
+          <div style="font-size: 13px; font-weight: 800; color: #ffffff;">Midjourney</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.07); border: 1px solid rgba(168,196,250,0.22); border-radius: 18px; padding: 22px 14px; display: grid; place-items: center; gap: 8px; transform: translateY(28px);">
+          <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); display: grid; place-items: center; color: #ffffff; font-size: 19px; font-weight: 900; position: relative;">C<img src="https://cdn.simpleicons.org/claude" alt="Claude" style="position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 12px; background: #ffffff; padding: 9px; object-fit: contain;"></div>
+          <div style="font-size: 13px; font-weight: 800; color: #ffffff;">Claude</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.07); border: 1px solid rgba(168,196,250,0.22); border-radius: 18px; padding: 22px 14px; display: grid; place-items: center; gap: 8px; transform: translateY(10px);">
+          <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); display: grid; place-items: center; color: #ffffff; font-size: 19px; font-weight: 900; position: relative;">G<img src="https://cdn.simpleicons.org/googlegemini" alt="Gemini" style="position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 12px; background: #ffffff; padding: 9px; object-fit: contain;"></div>
+          <div style="font-size: 13px; font-weight: 800; color: #ffffff;">Gemini</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.07); border: 1px solid rgba(168,196,250,0.22); border-radius: 18px; padding: 22px 14px; display: grid; place-items: center; gap: 8px; transform: translateY(-8px);">
+          <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); display: grid; place-items: center; color: #ffffff; font-size: 19px; font-weight: 900; position: relative;">S<img src="https://cdn.simpleicons.org/suno" alt="Suno" style="position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 12px; background: #ffffff; padding: 9px; object-fit: contain;"></div>
+          <div style="font-size: 13px; font-weight: 800; color: #ffffff;">Suno</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.07); border: 1px solid rgba(168,196,250,0.22); border-radius: 18px; padding: 22px 14px; display: grid; place-items: center; gap: 8px; transform: translateY(18px);">
+          <div style="width: 42px; height: 42px; border-radius: 12px; background: #2f6fed; display: grid; place-items: center; color: #ffffff; font-size: 19px; font-weight: 900; position: relative;">⌘<img src="https://cdn.simpleicons.org/cursor" alt="Cursor" style="position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 12px; background: #ffffff; padding: 9px; object-fit: contain;"></div>
+          <div style="font-size: 13px; font-weight: 800; color: #ffffff;">Cursor</div>
+        </div>
+      </div>
+    </div>
+    <!-- TAB NAV -->
+    <div style="border-top: 1px solid rgba(255,255,255,0.12);">
+      <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; gap: 8px; overflow-x: auto;">
+        <a href="#ai-text" style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.75); text-decoration: none; padding: 16px 18px; border-bottom: 3px solid transparent; white-space: nowrap;" style-hover="color: #ffffff; border-bottom-color: #2f6fed;">تولید محتوای متنی</a>
+        <a href="#ai-media" style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.75); text-decoration: none; padding: 16px 18px; border-bottom: 3px solid transparent; white-space: nowrap;" style-hover="color: #ffffff; border-bottom-color: #2f6fed;">محتوای صوتی و تصویری</a>
+        <a href="#ai-dev" style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.75); text-decoration: none; padding: 16px 18px; border-bottom: 3px solid transparent; white-space: nowrap;" style-hover="color: #ffffff; border-bottom-color: #2f6fed;">برنامه‌نویسی و API</a>
+        <a href="#others" style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.75); text-decoration: none; padding: 16px 18px; border-bottom: 3px solid transparent; white-space: nowrap;" style-hover="color: #ffffff; border-bottom-color: #2f6fed;">سایر اشتراک‌ها</a>
+        <a href="#faq" style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.75); text-decoration: none; padding: 16px 18px; border-bottom: 3px solid transparent; white-space: nowrap;" style-hover="color: #ffffff; border-bottom-color: #2f6fed;">سوالات متداول</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= AI ACCOUNT CATEGORIES ======= -->
+  <sc-for list="{{ sections }}" as="sec" hint-placeholder-count="3">
+    <section id="{{ sec.id }}" data-screen-label="{{ sec.title }}" style="max-width: 1200px; margin: 0 auto; padding: 72px 24px 4px; scroll-margin-top: 72px;">
+      <h2 style="font-size: 27px; font-weight: 900; margin: 0 0 10px; line-height: 1.5;">{{ sec.title }}</h2>
+      <p style="font-size: 14.5px; color: rgba(20,33,61,0.6); margin: 0 0 32px 0; line-height: 2;">{{ sec.desc }}</p>
+      <sc-if value="{{ sec.empty }}" hint-placeholder-val="{{ false }}">
+        <div style="font-size: 14px; font-weight: 600; color: rgba(20,33,61,0.5); background: #ffffff; border: 1.5px dashed rgba(20,33,61,0.18); border-radius: 14px; padding: 26px; text-align: center;">موردی با این جستجو یافت نشد — با پشتیبانی در میان بگذارید؛ احتمالاً می‌توانیم تهیه کنیم.</div>
+      </sc-if>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 20px;">
+        <sc-for list="{{ sec.items }}" as="it" hint-placeholder-count="8">
+          <a href="{{ it.buyHref }}" style="position: relative; overflow: hidden; background: #ffffff; border-radius: 22px; padding: 26px 24px 22px; display: flex; flex-direction: column; gap: 22px; text-decoration: none; color: #14213d; box-shadow: 0 1px 2px rgba(20,33,61,0.04), 0 0 0 1px rgba(20,33,61,0.06); transition: transform 0.25s, box-shadow 0.25s;" style-hover="transform: translateY(-5px); box-shadow: 0 24px 50px rgba(20,33,61,0.12), 0 0 0 1px rgba(47,111,237,0.35);">
+            <sc-if value="{{ it.popular }}" hint-placeholder-val="{{ false }}">
+              <span style="position: absolute; top: 18px; left: 18px; display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 800; color: #ffffff; background: linear-gradient(135deg, #3d7cff, #1d47b8); border-radius: 99px; padding: 5px 11px; box-shadow: 0 6px 14px rgba(47,111,237,0.35);"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21l1.6-7L2 9.2l7.1-.6z"></path></svg>پرفروش</span>
+            </sc-if>
+            <div style="{{ it.tileStyle }}">{{ it.initial }}<sc-if value="{{ it.hasIcon }}" hint-placeholder-val="{{ false }}"><img src="{{ it.icon }}" alt="{{ it.name }}" style="position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 18px; background: #f5f7fb; padding: 14px; object-fit: contain;"></sc-if></div>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <div dir="ltr" style="font-size: 20px; font-weight: 900; letter-spacing: -0.3px; text-align: right;">{{ it.name }}</div>
+              <div style="font-size: 14px; font-weight: 600; color: rgba(20,33,61,0.55);">{{ it.label }}</div>
+            </div>
+            <div style="margin-top: auto; padding-top: 16px; border-top: 1px solid rgba(20,33,61,0.07); display: flex; align-items: center; justify-content: space-between;">
+              <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 700; color: rgba(20,33,61,0.55);"><span style="width: 7px; height: 7px; border-radius: 50%; background: #12a46b;"></span>فعال‌سازی روی ایمیل شما</span>
+              <span style="width: 36px; height: 36px; border-radius: 50%; background: #14213d; color: #ffffff; display: grid; place-items: center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"></path></svg></span>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+      <sc-if value="{{ sec.hasMore }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; justify-content: center; margin-top: 28px;">
+          <button onClick="{{ sec.toggle }}" style="font-family: inherit; font-size: 14px; font-weight: 800; color: #2057cd; background: #ffffff; border: 1.5px solid rgba(47,111,237,0.4); border-radius: 99px; padding: 12px 30px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" style-hover="background: rgba(47,111,237,0.06);">
+            {{ sec.toggleLabel }}
+            <span style="{{ sec.chevronStyle }}">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+            </span>
+          </button>
+        </div>
+      </sc-if>
+    </section>
+  </sc-for>
+
+  <!-- ======= OTHER SUBSCRIPTIONS ======= -->
+  <section id="others" data-screen-label="سایر اشتراک‌ها" style="max-width: 1200px; margin: 0 auto; padding: 76px 24px; scroll-margin-top: 72px;">
+    <h2 style="font-size: 27px; font-weight: 900; margin: 0 0 10px; line-height: 1.5;">سایر اکانت‌ها و اشتراک‌ها</h2>
+    <p style="font-size: 14.5px; color: rgba(20,33,61,0.6); margin: 0 0 32px 0; line-height: 2;">هر اشتراک یا لایسنس خارجی دیگری که نیاز دارید، برای شما خریداری و روی حساب خودتان فعال می‌کنیم:</p>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;">
+      <div style="background: #ffffff; border: 1px solid rgba(20,33,61,0.11); border-radius: 18px; padding: 26px; display: flex; align-items: flex-start; gap: 18px;" style-hover="box-shadow: 0 14px 34px rgba(20,33,61,0.1);">
+        <div style="display: flex; gap: 8px; flex: none;">
+          <div style="width: 52px; height: 52px; border-radius: 14px; background: #ffffff; border: 1px solid rgba(20,33,61,0.12); display: grid; place-items: center;"><img src="https://cdn.simpleicons.org/googleplay" alt="Google Play" style="width: 26px; height: 26px; object-fit: contain;"></div>
+          <div style="width: 52px; height: 52px; border-radius: 14px; background: #ffffff; border: 1px solid rgba(20,33,61,0.12); display: grid; place-items: center;"><img src="https://cdn.simpleicons.org/appstore" alt="App Store" style="width: 26px; height: 26px; object-fit: contain;"></div>
+        </div>
+        <div>
+          <div style="font-size: 16.5px; font-weight: 800; margin-bottom: 6px;">گوگل‌پلی و اپ‌استور</div>
+          <div style="font-size: 13.5px; line-height: 2; color: rgba(20,33,61,0.6);">خرید اپلیکیشن، بازی و پرداخت درون‌برنامه‌ای روی حساب خودتان.</div>
+        </div>
+      </div>
+      <div style="background: #ffffff; border: 1px solid rgba(20,33,61,0.11); border-radius: 18px; padding: 26px; display: flex; align-items: flex-start; gap: 18px;" style-hover="box-shadow: 0 14px 34px rgba(20,33,61,0.1);">
+        <div style="display: flex; gap: 8px; flex: none;">
+          <div style="width: 52px; height: 52px; border-radius: 14px; background: #ffffff; border: 1px solid rgba(20,33,61,0.12); display: grid; place-items: center;"><img src="https://cdn.simpleicons.org/steam" alt="Steam" style="width: 26px; height: 26px; object-fit: contain;"></div>
+          <div style="width: 52px; height: 52px; border-radius: 14px; background: #ffffff; border: 1px solid rgba(20,33,61,0.12); display: grid; place-items: center;"><img src="https://cdn.simpleicons.org/playstation" alt="PlayStation" style="width: 26px; height: 26px; object-fit: contain;"></div>
+        </div>
+        <div>
+          <div style="font-size: 16.5px; font-weight: 800; margin-bottom: 6px;">استیم و پلی‌استیشن</div>
+          <div style="font-size: 13.5px; line-height: 2; color: rgba(20,33,61,0.6);">خرید بازی و شارژ کیف پول استیم و پلی‌استیشن.</div>
+        </div>
+      </div>
+      <div style="background: #ffffff; border: 1px solid rgba(20,33,61,0.11); border-radius: 18px; padding: 26px; display: flex; align-items: flex-start; gap: 18px;" style-hover="box-shadow: 0 14px 34px rgba(20,33,61,0.1);">
+        <div style="display: flex; gap: 8px; flex: none;">
+          <div style="width: 52px; height: 52px; border-radius: 14px; background: #ffffff; border: 1px solid rgba(20,33,61,0.12); display: grid; place-items: center;"><img src="https://svgl.app/library/adobe.svg" alt="Adobe" style="width: 26px; height: 26px; object-fit: contain;"></div>
+          <div style="width: 52px; height: 52px; border-radius: 14px; background: #ffffff; border: 1px solid rgba(20,33,61,0.12); display: grid; place-items: center;"><img src="https://svgl.app/library/microsoft.svg" alt="Microsoft" style="width: 26px; height: 26px; object-fit: contain;"></div>
+        </div>
+        <div>
+          <div style="font-size: 16.5px; font-weight: 800; margin-bottom: 6px;">ادوبی و مایکروسافت</div>
+          <div style="font-size: 13.5px; line-height: 2; color: rgba(20,33,61,0.6);">اشتراک Creative Cloud، Office 365 و سایر نرم‌افزارهای حرفه‌ای.</div>
+        </div>
+      </div>
+      <div style="background: #ffffff; border: 1px solid rgba(20,33,61,0.11); border-radius: 18px; padding: 26px; display: flex; align-items: flex-start; gap: 18px;" style-hover="box-shadow: 0 14px 34px rgba(20,33,61,0.1);">
+        <div style="display: flex; gap: 8px; flex: none;">
+          <div style="width: 52px; height: 52px; border-radius: 14px; background: #ffffff; border: 1px solid rgba(20,33,61,0.12); display: grid; place-items: center;">
+            <svg width="26" height="26" viewBox="0 0 48 48" fill="none" stroke="#14213d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6l14 6v10c0 9-6 16-14 20-8-4-14-11-14-20V12l14-6z M18 24l4 4 8-8"></path></svg>
+          </div>
+        </div>
+        <div>
+          <div style="font-size: 16.5px; font-weight: 800; margin-bottom: 6px;">نرم‌افزار و لایسنس</div>
+          <div style="font-size: 13.5px; line-height: 2; color: rgba(20,33,61,0.6);">خرید لایسنس اورجینال هر نرم‌افزار خارجی.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= HOW IT WORKS + WHY ======= -->
+  <section data-screen-label="نحوه سفارش" style="background: #14213d; padding: 76px 0;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+      <h2 style="font-size: 27px; font-weight: 900; margin: 0 0 44px; line-height: 1.5; color: #ffffff;">سفارش اکانت در ۴ قدم</h2>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; margin-bottom: 64px;">
+        <div style="border-top: 3px solid #2f6fed; padding-top: 20px;">
+          <div style="font-size: 13px; font-weight: 900; color: #a8c4fa; margin-bottom: 8px;">قدم ۱</div>
+          <div style="font-size: 16px; font-weight: 800; color: #ffffff; margin-bottom: 6px;">انتخاب سرویس</div>
+          <div style="font-size: 13px; line-height: 2; color: rgba(255,255,255,0.6);">سرویس و پلن مورد نظر خود را انتخاب کنید.</div>
+        </div>
+        <div style="border-top: 3px solid rgba(255,255,255,0.2); padding-top: 20px;">
+          <div style="font-size: 13px; font-weight: 900; color: #a8c4fa; margin-bottom: 8px;">قدم ۲</div>
+          <div style="font-size: 16px; font-weight: 800; color: #ffffff; margin-bottom: 6px;">ثبت درخواست</div>
+          <div style="font-size: 13px; line-height: 2; color: rgba(255,255,255,0.6);">ایمیل خود را وارد و درخواست را ثبت کنید.</div>
+        </div>
+        <div style="border-top: 3px solid rgba(255,255,255,0.2); padding-top: 20px;">
+          <div style="font-size: 13px; font-weight: 900; color: #a8c4fa; margin-bottom: 8px;">قدم ۳</div>
+          <div style="font-size: 16px; font-weight: 800; color: #ffffff; margin-bottom: 6px;">پرداخت ریالی</div>
+          <div style="font-size: 13px; line-height: 2; color: rgba(255,255,255,0.6);">فاکتور را از درگاه بانکی ایرانی پرداخت کنید.</div>
+        </div>
+        <div style="border-top: 3px solid rgba(255,255,255,0.2); padding-top: 20px;">
+          <div style="font-size: 13px; font-weight: 900; color: #a8c4fa; margin-bottom: 8px;">قدم ۴</div>
+          <div style="font-size: 16px; font-weight: 800; color: #ffffff; margin-bottom: 6px;">فعال‌سازی</div>
+          <div style="font-size: 13px; line-height: 2; color: rgba(255,255,255,0.6);">اشتراک روی ایمیل شما فعال و تأییدیه ارسال می‌شود.</div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+        <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(168,196,250,0.2); border-radius: 16px; padding: 22px 24px; display: flex; align-items: center; gap: 14px;">
+          <svg width="24" height="24" viewBox="0 0 48 48" fill="none" stroke="#a8c4fa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M24 4l5 10 11 2-8 8 2 11-10-5-10 5 2-11-8-8 11-2 5-10z"></path></svg>
+          <div style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.85); line-height: 1.9;">حساب شخصی خودتان؛ نه اکانت اشتراکی</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(168,196,250,0.2); border-radius: 16px; padding: 22px 24px; display: flex; align-items: center; gap: 14px;">
+          <svg width="24" height="24" viewBox="0 0 48 48" fill="none" stroke="#a8c4fa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M24 7a17 17 0 1 1 0 34 17 17 0 0 1 0-34z M24 14v10l7 5"></path></svg>
+          <div style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.85); line-height: 1.9;">یادآوری سررسید و تمدید بدون قطعی</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(168,196,250,0.2); border-radius: 16px; padding: 22px 24px; display: flex; align-items: center; gap: 14px;">
+          <svg width="24" height="24" viewBox="0 0 48 48" fill="none" stroke="#a8c4fa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M10 26a14 14 0 0 1 28 0 M8 28h6v10H8a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z M40 28h-6v10h6a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2z"></path></svg>
+          <div style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.85); line-height: 1.9;">پشتیبانی ۲۴ ساعته، ۷ روز هفته</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= FAQ ======= -->
+  <section id="faq" data-screen-label="سوالات متداول" style="background: #ffffff; padding: 96px 0; scroll-margin-top: 72px;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; flex-direction: column; gap: 44px;">
+      <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px;">
+        <span style="font-size: 14px; font-weight: 700; color: #2057cd;">هر سوالی که دارید، از ما بپرسید.</span>
+        <h2 style="font-size: clamp(28px, 2.8vw, 36px); font-weight: 900; line-height: 1.4; margin: 0; color: #14213d;">سوالات متداول</h2>
+      </div>
+      <div style="display: flex; flex-direction: column; border-top: 1px solid rgba(20,33,61,0.09);">
+        <sc-for list="{{ faqs }}" as="faq" hint-placeholder-count="4">
+          <div style="border-bottom: 1px solid rgba(20,33,61,0.09);">
+            <button onClick="{{ faq.toggle }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 30px 0; background: none; border: none; cursor: pointer; font-family: inherit; text-align: right; color: #14213d;">
+              <span style="flex: 1; font-size: 16.5px; font-weight: 700; line-height: 1.8;">{{ faq.q }}</span>
+              <span style="flex: none; width: 36px; display: grid; place-items: center; color: #2f6fed;">
+                <sc-if value="{{ faq.open }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"></path></svg></sc-if>
+                <sc-if value="{{ faq.closed }}" hint-placeholder-val="{{ true }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></sc-if>
+              </span>
+            </button>
+            <sc-if value="{{ faq.open }}" hint-placeholder-val="{{ false }}">
+              <div style="padding: 0 0 30px 60px; font-size: 15px; line-height: 2.1; color: rgba(20,33,61,0.75); text-wrap: pretty;">{{ faq.a }}</div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <div style="position: relative; overflow: hidden; background: #14213d; border-radius: 22px; padding: 48px 44px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;">
+        <div style="position: absolute; width: 320px; height: 320px; border-radius: 50%; background: #2f6fed; opacity: 0.3; filter: blur(80px); top: -180px; left: -60px;"></div>
+        <div style="position: relative; display: flex; align-items: center; gap: 18px;">
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="#6f9bff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M10 26a14 14 0 0 1 28 0 M8 28h6v10H8a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z M40 28h-6v10h6a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2z"></path></svg>
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <span style="font-size: 17px; font-weight: 800; color: #ffffff;">پاسخ سوال خود را پیدا نکردید؟</span>
+            <span style="font-size: 14px; line-height: 1.9; color: rgba(255,255,255,0.65);">کارشناسان ما در سریع‌ترین زمان ممکن با شما تماس می‌گیرند.</span>
+          </div>
+        </div>
+        <a href="contact.dc.html" style="position: relative; font-size: 15px; font-weight: 800; background: #ffffff; color: #14213d; text-decoration: none; padding: 14px 28px; border-radius: 12px; white-space: nowrap;" style-hover="background: #e8eefc;">درخواست مشاوره</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= CTA ======= -->
+  <section data-screen-label="بنر" style="max-width: 1200px; margin: 0 auto; padding: 0 24px 80px;">
+    <div style="position: relative; overflow: hidden; background: linear-gradient(115deg, #2f6fed 0%, #1d4fc4 100%); border-radius: 22px; padding: 46px 44px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; color: #ffffff;">
+      <div style="position: absolute; inset: 0; opacity: 0.16; background-image: radial-gradient(circle at 85% 20%, #ffffff 0, transparent 40%), radial-gradient(circle at 15% 90%, #ffffff 0, transparent 35%);"></div>
+      <h2 style="position: relative; font-size: 27px; font-weight: 900; margin: 0; line-height: 1.5;">سرویسی که می‌خواهید در فهرست نیست؟</h2>
+      <p style="position: relative; font-size: 14.5px; color: rgba(255,255,255,0.78); margin: 0; max-width: 540px;">نام سرویس را برای ما بفرستید؛ کارشناسان Nixopay ۲۴ ساعته پاسخگو هستند و استعلام رایگان است.</p>
+      <div style="position: relative; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;">
+        <a href="Nixopay Landing.dc.html#contact" style="font-size: 15px; font-weight: 800; background: #ffffff; color: #14213d; text-decoration: none; padding: 14px 34px; border-radius: 13px; white-space: nowrap;" style-hover="background: rgba(255,255,255,0.88);">استعلام قیمت</a>
+        <a href="Nixopay Landing.dc.html#contact" style="font-size: 15px; font-weight: 800; color: #ffffff; border: 1.5px solid rgba(255,255,255,0.5); text-decoration: none; padding: 14px 30px; border-radius: 13px; white-space: nowrap;" style-hover="background: rgba(255,255,255,0.12);">تماس با پشتیبانی</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= FOOTER ======= -->
+  <footer data-screen-label="فوتر" style="background: #14213d; color: #ffffff;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 56px 24px 28px;">
+      <div style="display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px; padding-bottom: 40px;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+            <span style="position: relative; display: block; width: 98px; height: 40px; overflow: hidden;"><img src="uploads/nikso-fa.svg" alt="نیکسو" style="position: absolute; left: -3px; top: -34px; width: 116px; height: 101px; max-width: none; display: block; filter: brightness(0) invert(1);"></span>
+          </div>
+          <p style="font-size: 13.5px; line-height: 1.9; color: rgba(255,255,255,0.55); margin: 0; max-width: 280px;">صرافی خدمات پرداخت ارزی؛ خرید از فروشگاه‌های بین‌المللی و پرداخت هزینه‌های خارجی، بدون ارز دیجیتال.</p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px;">
+          <div style="font-weight: 700; margin-bottom: 4px;">خدمات</div>
+          <a href="service-shopping.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">خرید از فروشگاه‌های خارجی</a>
+          <a href="service-payments.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">پرداخت ارزی</a>
+          <a href="service-travel.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">رزرو هتل و بلیت</a>
+          <a href="service-subscriptions.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">اشتراک سرویس‌های آنلاین</a>
+          <a href="service-giftcards.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">گیفت کارت</a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px;">
+          <div style="font-weight: 700; margin-bottom: 4px;">نیکسو</div>
+          <a href="about.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">درباره ما</a>
+          <a href="terms.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">قوانین و مقررات</a>
+          <a href="contact.dc.html" style="color: rgba(255,255,255,0.6); text-decoration: none;" style-hover="color: #ffffff;">تماس با ما</a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; padding-right: 48px;">
+          <div style="font-weight: 700; margin-bottom: 4px;">تماس</div>
+          <span dir="ltr" style="color: rgba(255,255,255,0.6); text-align: right;">۰۲۱-۹۱۰۰۰۰۰۰</span>
+          <span dir="ltr" style="color: rgba(255,255,255,0.6); text-align: right;">support@nixopay.ir</span>
+          <span style="color: rgba(255,255,255,0.6);">تهران، خیابان ولیعصر</span>
+        </div>
+      </div>
+      <div style="padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.12); font-size: 12.5px; color: rgba(255,255,255,0.45); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+        <span>© ۱۴۰۵ Nixopay — تمامی حقوق محفوظ است.</span>
+        <span>خدمات این مجموعه شامل ارزهای دیجیتال نمی‌شود.</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;initialVisible&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 8, &quot;tsType&quot;: &quot;number&quot;, &quot;min&quot;: 4, &quot;max&quot;: 12, &quot;step&quot;: 4, &quot;unit&quot;: &quot; کارت&quot;, &quot;section&quot;: &quot;فهرست اکانت‌ها&quot;}}">
+class Component extends DCLogic {
+  state = { menuOpen: false, menuCat: 0, expanded: {}, query: '', openFaq: -1 };
+
+  menuData() {
+    return [
+      { label: 'خرید کالای خارجی', href: 'service-shopping.dc.html', iconPath: 'M10 16h28v22a2 2 0 0 1-2 2H12a2 2 0 0 1-2-2V16z M17 16v-3a7 7 0 0 1 14 0v3', items: [{ label: 'خرید از آمازون', href: 'service-shopping.dc.html#amazon' }, { label: 'خرید از برندهای محبوب (نایکی، آدیداس، زارا)', href: 'service-shopping.dc.html#brands' }, { label: 'محاسبه قیمت و ثبت سفارش', href: 'service-shopping.dc.html#calc' }, { label: 'نحوه خرید و تحویل در ایران', href: 'service-shopping.dc.html#how' }, { label: 'سوالات متداول خرید', href: 'service-shopping.dc.html#faq' }], groups: [
+        [
+          { title: 'خرید از آمازون', href: 'service-shopping.dc.html#amazon', links: [{ label: 'آمازون امارات', href: 'service-shopping.dc.html#amazon', mark: 'AE' }, { label: 'آمازون انگلیس', href: 'service-shopping.dc.html#amazon', mark: 'UK' }, { label: 'آمازون ترکیه', href: 'service-shopping.dc.html#amazon', mark: 'TR' }, { label: 'آمازون آلمان', href: 'service-shopping.dc.html#amazon', mark: 'DE' }] },
+          { title: 'برندهای اورجینال', href: 'service-shopping.dc.html#brands', links: [{ label: 'نایکی', href: 'service-shopping.dc.html#brands', mark: 'NIKE' }, { label: 'آدیداس', href: 'service-shopping.dc.html#brands', mark: 'adidas' }, { label: 'زارا', href: 'service-shopping.dc.html#brands', mark: 'ZARA' }] },
+        ],
+        [
+          { title: 'فروشگاه‌های دیگر', href: 'service-shopping.dc.html', links: [{ label: 'ای‌بی', href: 'service-shopping.dc.html', mark: 'eBay' }, { label: 'علی‌اکسپرس', href: 'service-shopping.dc.html', mark: 'AliExpress' }, { label: 'ترندیول', href: 'service-shopping.dc.html', mark: 'Trendyol' }, { label: 'ایکیا', href: 'service-shopping.dc.html', mark: 'IKEA' }] },
+          { title: 'ثبت سفارش', href: 'service-shopping.dc.html#calc', links: [{ label: 'محاسبه آنلاین قیمت', href: 'service-shopping.dc.html#calc' }, { label: 'سوالات متداول خرید', href: 'service-shopping.dc.html#faq' }] },
+        ],
+      ] },
+      { label: 'پرداخت ارزی', href: 'service-payments.dc.html', iconPath: 'M13 6h22a2 2 0 0 1 2 2v32a2 2 0 0 1-2 2H13a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z M19 15h10 M19 22h10 M19 31l3 3 7-7', items: [{ label: 'آزمون‌های بین‌المللی (IELTS، TOEFL)', href: 'payment-exams.dc.html' }, { label: 'وقت سفارت و ویزا', href: 'payment-embassy.dc.html' }, { label: 'پرداخت هزینه بلیط', href: 'payment-tickets.dc.html' }] },
+      { label: 'اکانت و اشتراک', href: 'service-subscriptions.dc.html', iconPath: 'M24 7a17 17 0 1 1 0 34 17 17 0 0 1 0-34z M20 17l12 7-12 7v-14z', items: [{ label: 'اکانت هوش مصنوعی متنی (ChatGPT و…)', href: 'service-subscriptions.dc.html#ai-text' }, { label: 'هوش مصنوعی تصویر و صدا', href: 'service-subscriptions.dc.html#ai-media' }, { label: 'ابزار برنامه‌نویسی و API', href: 'service-subscriptions.dc.html#ai-dev' }, { label: 'سایر اشتراک‌ها (ادوبی، گوگل‌پلی، استیم و…)', href: 'service-subscriptions.dc.html#others' }] },
+      { label: 'گیفت کارت', href: 'service-giftcards.dc.html', iconPath: 'M8 16h32v22a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V16z M8 24h32 M24 16v24 M24 16c-8 0-9-8-4-8s4 8 4 8z M24 16c8 0 9-8 4-8s-4 8-4 8z', items: [{ label: 'گیفت کارت بازی (Steam، PlayStation و…)', href: 'service-giftcards.dc.html#gaming' }, { label: 'استریم و اپلیکیشن (Netflix، Spotify و…)', href: 'service-giftcards.dc.html#streaming' }, { label: 'خرید و پرداخت آنلاین (PayPal، Amazon و…)', href: 'service-giftcards.dc.html#shopping' }, { label: 'نحوه سفارش گیفت کارت', href: 'service-giftcards.dc.html#how' }] },
+      { label: 'سفر و اقامت', href: 'service-travel.dc.html', iconPath: 'M12 40V12a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v28 M8 40h32 M18 17h4 M26 17h4 M18 25h4 M26 25h4 M21 40v-7h6v7', items: [{ label: 'بلیت پرواز خارجی', href: 'service-travel.dc.html#flights' }, { label: 'رزرو هتل و اقامت', href: 'service-travel.dc.html#hotels' }, { label: 'ویزا، سفارت و مهاجرت', href: 'service-travel.dc.html#visa' }] },
+    ];
+  }
+
+  sectionData() {
+    return [
+      {
+        id: 'ai-text', num: '۰۱',
+        title: 'اکانت‌های هوش مصنوعی برای تولید محتوای متنی',
+        desc: 'ابزارهایی که برای نویسندگی، بازنویسی، ترجمه، تولید محتوا و سئو کاربرد دارند:',
+        items: [
+          { name: 'ChatGPT', label: 'اکانت ChatGPT Plus', popular: true, icon: 'https://svgl.app/library/openai.svg' },
+          { name: 'Claude', label: 'اکانت Claude Pro', popular: true, icon: 'https://cdn.simpleicons.org/claude' },
+          { name: 'Gemini', label: 'اکانت Gemini', icon: 'https://cdn.simpleicons.org/googlegemini' },
+          { name: 'Grok', label: 'اکانت Grok', icon: 'https://unpkg.com/@lobehub/icons-static-svg/icons/grok.svg' },
+          { name: 'Perplexity', label: 'اکانت Perplexity', icon: 'https://cdn.simpleicons.org/perplexity' },
+          { name: 'DeepSeek', label: 'اکانت DeepSeek', icon: 'https://cdn.simpleicons.org/deepseek' },
+          { name: 'NotebookLM', label: 'اکانت NotebookLM', icon: 'https://cdn.simpleicons.org/notebooklm' },
+          { name: 'Copilot', label: 'اکانت Copilot', icon: 'https://svgl.app/library/microsoft-copilot.svg' },
+          { name: 'Grammarly', label: 'اکانت Grammarly', icon: 'https://cdn.simpleicons.org/grammarly' },
+          { name: 'QuillBot', label: 'اکانت QuillBot', icon: 'https://www.google.com/s2/favicons?domain=quillbot.com&sz=64' },
+          { name: 'Jasper', label: 'اکانت Jasper', icon: 'https://www.google.com/s2/favicons?domain=jasper.ai&sz=64' },
+          { name: 'Notion AI', label: 'اکانت Notion AI', icon: 'https://cdn.simpleicons.org/notion' },
+        ],
+      },
+      {
+        id: 'ai-media', num: '۰۲',
+        title: 'اکانت‌های هوش مصنوعی برای محتوای صوتی و تصویری',
+        desc: 'ابزارهایی که برای خلق، ویرایش یا تولید تصویر، ویدیو و صدا کاربرد دارند:',
+        items: [
+          { name: 'Midjourney', label: 'اکانت Midjourney', popular: true, icon: 'https://svgl.app/library/midjourney.svg' },
+          { name: 'DALL·E', label: 'اکانت DALL-E', icon: 'https://svgl.app/library/openai.svg' },
+          { name: 'Leonardo.Ai', label: 'اکانت Leonardo AI', icon: 'https://www.google.com/s2/favicons?domain=leonardo.ai&sz=64' },
+          { name: 'Runway', label: 'اکانت Runway', icon: 'https://svgl.app/library/runway.svg' },
+          { name: 'ElevenLabs', label: 'اکانت ElevenLabs', icon: 'https://cdn.simpleicons.org/elevenlabs' },
+          { name: 'Synthesia', label: 'اکانت Synthesia', icon: 'https://www.google.com/s2/favicons?domain=synthesia.io&sz=64' },
+          { name: 'Suno', label: 'اکانت Suno', icon: 'https://cdn.simpleicons.org/suno' },
+          { name: 'Hailuo AI', label: 'اکانت Hailuo AI', icon: 'https://cdn.simpleicons.org/minimax' },
+        ],
+      },
+      {
+        id: 'ai-dev', num: '۰۳',
+        title: 'اکانت‌های هوش مصنوعی برای برنامه‌نویسی و API',
+        desc: 'برای توسعه‌دهندگان و متخصصان تکنولوژی:',
+        items: [
+          { name: 'GitHub Copilot', label: 'اکانت Github Copilot', icon: 'https://cdn.simpleicons.org/githubcopilot' },
+          { name: 'Cursor', label: 'اکانت Cursor', popular: true, icon: 'https://cdn.simpleicons.org/cursor' },
+          { name: 'Tabnine', label: 'اکانت Tabnine', icon: 'https://www.google.com/s2/favicons?domain=tabnine.com&sz=64' },
+          { name: 'OpenAI API', label: 'خرید Api Open AI', icon: 'https://svgl.app/library/openai.svg' },
+          { name: 'Vercel', label: 'اکانت Vercel', icon: 'https://cdn.simpleicons.org/vercel' },
+          { name: 'Lovable', label: 'اکانت Lovable', icon: 'https://svgl.app/library/lovable.svg' },
+          { name: 'n8n', label: 'اکانت n8n', icon: 'https://cdn.simpleicons.org/n8n' },
+          { name: 'Replit', label: 'اکانت Replit', icon: 'https://cdn.simpleicons.org/replit' },
+        ],
+      },
+    ];
+  }
+
+  faqData() {
+    return [
+      { q: 'اکانت روی ایمیل خودم فعال می‌شود؟', a: 'بله. برخلاف اکانت‌های اشتراکی، همه اشتراک‌ها روی ایمیل شخصی شما خریداری و فعال می‌شوند و فقط خودتان به آن دسترسی دارید.' },
+      { q: 'فعال‌سازی چقدر طول می‌کشد؟', a: 'اغلب اشتراک‌ها در کمتر از ۵ دقیقه پس از پرداخت فعال می‌شوند. سرویس‌هایی که نیاز به بررسی بیشتری دارند کمی بیشتر زمان می‌برند.' },
+      { q: 'قیمت اشتراک‌ها چگونه محاسبه می‌شود؟', a: 'قیمت بر اساس تعرفه دلاری سرویس، نرخ لحظه‌ای ارز و کارمزد شفاف Nixopay محاسبه و پیش از پرداخت در فاکتور نمایش داده می‌شود؛ هزینه پنهانی وجود ندارد.' },
+      { q: 'اگر سرویس مورد نظر من در فهرست نبود چه کنم؟', a: 'نام سرویس را برای پشتیبانی ارسال کنید. تقریباً هر اشتراک یا لایسنس خارجی که با ویزا، مستر یا پی‌پال قابل خرید باشد را می‌توانیم برای شما تهیه کنیم.' },
+      { q: 'تمدید اشتراک چگونه انجام می‌شود؟', a: 'پیش از پایان دوره، سررسید اشتراک به شما یادآوری می‌شود و در صورت تأیید، تمدید بدون قطعی سرویس انجام می‌گیرد.' },
+    ];
+  }
+
+  renderVals() {
+    const cats = this.menuData();
+    const activeCat = Math.min(this.state.menuCat, cats.length - 1);
+    const visible = this.props.initialVisible ?? 8;
+    const q = this.state.query.trim().toLowerCase();
+    return {
+      menuOpen: this.state.menuOpen,
+      openMenu: () => this.setState({ menuOpen: true }),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      contactOpen: !!this.state.contactOpen,
+      openContact: () => this.setState({ contactOpen: true }),
+      closeContact: () => this.setState({ contactOpen: false }),
+      menuCats: cats.map((c, i) => ({
+        label: c.label,
+        iconPath: c.iconPath,
+        href: c.href,
+        activate: () => this.setState({ menuCat: i }),
+        rowStyle: {
+          display: 'flex', alignItems: 'center', gap: '11px', padding: '13px 22px',
+          fontSize: '14.5px', fontWeight: i === activeCat ? 800 : 600,
+          color: i === activeCat ? '#2057cd' : 'rgba(20,33,61,0.75)',
+          background: i === activeCat ? 'rgba(47,111,237,0.07)' : 'transparent',
+          borderRight: i === activeCat ? '3px solid #2f6fed' : '3px solid transparent',
+          cursor: 'pointer', whiteSpace: 'nowrap', textDecoration: 'none',
+        },
+      })),
+      menuItems: cats[activeCat].items.map(it => (typeof it === 'string' ? { label: it, href: cats[activeCat].href } : it)),
+      menuHasGroups: !!cats[activeCat].groups,
+      menuNoGroups: !cats[activeCat].groups,
+      menuGroupCols: (cats[activeCat].groups || []).map(col => ({ groups: col.map(g => ({
+        title: g.title, href: g.href, badge: g.badge, hasBadge: !!g.badge,
+        badgeStyle: { flex: 'none', width: '36px', height: '36px', borderRadius: '50%', background: g.badgeBg, color: g.badgeColor, display: 'grid', placeItems: 'center', fontSize: g.badge && g.badge.length > 1 ? '11.5px' : '17px', fontWeight: 900, direction: 'ltr', letterSpacing: '0.5px' },
+        links: g.links.map(l => ({ label: l.label, href: l.href, mark: l.mark, hasMark: !!l.mark, img: ({"AE":"logos/flag-ae.svg","UK":"logos/flag-gb.svg","TR":"logos/flag-tr.svg","DE":"logos/flag-de.svg","NIKE":"logos/nike.svg","adidas":"logos/adidas.svg","ZARA":"logos/zara.svg","eBay":"logos/ebay.svg","AliExpress":"logos/aliexpress.svg","Trendyol":"logos/trendyol.svg","IKEA":"logos/ikea.svg"})[l.mark],
+          rowStyle: { display: 'flex', alignItems: 'center', gap: '12px', fontSize: '14px', fontWeight: 500, color: 'rgba(20,33,61,0.68)', textDecoration: 'none', padding: '8px 0', paddingRight: g.badge ? '48px' : '0' },
+          markStyle: { flex: 'none', width: (['eBay','AliExpress','IKEA','ZARA'].includes(l.mark) ? '36px' : '24px'), height: (['AE','UK','TR','DE'].includes(l.mark) ? '17px' : '24px'), backgroundImage: 'url("' + ({"AE":"logos/flag-ae.svg","UK":"logos/flag-gb.svg","TR":"logos/flag-tr.svg","DE":"logos/flag-de.svg","NIKE":"logos/nike.svg","adidas":"logos/adidas.svg","ZARA":"logos/zara.svg","eBay":"logos/ebay.svg","AliExpress":"logos/aliexpress.svg","Trendyol":"logos/trendyol.svg","IKEA":"logos/ikea.svg"})[l.mark] + '")', backgroundSize: (['AE','UK','TR','DE'].includes(l.mark) ? 'cover' : (l.mark === 'Trendyol' ? '100%' : (['eBay','AliExpress','IKEA','ZARA'].includes(l.mark) ? '92%' : '62%'))), backgroundRepeat: 'no-repeat', backgroundPosition: 'center', borderRadius: (['AE','UK','TR','DE'].includes(l.mark) ? '4px' : '6px'), boxShadow: '0 0 0 1px rgba(20,33,61,0.08)', backgroundColor: '#ffffff' },
+        })),
+      })) })),
+
+      query: this.state.query,
+      setQuery: e => this.setState({ query: e.target.value }),
+
+      sections: this.sectionData().map(sec => {
+        const matched = q ? sec.items.filter(it => (it.name + ' ' + it.label).toLowerCase().includes(q)) : sec.items;
+        const open = !!this.state.expanded[sec.id];
+        const items = (q || open) ? matched : matched.slice(0, visible);
+        return {
+          id: sec.id,
+          num: sec.num,
+          title: sec.title,
+          desc: sec.desc,
+          empty: matched.length === 0,
+          items: items.map(it => ({
+            name: it.name,
+            label: it.label,
+            popular: !!it.popular,
+            hasIcon: !!it.icon,
+            icon: it.icon || '',
+            buyHref: 'auth.dc.html?next=' + encodeURIComponent('subscription-plans.dc.html?s=' + encodeURIComponent(it.name) + '&i=' + encodeURIComponent(it.icon || '')),
+            initial: it.name.replace(/[^A-Za-z0-9]/g, '').charAt(0).toUpperCase(),
+            tileStyle: {
+              position: 'relative',
+              width: '64px', height: '64px', borderRadius: '18px',
+              background: it.popular ? '#2f6fed' : '#14213d',
+              display: 'grid', placeItems: 'center',
+              color: '#ffffff', fontSize: '24px', fontWeight: 900,
+            },
+          })),
+          hasMore: !q && matched.length > visible,
+          toggle: () => this.setState(s => ({ expanded: { ...s.expanded, [sec.id]: !s.expanded[sec.id] } })),
+          toggleLabel: open ? 'مشاهده کمتر' : 'مشاهده بیشتر',
+          chevronStyle: {
+            display: 'grid', placeItems: 'center',
+            transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: 'transform 0.2s',
+          },
+        };
+      }),
+
+      faqs: this.faqData().map((f, i) => ({
+        q: f.q,
+        a: f.a,
+        open: this.state.openFaq === i, closed: !(this.state.openFaq === i),
+        toggle: () => this.setState(s => ({ openFaq: s.openFaq === i ? -1 : i })),
+        chevronStyle: {
+          flex: 'none', width: '26px', height: '26px', borderRadius: '50%',
+          background: 'rgba(47,111,237,0.1)', color: '#2057cd',
+          display: 'grid', placeItems: 'center',
+          transform: this.state.openFaq === i ? 'rotate(180deg)' : 'rotate(0deg)',
+          transition: 'transform 0.2s',
+        },
+      })),
+    };
+  }
+}
+</script>
+</body>
+</html>

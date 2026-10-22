@@ -1,0 +1,22 @@
+/* Design tokens from docs/design-handoff/README.md */
+:root {
+  --ink: #14213d;
+  --admin-sidebar: #0b1226;
+  --user-sidebar: #f3f5f9;
+  --primary: #2f6fed;
+  --primary-hover: #2057cd;
+  --indigo: #2f4fa8;
+  --success: #1a7f4b;
+  --warning: #a8620f;
+  --danger: #b0353f;
+  --purple: #5b4b9a;
+  --muted: rgba(20, 33, 61, 0.55);
+  --faint: rgba(20, 33, 61, 0.45);
+  --surface: #ffffff;
+  --surface-subtle: #f6f8fc;
+  --field: #f3f5fa;
+  --track: #e9edf5;
+  --border: rgba(20, 33, 61, 0.08);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #ffffff; color: var(--ink); font-family: 'Vazirmatn', system-ui, sans-serif; }

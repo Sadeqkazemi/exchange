@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #ffffff; }
+  * { box-sizing: border-box; }
+  input::placeholder { color: rgba(20,33,61,0.35); }
+  a { color: #2057cd; } a:hover { color: #14213d; }
+</style>
+</helmet>
+<div dir="rtl" style="font-family: 'Vazirmatn', system-ui, sans-serif; color: #14213d; background: #ffffff; min-height: 100vh; display: flex;">
+
+  <aside data-screen-label="سایدبار" style="width: 268px; flex: none; background: #14213d; color: #ffffff; display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh;">
+    <a href="Nixopay Landing.dc.html" style="display: flex; align-items: center; justify-content: center; text-decoration: none; color: inherit; padding: 24px 24px 18px;">
+      <span style="position: relative; display: block; width: 100px; height: 41px; overflow: hidden;"><img src="nikso-fa-white.svg" alt="نیکسو" style="position: absolute; left: -3px; top: -33px; width: 118px; height: 103px; max-width: none; display: block;"></span>
+    </a>
+    <nav style="flex: 1; display: flex; flex-direction: column; gap: 2px; padding: 0 14px 10px; overflow-y: auto;">
+      <div style="font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.4); letter-spacing: 0.5px; padding: 8px 14px 6px;">منوی کاربری</div>
+      <sc-for list="{{ userNav }}" as="nv" hint-placeholder-count="5">
+        <a href="{{ nv.href }}" style="{{ nv.style }}" style-hover="background: rgba(255,255,255,0.06); color: #ffffff;">
+          <svg width="18" height="18" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="{{ nv.icon }}"></path></svg>
+          {{ nv.label }}
+          <sc-if value="{{ nv.badge }}" hint-placeholder-val="{{ false }}">
+            <span style="margin-right: auto; font-size: 11px; font-weight: 800; color: #ffffff; background: #2f6fed; border-radius: 99px; padding: 2px 8px;">۲</span>
+          </sc-if>
+        </a>
+      </sc-for>
+      <div style="font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.4); letter-spacing: 0.5px; padding: 16px 14px 6px;">خدمات</div>
+      <sc-for list="{{ catNav }}" as="cv" hint-placeholder-count="3">
+        <a href="{{ cv.href }}" style="{{ cv.style }}" style-hover="background: rgba(255,255,255,0.06); color: #ffffff;">
+          <svg width="18" height="18" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="{{ cv.icon }}"></path></svg>
+          {{ cv.label }}
+        </a>
+      </sc-for>
+    </nav>
+    <div style="flex: none; padding: 14px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; flex-direction: column; gap: 4px;">
+      <a href="panel.dc.html" style="display: flex; align-items: center; gap: 12px; border-radius: 12px; padding: 10px 12px; color: #ffffff; text-decoration: none;" style-hover="background: rgba(255,255,255,0.06); color: #ffffff;">
+        <span style="width: 34px; height: 34px; flex: none; border-radius: 50%; background: #2f6fed; display: grid; place-items: center; font-size: 13.5px; font-weight: 800;">س</span>
+        <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px;">
+          <span style="font-size: 13.5px; font-weight: 800;">سارا محمدی</span>
+          <span style="font-size: 11.5px; font-weight: 600; color: rgba(255,255,255,0.5);">مشاهده پروفایل</span>
+        </span>
+      </a>
+      <a href="auth.dc.html" style="display: flex; align-items: center; gap: 12px; font-size: 13.5px; font-weight: 700; color: #ffffff; background: #d93a45; text-decoration: none; border-radius: 12px; padding: 10px 12px;" style-hover="background: #c22f3a; color: #ffffff;">
+        <span style="width: 34px; height: 34px; flex: none; border-radius: 50%; background: rgba(255,255,255,0.18); display: grid; place-items: center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transform: scaleX(-1);"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3 M10 17l-5-5 5-5 M5 12h11"></path></svg></span>
+        <span style="flex: 1; text-align: center; margin-inline-end: 46px;">خروج از حساب</span>
+      </a>
+    </div>
+  </aside>
+
+  <main style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
+    <div style="height: 76px; flex: none; border-bottom: 1px solid rgba(20,33,61,0.08); background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); position: sticky; top: 0; z-index: 40;">
+      <div style="max-width: 1400px; margin: 0 auto; padding: 0 40px; height: 100%; display: flex; align-items: center; gap: 16px;">
+        <div style="flex: 1 1 0; min-width: 0;"></div>
+        <div style="position: relative; flex: 0 1 620px; min-width: 0;">
+          <input placeholder="جستجو در خدمات…" style="width: 100%; font-family: inherit; font-size: 15px; font-weight: 600; color: #14213d; background: rgba(20,33,61,0.045); border: 1px solid rgba(20,33,61,0.1); border-radius: 14px; padding: 15px 48px 15px 18px; outline: none;" style-focus="border-color: #2f6fed; background: #ffffff;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="rgba(20,33,61,0.45)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; top: 50%; right: 18px; transform: translateY(-50%);"><path d="M11 4a7 7 0 1 1 0 14 7 7 0 0 1 0-14z M21 21l-4.7-4.7"></path></svg>
+        </div>
+        <div style="flex: 1;"></div>
+        <a href="panel.dc.html" style="flex: none; width: 42px; height: 42px; border-radius: 12px; border: 1px solid rgba(20,33,61,0.12); background: #ffffff; display: grid; place-items: center; color: rgba(20,33,61,0.65);" style-hover="border-color: #2f6fed; color: #2057cd;"><svg width="19" height="19" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M42 30a4 4 0 0 1-4 4H14l-8 8V10a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4z"></path></svg></a>
+        <a href="panel.dc.html" style="flex: none; width: 42px; height: 42px; border-radius: 12px; border: 1px solid rgba(20,33,61,0.12); background: #ffffff; display: grid; place-items: center; color: rgba(20,33,61,0.65);" style-hover="border-color: #2f6fed; color: #2057cd;"><svg width="19" height="19" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 14h32l-3.5 20a3 3 0 0 1-3 2.5h-19a3 3 0 0 1-3-2.5z M17 14l7-8 7 8 M19 22v8 M29 22v8"></path></svg></a>
+        <div style="position: relative; flex: none;">
+          <button onClick="{{ toggleProfile }}" style="font-family: inherit; display: flex; align-items: center; gap: 10px; height: 42px; background: #ffffff; border: 1px solid rgba(20,33,61,0.12); border-radius: 12px; padding: 0 12px 0 14px; cursor: pointer;" style-hover="border-color: #2f6fed;">
+            <span style="width: 28px; height: 28px; border-radius: 50%; background: #2f6fed; color: #ffffff; display: grid; place-items: center; font-size: 12.5px; font-weight: 800;">س</span>
+            <span style="font-size: 13px; font-weight: 800; color: #14213d; white-space: nowrap;">سارا محمدی</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(20,33,61,0.5)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+          </button>
+          <sc-if value="{{ profileOpen }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ closeProfile }}" style="position: fixed; inset: 0; z-index: 80; background: transparent;"></div>
+            <div style="position: absolute; top: 50px; left: 0; width: 300px; background: #ffffff; border: 1px solid rgba(20,33,61,0.1); border-radius: 16px; box-shadow: 0 26px 60px rgba(20,33,61,0.2); z-index: 90; overflow: hidden;">
+              <a href="panel.dc.html" style="display: flex; align-items: center; gap: 12px; padding: 16px 18px; text-decoration: none; border-bottom: 1px solid rgba(20,33,61,0.07);" style-hover="background: rgba(20,33,61,0.03);">
+                <span style="width: 40px; height: 40px; flex: none; border-radius: 50%; background: #2f6fed; color: #ffffff; display: grid; place-items: center; font-size: 16px; font-weight: 800;">س</span>
+                <span style="flex: 1; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 13.5px; font-weight: 900; color: #14213d;">سارا محمدی</span><span dir="ltr" style="font-size: 11px; color: rgba(20,33,61,0.5); text-align: right;">0912•••6789</span></span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(20,33,61,0.4)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"></path></svg>
+              </a>
+              <div style="padding: 12px 14px 8px;">
+                <a href="panel.dc.html" style="display: flex; align-items: center; gap: 12px; background: #14213d; color: #ffffff; border-radius: 13px; padding: 13px 15px; text-decoration: none;" style-hover="background: #1f2f52;">
+                  <span style="width: 32px; height: 32px; flex: none; border-radius: 10px; background: rgba(255,255,255,0.12); display: grid; place-items: center;"><svg width="16" height="16" viewBox="0 0 48 48" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M38 16H12a4 4 0 0 1 0-8h22v8 M8 12v22a6 6 0 0 0 6 6h26V16 M31 28h1"></path></svg></span>
+                  <span style="flex: 1; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 11px; color: rgba(255,255,255,0.6);">موجودی کیف پول</span><span style="font-size: 14px; font-weight: 900;">۳٬۳۷۰٬۰۰۰ تومان</span></span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"></path></svg>
+                </a>
+              </div>
+              <div style="display: flex; flex-direction: column; padding: 4px 0;">
+                <a href="panel.dc.html" style="display: flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 700; color: #14213d; text-decoration: none; padding: 11px 18px;" style-hover="background: rgba(20,33,61,0.04);"><svg width="17" height="17" viewBox="0 0 48 48" fill="none" stroke="rgba(20,33,61,0.55)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M12 8h24a2 2 0 0 1 2 2v30l-14-6-14 6V10a2 2 0 0 1 2-2z"></path></svg>سفارش‌ها و پیگیری</a>
+                <a href="panel.dc.html" style="display: flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 700; color: #14213d; text-decoration: none; padding: 11px 18px;" style-hover="background: rgba(20,33,61,0.04);"><svg width="17" height="17" viewBox="0 0 48 48" fill="none" stroke="rgba(20,33,61,0.55)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M42 30a4 4 0 0 1-4 4H14l-8 8V10a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4z"></path></svg>پشتیبانی و تیکت‌ها</a>
+                <a href="panel.dc.html" style="display: flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 700; color: #14213d; text-decoration: none; padding: 11px 18px;" style-hover="background: rgba(20,33,61,0.04);"><svg width="17" height="17" viewBox="0 0 48 48" fill="none" stroke="rgba(20,33,61,0.55)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M24 24a9 9 0 1 1 0-18 9 9 0 0 1 0 18z M8 42c0-9 7-16 16-16s16 7 16 16"></path></svg>پروفایل و احراز هویت</a>
+                <a href="panel.dc.html" style="display: flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 700; color: #14213d; text-decoration: none; padding: 11px 18px;" style-hover="background: rgba(20,33,61,0.04);"><svg width="17" height="17" viewBox="0 0 48 48" fill="none" stroke="rgba(20,33,61,0.55)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M6 18l18-10 18 10 M10 18v18 M20 18v18 M28 18v18 M38 18v18 M6 40h36"></path></svg>حساب‌های بانکی</a>
+              </div>
+              <a href="auth.dc.html" style="display: flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 800; color: #b0353f; text-decoration: none; padding: 13px 18px; border-top: 1px solid rgba(20,33,61,0.07);" style-hover="background: rgba(176,53,63,0.05);"><svg width="17" height="17" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M30 8h8a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2h-8 M20 32l-8-8 8-8 M12 24h20"></path></svg>خروج از حساب</a>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+
+    <div style="max-width: 1400px; width: 100%; margin: 0 auto; padding: 36px 40px 60px;">
+      <div data-screen-label="خرید اشتراک">
+        <h1 style="font-size: 21px; font-weight: 900; margin: 0 0 6px;">{{ pageTitle }} <span dir="ltr">{{ name }}</span></h1>
+        <p style="font-size: 13px; color: rgba(20,33,61,0.55); margin: 0 0 20px;">{{ pageSub }}</p>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; justify-content: space-between;">
+          <div style="flex: 1 1 440px; max-width: 760px; display: flex; flex-direction: column; gap: 16px; min-width: 0;">
+
+            <div style="background: #ffffff; border: 1px solid rgba(20,33,61,0.08); border-radius: 20px; padding: 28px 30px; display: flex; flex-direction: column; gap: 12px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 10px;"><span style="width: 28px; height: 28px; border-radius: 50%; background: #14213d; color: #ffffff; display: grid; place-items: center; font-size: 13px; font-weight: 800;">۱</span><span style="font-size: 17px; font-weight: 900;">{{ step1Title }}</span></div>
+                <span style="font-size: 12.5px; font-weight: 700; color: rgba(20,33,61,0.55);">نرخ دلار: {{ rateLabel }} ریال · {{ updated }}</span>
+              </div>
+              <sc-for list="{{ plans }}" as="p" hint-placeholder-count="3">
+                <button onClick="{{ p.select }}" style="{{ p.cardStyle }}">
+                  <span style="{{ p.radioStyle }}"><span style="{{ p.dotStyle }}"></span></span>
+                  <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; text-align: right;">
+                    <span dir="ltr" style="font-size: 15.5px; font-weight: 800; text-align: right;">{{ p.name }}</span>
+                    <span dir="ltr" style="font-size: 12.5px; font-weight: 700; color: rgba(20,33,61,0.5); text-align: right;">{{ p.sub }}</span>
+                  </span>
+                  <span style="font-size: 15px; font-weight: 800; white-space: nowrap;">{{ p.rial }} ریال</span>
+                </button>
+              </sc-for>
+            </div>
+
+            <div style="background: #ffffff; border: 1px solid rgba(20,33,61,0.08); border-radius: 20px; padding: 28px 30px; display: flex; flex-direction: column; gap: 16px;">
+              <div style="display: flex; align-items: center; gap: 10px;"><span style="width: 28px; height: 28px; border-radius: 50%; background: #14213d; color: #ffffff; display: grid; place-items: center; font-size: 13px; font-weight: 800;">۲</span><span style="font-size: 17px; font-weight: 900;">پرداخت</span></div>
+              
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <span style="font-size: 12.5px; font-weight: 600; color: rgba(20,33,61,0.5);">زمان تحویل: {{ delivery }}</span>
+              </div>
+              <div style="background: #f3f6fc; border: 1px solid rgba(47,111,237,0.14); border-radius: 16px; padding: 22px 24px; display: flex; flex-direction: column; gap: 14px;">
+                <div style="display: flex; justify-content: space-between; gap: 12px; font-size: 15px;"><span style="font-weight: 700;" dir="ltr">{{ sel.name }}</span><span style="color: rgba(20,33,61,0.6); font-weight: 700;">{{ sel.rial }} ریال</span></div>
+                <div style="display: flex; justify-content: space-between; gap: 12px; font-size: 15px;"><span style="font-weight: 700;">کارمزد خدمات</span><span style="color: rgba(20,33,61,0.6); font-weight: 700;">{{ feeLabel }} ریال</span></div>
+                <div style="display: flex; justify-content: space-between; gap: 12px; font-size: 15.5px;"><span style="font-weight: 700;">مبلغ نهایی</span><span style="font-weight: 900; color: #2f6fed;">{{ totalLabel }} ریال</span></div>
+                <button onClick="{{ pay }}" style="{{ payBtnStyle }}">تایید و پرداخت</button>
+                <sc-if value="{{ hasMsg }}" hint-placeholder-val="{{ false }}">
+                  <div style="font-size: 12.5px; font-weight: 700; color: #d14343; text-align: center;">{{ msg }}</div>
+                </sc-if>
+              </div>
+            </div>
+          </div>
+
+          <div style="position: relative; overflow: hidden; flex: 0 1 300px; min-width: 240px; margin-right: auto; border-radius: 999px; background: linear-gradient(180deg, #3b7bf5 0%, #2f6fed 45%, #1d4fc4 100%); color: #ffffff; padding: 80px 30px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 28px; box-shadow: 0 24px 50px rgba(47,111,237,0.25);">
+            <div style="position: absolute; top: -60px; left: 50%; width: 260px; height: 260px; transform: translateX(-50%); border-radius: 50%; border: 1px solid rgba(255,255,255,0.18);"></div>
+            <div style="position: relative; width: 96px; height: 96px; border-radius: 50%; background: #ffffff; box-shadow: 0 0 0 10px rgba(255,255,255,0.1), 0 16px 34px rgba(10,30,90,0.3); display: grid; place-items: center;">
+              <span style="position: relative; display: block; width: 66px; height: 27px; overflow: hidden;"><img src="uploads/nikso-fa.svg" alt="نیکسو" style="position: absolute; left: -2px; top: -22px; width: 78px; height: 68px; max-width: none; display: block;"></span>
+            </div>
+            <div style="position: relative; display: flex; flex-direction: column; gap: 4px;">
+              <div dir="ltr" style="font-size: 22px; font-weight: 900;">{{ name }}</div>
+              <div style="font-size: 17px; font-weight: 800; line-height: 1.7;">{{ pillText }}</div>
+            </div>
+            <div style="position: relative; display: flex; flex-direction: column; gap: 14px; width: 100%; padding: 0 6px;">
+              <div style="display: flex; align-items: center; gap: 12px;"><span style="width: 30px; height: 30px; flex: none; border-radius: 50%; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.3); display: grid; place-items: center; font-size: 13px; font-weight: 800;">۱</span><span style="font-size: 13.5px; font-weight: 700; color: rgba(255,255,255,0.92);">{{ step1Title }}</span></div>
+              <div style="display: flex; align-items: center; gap: 12px;"><span style="width: 30px; height: 30px; flex: none; border-radius: 50%; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.3); display: grid; place-items: center; font-size: 13px; font-weight: 800;">۲</span><span style="font-size: 13.5px; font-weight: 700; color: rgba(255,255,255,0.92);">پرداخت معادل ریالی</span></div>
+              <div style="display: flex; align-items: center; gap: 12px;"><span style="width: 30px; height: 30px; flex: none; border-radius: 50%; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.3); display: grid; place-items: center; font-size: 13px; font-weight: 800;">۳</span><span style="font-size: 13.5px; font-weight: 700; color: rgba(255,255,255,0.92);">{{ step3Title }}</span></div>
+            </div>
+            <div dir="ltr" style="position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;">
+              <span style="font-size: 12px; font-weight: 700; color: #14213d; background: #ffffff; padding: 6px 12px; border-radius: 999px;">{{ sel.name }}</span>
+              <span style="font-size: 12px; font-weight: 700; color: #14213d; background: #ffffff; padding: 6px 12px; border-radius: 999px;">${{ sel.usd }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;baseRate&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 98500, &quot;tsType&quot;: &quot;number&quot;, &quot;min&quot;: 50000, &quot;max&quot;: 200000, &quot;step&quot;: 500, &quot;unit&quot;: &quot;تومان&quot;}}">
+class Component extends DCLogic {
+  state = { sel: 1, method: 0, email: '', rate: 0, updated: '', msg: '' };
+  componentDidMount() {
+    const q = location.search;
+    const get = k => { const m = q.match(new RegExp('[?&]' + k + '=([^&]*)')); return m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : ''; };
+    this.svc = get('s') || 'ElevenLabs';
+    this.gift = get('t') === 'gift';
+    this.icon = get('i') || (this.svc === 'ElevenLabs' ? 'https://cdn.simpleicons.org/elevenlabs' : '');
+    this.fetchRate();
+    this._t = setInterval(() => this.fetchRate(), 60000);
+  }
+  componentWillUnmount() { clearInterval(this._t); }
+  fetchRate() {
+    const base = (this.props.baseRate ?? 98500) * 10;
+    const rate = Math.round((base + (Math.random() * 6000 - 3000)) / 100) * 100;
+    this.setState({ rate, updated: new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' }) });
+  }
+  catalog() {
+    if (this.gift) {
+      const G = { 'Steam': [5, 10, 20, 50, 100], 'PlayStation': [10, 25, 50, 100], 'Apple': [10, 25, 50, 100], 'Google Play': [10, 25, 50], 'Xbox': [10, 25, 50], 'Netflix': [25, 50, 100] };
+      return (G[this.svc] || [10, 25, 50, 100]).map(v => ['$' + v + ' ' + this.svc, v]);
+    }
+    const C = {
+      'ChatGPT': [['ChatGPT Go', 5], ['ChatGPT Plus', 20], ['ChatGPT Pro', 200]],
+      'ElevenLabs': [['Starter', 5], ['Creator', 22], ['Pro', 99]],
+      'Suno': [['Pro', 10], ['Premier', 30]],
+      'Synthesia': [['Starter', 29], ['Creator', 89]],
+      'Midjourney': [['Basic', 10], ['Standard', 30], ['Pro', 60]],
+      'Cursor': [['Pro', 20], ['Ultra', 200]],
+      'Claude': [['Claude Pro', 20], ['Claude Max 5x', 100], ['Claude Max 20x', 200]],
+      'Spotify': [['Individual', 12], ['Duo', 17], ['Family', 20]],
+      'YouTube': [['Premium', 14], ['Family', 23]],
+      'Perplexity': [['Pro', 20], ['Max', 200]],
+      'Notion': [['Plus', 12], ['Business', 24]],
+      'Figma': [['Professional', 16], ['Organization', 55]],
+      'Coursera': [['Plus Monthly', 59], ['Plus Annual', 399]],
+    };
+    return C[this.svc] || [['Basic', 10], ['Pro', 25], ['Business', 60]];
+  }
+  renderVals() {
+    const s = this.state;
+    const fa = n => Math.round(n).toLocaleString('fa-IR');
+    const name = this.svc || '';
+    const plans = this.catalog();
+    const sel = Math.min(s.sel, plans.length - 1);
+    const rial = usd => usd * s.rate;
+    const radio = on => ({ width: '20px', height: '20px', flex: 'none', borderRadius: '50%', border: '2px solid ' + (on ? '#2f6fed' : 'rgba(20,33,61,0.25)'), display: 'grid', placeItems: 'center' });
+    const dot = on => ({ width: '10px', height: '10px', borderRadius: '50%', background: on ? '#2f6fed' : 'transparent' });
+    const card = on => ({ fontFamily: 'inherit', width: '100%', display: 'flex', alignItems: 'center', gap: '14px', padding: '18px 20px', borderRadius: '14px', cursor: 'pointer', color: '#14213d', background: on ? '#f3f6fc' : '#ffffff', border: '1.5px solid ' + (on ? '#2f6fed' : 'rgba(20,33,61,0.12)') });
+    const pill = on => ({ fontFamily: 'inherit', fontSize: '14.5px', fontWeight: 800, padding: '12px 22px', borderRadius: '12px', cursor: 'pointer', color: on ? '#2057cd' : 'rgba(20,33,61,0.6)', background: on ? 'rgba(47,111,237,0.08)' : '#ffffff', border: '1.5px solid ' + (on ? '#2f6fed' : 'rgba(20,33,61,0.14)') });
+    const navItem = (on) => ({ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '13.5px', fontWeight: on ? 800 : 700, textDecoration: 'none', borderRadius: '12px', padding: '11px 14px', color: on ? '#ffffff' : 'rgba(255,255,255,0.72)', background: on ? 'rgba(47,111,237,0.22)' : 'transparent', boxShadow: on ? 'inset -3px 0 0 #2f6fed' : 'none' });
+    const p = plans[sel];
+    const methods = [
+      { title: 'فعال‌سازی روی ایمیل شما', label: 'ایمیل اکانت شما', delivery: '۵ دقیقه تا ۱ ساعت' },
+    ];
+    const m = methods[s.method];
+    const sub = rial(p[1]);
+    const fee = sub * 0.05;
+    const ready = s.rate > 0;
+    const valid = true;
+    return {
+      userNav: [
+        { label: 'داشبورد', href: 'panel.dc.html', icon: 'M8 8h12v12H8z M28 8h12v12H28z M8 28h12v12H8z M28 28h12v12H28z' },
+        { label: 'پرداخت در سایت‌های خارجی', href: 'panel.dc.html', icon: 'M24 6a18 18 0 1 0 0 36 18 18 0 0 0 0-36z M6 24h36 M24 6c5 5 7 11 7 18s-2 13-7 18c-5-5-7-11-7-18s2-13 7-18z' },
+        { label: 'سفارش‌ها و پیگیری', href: 'panel.dc.html', badge: true, icon: 'M12 6h24v36l-12-8-12 8z' },
+        { label: 'کیف پول و شارژ', href: 'panel.dc.html', icon: 'M8 12h32v26H8z M8 18h32 M32 28h2' },
+        { label: 'تیکت و پشتیبانی', href: 'panel.dc.html', icon: 'M42 30a4 4 0 0 1-4 4H14l-8 8V10a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4z' },
+      ].map(x => ({ ...x, badge: !!x.badge, style: navItem(false) })),
+      catNav: [
+        { label: 'گیفت کارت', href: 'service-giftcards.dc.html', on: !!this.gift, icon: 'M8 18h32v8H8z M10 26h28v14H10z M24 18v22 M24 18c-4-8-12-6-10 0 M24 18c4-8 12-6 10 0' },
+        { label: 'اکانت و اشتراک', href: 'service-subscriptions.dc.html', on: !this.gift, icon: 'M24 6a18 18 0 1 0 0 36 18 18 0 0 0 0-36z M20 16l12 8-12 8z' },
+      ].map(x => ({ ...x, style: navItem(!!x.on) })),
+      name, icon: this.icon || '', hasIcon: !!this.icon,
+      initial: name.replace(/[^A-Za-z0-9]/g, '').charAt(0).toUpperCase(),
+      rateLabel: ready ? fa(s.rate) : '…', updated: s.updated,
+      pageTitle: this.gift ? 'خرید گیفت کارت' : 'فعال‌سازی اکانت',
+      pageSub: this.gift ? 'مبلغ گیفت کارت را انتخاب کنید؛ معادل ریالی با نرخ لحظه‌ای دلار محاسبه می‌شود.' : 'پلن را انتخاب کنید؛ مبلغ ریالی با نرخ لحظه‌ای دلار محاسبه می‌شود.',
+      step1Title: this.gift ? 'انتخاب مبلغ' : 'انتخاب پلن',
+      step3Title: this.gift ? 'تحویل کد گیفت کارت' : 'فعال‌سازی و تحویل',
+      pillText: this.gift ? 'کد گیفت کارت در پنل شما تحویل می‌شود' : 'اشتراک روی ایمیل شما فعال می‌شود',
+      plans: plans.map((x, i) => ({ name: x[0], usd: x[1], sub: this.gift ? 'Gift Card' : '$' + x[1] + ' / month', rial: ready ? fa(rial(x[1])) : '…', select: () => this.setState({ sel: i }), cardStyle: card(i === sel), radioStyle: radio(i === sel), dotStyle: dot(i === sel) })),
+      sel: { name: p[0], usd: p[1], rial: ready ? fa(sub) : '…' },
+      methods: methods.map((x, i) => ({ title: x.title, select: () => this.setState({ method: i }), style: pill(i === s.method) })),
+      fieldLabel: m.label, delivery: this.gift ? 'فوری (کمتر از ۵ دقیقه)' : m.delivery,
+      email: s.email, setEmail: e => this.setState({ email: e.target.value, msg: '' }),
+      feeLabel: ready ? fa(fee) : '…', totalLabel: ready ? fa(sub + fee) : '…',
+      msg: s.msg, hasMsg: !!s.msg,
+      profileOpen: !!s.profileOpen, toggleProfile: () => this.setState({ profileOpen: !s.profileOpen }), closeProfile: () => this.setState({ profileOpen: false }),
+      payBtnStyle: { fontFamily: 'inherit', width: '100%', fontSize: '15.5px', fontWeight: 800, border: 'none', borderRadius: '12px', padding: '16px', cursor: valid ? 'pointer' : 'not-allowed', color: valid ? '#ffffff' : 'rgba(20,33,61,0.35)', background: valid ? '#2f6fed' : 'rgba(20,33,61,0.06)', boxShadow: valid ? '0 10px 24px rgba(47,111,237,0.35)' : 'none' },
+      pay: () => {
+        if (!valid) return this.setState({ msg: 'لطفاً ایمیل معتبر وارد کنید.' });
+        const dm = { 'ChatGPT': 'chatgpt.com', 'Claude': 'claude.ai', 'Perplexity': 'perplexity.ai', 'Notion': 'notion.so', 'Coursera': 'coursera.org', 'Suno': 'suno.com', 'Synthesia': 'synthesia.io', 'ElevenLabs': 'elevenlabs.io', 'Midjourney': 'midjourney.com', 'Cursor': 'cursor.com', 'Hailuo AI': 'hailuoai.video', 'Leonardo.Ai': 'leonardo.ai', 'Runway': 'runwayml.com', 'Replit': 'replit.com', 'n8n': 'n8n.io', 'Lovable': 'lovable.dev' };
+        const site = dm[name] || (name.toLowerCase().replace(/[^a-z0-9.]/g, '') + '.com');
+        location.href = 'panel.dc.html?paysite=' + encodeURIComponent(site) + '&usd=' + p[1].toFixed(2) + '&rial=' + Math.round(sub + fee);
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

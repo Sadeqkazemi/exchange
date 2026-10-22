@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #ffffff; }
+  * { box-sizing: border-box; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+  input::placeholder { color: rgba(20,33,61,0.35); }
+</style>
+</helmet>
+<div dir="rtl" style="font-family: 'Vazirmatn', system-ui, sans-serif; color: #14213d; background: #ffffff; min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;">
+
+  <!-- ======= FORM SIDE ======= -->
+  <div data-screen-label="فرم ورود" style="display: flex; flex-direction: column; padding: 32px 48px; min-height: 100vh;">
+    <a href="Nixopay Landing.dc.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; align-self: flex-start;">
+      <div style="width: 36px; height: 36px; border-radius: 10px; background: #14213d; display: grid; place-items: center; color: #ffffff; font-weight: 800; font-size: 18px;">N</div>
+      <div style="font-weight: 800; font-size: 20px; letter-spacing: -0.5px;">Nixopay</div>
+    </a>
+
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; max-width: 400px; width: 100%; margin: 0 auto; animation: fadeUp 0.5s ease both;">
+
+      <!-- STEP: LOGIN / SIGNUP -->
+      <sc-if value="{{ stepLogin }}" hint-placeholder-val="{{ true }}">
+        <h1 style="font-size: 28px; font-weight: 900; margin: 0 0 8px; line-height: 1.5;">{{ formTitle }}</h1>
+        <p style="font-size: 14px; line-height: 2; color: rgba(20,33,61,0.6); margin: 0 0 28px;">{{ formSubtitle }}</p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; background: rgba(20,33,61,0.06); border-radius: 12px; padding: 4px; margin-bottom: 24px;">
+          <button onClick="{{ pickMobile }}" style="{{ tabMobileStyle }}">موبایل</button>
+          <button onClick="{{ pickEmail }}" style="{{ tabEmailStyle }}">ایمیل</button>
+        </div>
+
+        <sc-if value="{{ isSignup }}" hint-placeholder-val="{{ false }}">
+          <label style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; font-weight: 700; color: rgba(20,33,61,0.65); margin-bottom: 16px;">نام و نام خانوادگی
+            <input value="{{ fullName }}" onChange="{{ setFullName }}" placeholder="مثلاً سارا محمدی" style="font-family: inherit; font-size: 15px; font-weight: 600; color: #14213d; background: #ffffff; border: 1.5px solid rgba(20,33,61,0.18); border-radius: 12px; padding: 13px 16px; outline: none;" style-focus="border-color: #2f6fed;">
+          </label>
+        </sc-if>
+
+        <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ true }}">
+          <label style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; font-weight: 700; color: rgba(20,33,61,0.65); margin-bottom: 16px;">شماره موبایل
+            <input dir="ltr" value="{{ phone }}" onChange="{{ setPhone }}" placeholder="0912 345 6789" style="font-family: inherit; font-size: 15px; font-weight: 700; letter-spacing: 1px; color: #14213d; background: #ffffff; border: 1.5px solid rgba(20,33,61,0.18); border-radius: 12px; padding: 13px 16px; outline: none; text-align: left;" style-focus="border-color: #2f6fed;">
+          </label>
+        </sc-if>
+        <sc-if value="{{ isEmail }}" hint-placeholder-val="{{ false }}">
+          <label style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; font-weight: 700; color: rgba(20,33,61,0.65); margin-bottom: 16px;">ایمیل
+            <input dir="ltr" value="{{ email }}" onChange="{{ setEmail }}" placeholder="you@example.com" style="font-family: inherit; font-size: 15px; font-weight: 600; color: #14213d; background: #ffffff; border: 1.5px solid rgba(20,33,61,0.18); border-radius: 12px; padding: 13px 16px; outline: none; text-align: left;" style-focus="border-color: #2f6fed;">
+          </label>
+          <label style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; font-weight: 700; color: rgba(20,33,61,0.65); margin-bottom: 8px;">رمز عبور
+            <input dir="ltr" type="password" value="{{ password }}" onChange="{{ setPassword }}" placeholder="••••••••" style="font-family: inherit; font-size: 15px; font-weight: 600; color: #14213d; background: #ffffff; border: 1.5px solid rgba(20,33,61,0.18); border-radius: 12px; padding: 13px 16px; outline: none; text-align: left;" style-focus="border-color: #2f6fed;">
+          </label>
+          <sc-if value="{{ isLoginMode }}" hint-placeholder-val="{{ true }}">
+            <a href="#" style="font-size: 12.5px; font-weight: 700; color: #2057cd; text-decoration: none; align-self: flex-start; margin-bottom: 8px;">فراموشی رمز عبور</a>
+          </sc-if>
+        </sc-if>
+
+        <div style="min-height: 22px; font-size: 12.5px; font-weight: 700; color: #b0353f; margin-bottom: 6px;">{{ error }}</div>
+
+        <button onClick="{{ submitLogin }}" style="font-family: inherit; font-size: 15.5px; font-weight: 800; color: #ffffff; background: #2f6fed; border: none; border-radius: 13px; padding: 15px; cursor: pointer; width: 100%;" style-hover="background: #2459c4;">{{ submitLabel }}</button>
+
+        <div style="font-size: 13.5px; color: rgba(20,33,61,0.6); margin-top: 22px; text-align: center;">
+          {{ switchPrompt }}
+          <button onClick="{{ toggleMode }}" style="font-family: inherit; font-size: 13.5px; font-weight: 800; color: #2057cd; background: none; border: none; cursor: pointer; padding: 0 4px;">{{ switchAction }}</button>
+        </div>
+
+        <div style="font-size: 11.5px; line-height: 2; color: rgba(20,33,61,0.45); margin-top: 26px; text-align: center;">ورود یا ثبت‌نام به معنی پذیرش <a href="#" style="color: #2057cd; text-decoration: none; font-weight: 700;">قوانین Nixopay</a> است.</div>
+      </sc-if>
+
+      <!-- STEP: OTP -->
+      <sc-if value="{{ stepOtp }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ backToLogin }}" style="font-family: inherit; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: rgba(20,33,61,0.6); background: none; border: none; cursor: pointer; padding: 0; margin-bottom: 24px; align-self: flex-start;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14 M13 6l6 6-6 6"></path></svg>
+          بازگشت و ویرایش شماره
+        </button>
+        <h1 style="font-size: 26px; font-weight: 900; margin: 0 0 8px; line-height: 1.5;">کد تأیید را وارد کنید</h1>
+        <p style="font-size: 14px; line-height: 2; color: rgba(20,33,61,0.6); margin: 0 0 28px;">کد ۵ رقمی به <span dir="ltr" style="font-weight: 800; color: #14213d;">{{ maskedTarget }}</span> ارسال شد.</p>
+        <div dir="ltr" style="display: flex; gap: 10px; justify-content: center; margin-bottom: 18px;">
+          <sc-for list="{{ otpBoxes }}" as="box" hint-placeholder-count="5">
+            <input dir="ltr" value="{{ box.val }}" onChange="{{ box.onChange }}" onKeyDown="{{ box.onKeyDown }}" ref="{{ box.ref }}" maxLength="1" inputMode="numeric" style="width: 54px; height: 60px; font-family: inherit; font-size: 24px; font-weight: 900; color: #14213d; text-align: center; background: #ffffff; border: 1.5px solid rgba(20,33,61,0.18); border-radius: 13px; outline: none;" style-focus="border-color: #2f6fed;">
+          </sc-for>
+        </div>
+        <div style="min-height: 22px; font-size: 12.5px; font-weight: 700; color: #b0353f; margin-bottom: 6px; text-align: center;">{{ error }}</div>
+        <button onClick="{{ verifyOtp }}" style="font-family: inherit; font-size: 15.5px; font-weight: 800; color: #ffffff; background: #2f6fed; border: none; border-radius: 13px; padding: 15px; cursor: pointer; width: 100%;" style-hover="background: #2459c4;">تأیید و ورود</button>
+        <div style="font-size: 13px; color: rgba(20,33,61,0.55); margin-top: 20px; text-align: center;">{{ timerText }}
+          <sc-if value="{{ canResend }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ resend }}" style="font-family: inherit; font-size: 13px; font-weight: 800; color: #2057cd; background: none; border: none; cursor: pointer; padding: 0 4px;">ارسال مجدد کد</button>
+          </sc-if>
+        </div>
+        <div style="margin-top: 26px; background: rgba(47,111,237,0.06); border: 1px solid rgba(47,111,237,0.18); border-radius: 12px; padding: 12px 16px; font-size: 12px; color: rgba(20,33,61,0.6); text-align: center;">نسخه نمایشی — کد تأیید: <span dir="ltr" style="font-weight: 900; color: #2057cd; letter-spacing: 2px;">۱۲۳۴۵</span></div>
+      </sc-if>
+
+      <!-- STEP: SUCCESS -->
+      <sc-if value="{{ stepDone }}" hint-placeholder-val="{{ false }}">
+        <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 18px;">
+          <div style="width: 76px; height: 76px; border-radius: 50%; background: rgba(47,111,237,0.1); display: grid; place-items: center;">
+            <svg width="36" height="36" viewBox="0 0 48 48" fill="none" stroke="#2f6fed" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 25l9 9 19-19"></path></svg>
+          </div>
+          <h1 style="font-size: 26px; font-weight: 900; margin: 0; line-height: 1.5;">خوش آمدید!</h1>
+          <p style="font-size: 14px; line-height: 2; color: rgba(20,33,61,0.6); margin: 0;">ورود شما با موفقیت انجام شد.</p>
+          <a href="{{ nextHref }}" style="font-size: 15.5px; font-weight: 800; background: #2f6fed; color: #ffffff; text-decoration: none; padding: 15px 40px; border-radius: 13px;" style-hover="background: #2459c4;">ورود به پنل کاربری</a>
+        </div>
+      </sc-if>
+
+    </div>
+  </div>
+
+  <!-- ======= BRAND SIDE ======= -->
+  <div data-screen-label="ویژوال برند" style="background: #14213d; display: flex; flex-direction: column; justify-content: center; padding: 64px; position: relative; overflow: hidden;">
+    <div style="max-width: 440px; margin: 0 auto;">
+      <h2 style="font-size: 32px; font-weight: 900; color: #ffffff; margin: 0 0 16px; line-height: 1.6; text-wrap: pretty;">همه پرداخت‌های خارجی شما، در یک حساب</h2>
+      <p style="font-size: 15px; line-height: 2.2; color: rgba(255,255,255,0.65); margin: 0 0 40px;">با یک بار ثبت‌نام، به همه خدمات Nixopay دسترسی دارید: خرید از فروشگاه‌های خارجی، پرداخت ارزی، کارت مجازی، گیفت کارت و اشتراک سرویس‌ها.</p>
+      <div style="display: flex; flex-direction: column; gap: 18px;">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div style="width: 40px; height: 40px; flex: none; border-radius: 11px; background: rgba(47,111,237,0.25); display: grid; place-items: center;">
+            <svg width="20" height="20" viewBox="0 0 48 48" fill="none" stroke="#a8c4fa" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M24 7a17 17 0 1 1 0 34 17 17 0 0 1 0-34z M24 14v10l7 5"></path></svg>
+          </div>
+          <div style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.85);">انجام اغلب سفارش‌ها در کمتر از ۵ دقیقه</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div style="width: 40px; height: 40px; flex: none; border-radius: 11px; background: rgba(47,111,237,0.25); display: grid; place-items: center;">
+            <svg width="20" height="20" viewBox="0 0 48 48" fill="none" stroke="#a8c4fa" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6l14 6v10c0 9-6 16-14 20-8-4-14-11-14-20V12l14-6z M18 24l4 4 8-8"></path></svg>
+          </div>
+          <div style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.85);">نرخ شفاف و فاکتور پیش از پرداخت</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div style="width: 40px; height: 40px; flex: none; border-radius: 11px; background: rgba(47,111,237,0.25); display: grid; place-items: center;">
+            <svg width="20" height="20" viewBox="0 0 48 48" fill="none" stroke="#a8c4fa" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 26a14 14 0 0 1 28 0 M8 28h6v10H8a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z M40 28h-6v10h6a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2z"></path></svg>
+          </div>
+          <div style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.85);">پشتیبانی ۲۴ ساعته، ۷ روز هفته</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    step: 'login',        // login | otp | done
+    mode: 'login',        // login | signup
+    method: 'mobile',     // mobile | email
+    phone: '', email: '', password: '', fullName: '',
+    otp: ['', '', '', '', ''],
+    error: '',
+    secondsLeft: 120,
+  };
+
+  constructor(props) {
+    super(props);
+    this.otpRefs = [0,1,2,3,4].map(() => React.createRef());
+  }
+
+  startTimer() {
+    clearInterval(this._t);
+    this.setState({ secondsLeft: 120 });
+    this._t = setInterval(() => {
+      this.setState(s => {
+        if (s.secondsLeft <= 1) { clearInterval(this._t); return { secondsLeft: 0 }; }
+        return { secondsLeft: s.secondsLeft - 1 };
+      });
+    }, 1000);
+  }
+
+  componentWillUnmount() { clearInterval(this._t); }
+
+  renderVals() {
+    const s = this.state;
+    const fa = n => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+    const isSignup = s.mode === 'signup';
+    const isMobile = s.method === 'mobile';
+    const tabBase = {
+      fontFamily: 'inherit', fontSize: '14px', fontWeight: 800, padding: '10px',
+      border: 'none', borderRadius: '9px', cursor: 'pointer', transition: 'all 0.15s',
+    };
+    const digitsOk = v => /^\d*$/.test(v.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)));
+    const normalize = v => v.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
+
+    const mm = String(Math.floor(s.secondsLeft / 60)).padStart(1, '0');
+    const ss = String(s.secondsLeft % 60).padStart(2, '0');
+
+    const nm = location.search.match(/[?&]next=([^&]*)/);
+    return {
+      nextHref: nm ? decodeURIComponent(nm[1]) : 'panel.dc.html',
+      stepLogin: s.step === 'login',
+      stepOtp: s.step === 'otp',
+      stepDone: s.step === 'done',
+      isSignup, isLoginMode: !isSignup, isMobile, isEmail: !isMobile,
+
+      formTitle: isSignup ? 'ساخت حساب Nixopay' : 'ورود به Nixopay',
+      formSubtitle: isSignup ? 'در کمتر از یک دقیقه حساب بسازید و اولین سفارش‌تان را ثبت کنید.' : 'خوش برگشتید! برای ادامه وارد حساب خود شوید.',
+      submitLabel: isMobile ? 'دریافت کد تأیید' : (isSignup ? 'ثبت‌نام' : 'ورود'),
+      switchPrompt: isSignup ? 'قبلاً حساب ساخته‌اید؟' : 'حساب ندارید؟',
+      switchAction: isSignup ? 'وارد شوید' : 'ثبت‌نام کنید',
+      toggleMode: () => this.setState({ mode: isSignup ? 'login' : 'signup', error: '' }),
+
+      pickMobile: () => this.setState({ method: 'mobile', error: '' }),
+      pickEmail: () => this.setState({ method: 'email', error: '' }),
+      tabMobileStyle: { ...tabBase, background: isMobile ? '#14213d' : 'transparent', color: isMobile ? '#ffffff' : 'rgba(20,33,61,0.6)' },
+      tabEmailStyle: { ...tabBase, background: !isMobile ? '#14213d' : 'transparent', color: !isMobile ? '#ffffff' : 'rgba(20,33,61,0.6)' },
+
+      phone: s.phone, setPhone: e => this.setState({ phone: e.target.value }),
+      email: s.email, setEmail: e => this.setState({ email: e.target.value }),
+      password: s.password, setPassword: e => this.setState({ password: e.target.value }),
+      fullName: s.fullName, setFullName: e => this.setState({ fullName: e.target.value }),
+      error: s.error,
+
+      submitLogin: () => {
+        if (isSignup && !s.fullName.trim()) return this.setState({ error: 'نام و نام خانوادگی را وارد کنید.' });
+        if (isMobile) {
+          const p = normalize(s.phone).replace(/\s/g, '');
+          if (!/^09\d{9}$/.test(p)) return this.setState({ error: 'شماره موبایل معتبر نیست؛ مثلاً 09123456789' });
+          this.setState({ step: 'otp', error: '', otp: ['','','','',''] });
+          this.startTimer();
+        } else {
+          if (!/^\S+@\S+\.\S+$/.test(s.email)) return this.setState({ error: 'ایمیل معتبر نیست.' });
+          if (s.password.length < 6) return this.setState({ error: 'رمز عبور حداقل ۶ کاراکتر باشد.' });
+          this.setState({ step: 'done', error: '' });
+        }
+      },
+
+      backToLogin: () => { clearInterval(this._t); this.setState({ step: 'login', error: '' }); },
+      maskedTarget: (() => { const p = normalize(s.phone).replace(/\s/g, ''); return p ? p.slice(0, 4) + '•••' + p.slice(-4) : ''; })(),
+
+      otpBoxes: s.otp.map((val, i) => ({
+        val,
+        ref: this.otpRefs[i],
+        onChange: e => {
+          const v = normalize(e.target.value).slice(-1);
+          if (v && !/\d/.test(v)) return;
+          const otp = [...this.state.otp]; otp[i] = v;
+          this.setState({ otp, error: '' });
+          if (v && i < 4) { const nx = this.otpRefs[i + 1].current; if (nx) nx.focus(); }
+        },
+        onKeyDown: e => {
+          if (e.key === 'Backspace' && !this.state.otp[i] && i > 0) {
+            const pv = this.otpRefs[i - 1].current; if (pv) pv.focus();
+          }
+        },
+      })),
+
+      verifyOtp: () => {
+        const code = s.otp.join('');
+        if (code.length < 5) return this.setState({ error: 'کد ۵ رقمی را کامل وارد کنید.' });
+        if (code !== '12345') return this.setState({ error: 'کد وارد شده صحیح نیست.' });
+        clearInterval(this._t);
+        this.setState({ step: 'done', error: '' });
+      },
+
+      timerText: s.secondsLeft > 0 ? 'ارسال مجدد کد تا ' + fa(mm) + ':' + fa(ss) + ' دیگر' : 'کدی دریافت نکردید؟',
+      canResend: s.secondsLeft === 0,
+      resend: () => { this.setState({ otp: ['','','','',''], error: '' }); this.startTimer(); },
+    };
+  }
+}
+</script>
+</body>
+</html>
