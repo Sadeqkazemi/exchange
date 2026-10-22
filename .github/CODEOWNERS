@@ -1,0 +1,9 @@
+# SEC-SDLC-01: security-sensitive paths need review from the security owner.
+/docs/security/                @Sadeqkazemi
+/backend/apps/payment-core/    @Sadeqkazemi
+/backend/apps/auth-service/    @Sadeqkazemi
+/backend/apps/api-gateway/     @Sadeqkazemi
+/backend/libs/security/        @Sadeqkazemi
+/backend/libs/ledger/          @Sadeqkazemi
+/infra/                        @Sadeqkazemi
+/.github/                      @Sadeqkazemi

@@ -5,6 +5,8 @@ description: Design, scaffold and review an online exchange (crypto/fiat) with a
 
 # معمار صرافی آنلاین (React + NestJS Microservices + Blockchain Ledger)
 
+> **مرجع امنیتی:** `docs/security/SECURITY-STANDARD.md` در ریشه مخزن لازم‌الاجراست و در تعارض بر این اسکیل مقدم است. کنترل‌ها را با شناسه الزام (مثل `SEC-PAY-02`) در کد و تست علامت بزن.
+
 این اسکیل چارچوب ثابتی برای ساخت/بازبینی یک صرافی آنلاین است. هر کدی که تولید می‌کنی باید با **قواعد اجباری** پایین سازگار باشد. جزئیات در فایل‌های `references/` و نمونه‌کدها در `templates/` است؛ فقط وقتی لازم شد آن‌ها را بخوان.
 
 | فایل | کی بخوانی |
@@ -55,7 +57,7 @@ description: Design, scaffold and review an online exchange (crypto/fiat) with a
 
 1. **هسته پرداخت جداست:** `payment-core` در namespace و شبکه جدا اجرا می‌شود، فقط از طریق gRPC داخلی با mTLS از `api-gateway`/`order-service`/`wallet-service` قابل دسترسی است، هیچ endpoint عمومی ندارد، و تنها سرویسی است که موجودی واقعی را تغییر می‌دهد.
 2. **لجر بلاک‌چینی:** هر تراکنش در `payment-core` یک ورودی append-only دوطرفه (double-entry) است که هش ورودی قبلی را دارد؛ ورودی‌ها در بلاک‌ها جمع شده، Merkle root محاسبه و امضا می‌شود و دوره‌ای روی زنجیره عمومی anchor می‌شود. `UPDATE`/`DELETE` روی جدول لجر با Trigger/Permission ممنوع است. اصلاح فقط با تراکنش معکوس. (جزئیات: `references/payment-core.md`)
-3. **۵ لایه امنیتی** همیشه پیاده می‌شود (جزئیات: `references/security-layers.md`):
+3. **۵ لایه امنیتی** همیشه پیاده می‌شود (الزامات دقیق: `docs/security/SECURITY-STANDARD.md`؛ راهنمای پیاده‌سازی: `references/security-layers.md`):
    1. لایه شبکه و لبه (WAF، DDoS، TLS 1.3، CDN)
    2. لایه API Gateway (rate limit، **محدودیت IP روزانه**، اعتبارسنجی schema، CORS/CSP)
    3. لایه هویت و دسترسی (JWT کوتاه‌عمر + refresh rotation، 2FA اجباری برای برداشت، RBAC/ABAC، device binding)
